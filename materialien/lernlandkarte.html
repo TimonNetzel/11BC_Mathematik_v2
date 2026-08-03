@@ -1,0 +1,1945 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#080d1a">
+  <title>Mathematik 11.1 – Interaktive Lernlandkarte: Von Daten zu Funktionen I</title>
+  <style>
+    :root{
+      --bg:#0b1020;
+      --bg-deep:#070b15;
+      --panel:#121a2e;
+      --panel-2:#18223a;
+      --ink:#e8f0ff;
+      --muted:#a7b4ce;
+      --accent:#00d5ff;
+      --accent-2:#7c3cff;
+      --good:#5eead4;
+      --warn:#facc15;
+      --bad:#fb7185;
+      --line:rgba(255,255,255,.14);
+      --shadow:0 24px 70px rgba(0,0,0,.35);
+      --radius:22px;
+      --paper:#f8fbff;
+      --paper-2:#edf4ff;
+      --paper-ink:#101828;
+      --paper-muted:#475569;
+      --focus:0 0 0 4px rgba(0,213,255,.22);
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      min-width:300px;
+      font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+      background:
+        radial-gradient(circle at 7% 2%,rgba(0,213,255,.16),transparent 34rem),
+        radial-gradient(circle at 88% 5%,rgba(124,60,255,.22),transparent 31rem),
+        linear-gradient(180deg,#080d1a 0%,var(--bg) 48%,var(--bg-deep) 100%);
+      color:var(--ink);
+      line-height:1.5;
+    }
+    a{color:#8be9ff}
+    button,input,select,textarea{font:inherit}
+    button,input,select,textarea,summary,a{-webkit-tap-highlight-color:transparent}
+    :focus-visible{outline:none;box-shadow:var(--focus)}
+    section{padding:42px 0;scroll-margin-top:84px}
+    h1,h2,h3,h4{line-height:1.12}
+    h1{font-size:clamp(2.25rem,5.5vw,5rem);letter-spacing:-.06em;margin:0}
+    h2{font-size:clamp(1.55rem,3vw,2.35rem);letter-spacing:-.035em;margin:0 0 12px}
+    h3{font-size:1.16rem;margin:0 0 8px}
+    h4{font-size:1rem;margin:0 0 7px}
+    p{margin:.48rem 0}
+    small{color:inherit}
+    .wrap{width:min(1180px,calc(100% - 32px));margin:auto}
+    .skip-link{
+      position:fixed;left:12px;top:10px;z-index:100;
+      padding:10px 14px;border-radius:12px;background:white;color:#0f172a;
+      transform:translateY(-150%);transition:transform .18s;
+    }
+    .skip-link:focus{transform:translateY(0)}
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:8px;
+      text-transform:uppercase;letter-spacing:.12em;font-size:.76rem;font-weight:900;
+      color:#b8f3ff;
+    }
+    .eyebrow::before{content:"";width:28px;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+
+    header.hero{padding:42px 0 26px;position:relative;overflow:hidden}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:28px}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:850;letter-spacing:.02em}
+    .brand-mark{
+      width:44px;height:44px;border-radius:15px;display:grid;place-items:center;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      color:#06101c;font-weight:950;box-shadow:0 0 38px rgba(0,213,255,.42);
+    }
+    .hero-grid{display:grid;grid-template-columns:1.22fr .78fr;gap:24px;align-items:stretch}
+    .glass,.panel,.dark-card{
+      background:linear-gradient(180deg,rgba(255,255,255,.085),rgba(255,255,255,.038));
+      border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);
+      backdrop-filter:blur(12px);
+    }
+    .hero-card{padding:clamp(22px,4vw,34px)}
+    .lead{font-size:clamp(1.05rem,1.8vw,1.3rem);color:var(--muted);max-width:830px;margin-top:18px}
+    .pillbar{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+    .pill{
+      border:1px solid var(--line);background:rgba(255,255,255,.055);
+      padding:8px 12px;border-radius:999px;color:var(--muted);font-size:.9rem;
+    }
+    .metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:20px}
+    .metric{background:rgba(4,10,24,.58);border:1px solid var(--line);border-radius:18px;padding:14px}
+    .metric b{display:block;font-size:1.42rem;color:white}
+    .metric span{color:var(--muted);font-size:.85rem}
+    .model-flow{padding:20px;display:grid;place-items:center;min-height:330px;overflow:hidden}
+    .model-flow svg{width:100%;max-width:470px;filter:drop-shadow(0 18px 36px rgba(0,0,0,.32))}
+
+    nav.quick{
+      position:sticky;top:0;z-index:30;
+      background:rgba(8,13,26,.78);border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+      backdrop-filter:blur(15px);
+    }
+    nav.quick .wrap{display:flex;gap:8px;padding:10px 0;overflow-x:auto;scrollbar-width:thin}
+    .btn,button{
+      appearance:none;border:1px solid var(--line);color:var(--ink);
+      background:rgba(255,255,255,.065);border-radius:999px;padding:10px 14px;
+      cursor:pointer;font-weight:760;transition:transform .18s,background .18s,border-color .18s;
+      text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap;
+      min-height:42px;
+    }
+    .btn:hover,button:hover{transform:translateY(-1px);border-color:rgba(0,213,255,.58);background:rgba(0,213,255,.12)}
+    .btn.primary,button.primary{border:0;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#06101c}
+    .btn.ghost{background:transparent}
+    .danger-lite{border-color:rgba(251,113,133,.36)}
+
+    .section-head{display:flex;justify-content:space-between;gap:18px;align-items:end;margin-bottom:20px}
+    .section-head p{color:var(--muted);max-width:780px}
+    .controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+    input,select,textarea{
+      width:100%;background:#071022;color:var(--ink);border:1px solid var(--line);
+      border-radius:14px;padding:11px 13px;outline:none;
+    }
+    input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:var(--focus)}
+    input[type="range"]{padding:4px 0;accent-color:var(--accent);border:0;background:transparent}
+    input[type="checkbox"]{width:19px;height:19px;padding:0;accent-color:#00a8cc}
+    textarea{min-height:180px;resize:vertical;line-height:1.45}
+    label{display:grid;gap:6px;color:var(--muted);font-weight:720;font-size:.92rem}
+    .search{min-width:min(360px,100%)}
+    .status-strip{
+      display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;
+      padding:14px 16px;margin-bottom:18px;
+    }
+    .progress-track{height:9px;border-radius:999px;background:rgba(255,255,255,.1);overflow:hidden;margin-top:7px}
+    .progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .25s}
+
+    .paper{
+      background:linear-gradient(180deg,var(--paper),var(--paper-2));color:var(--paper-ink);
+      border-radius:28px;border:1px solid rgba(255,255,255,.72);box-shadow:0 28px 90px rgba(0,0,0,.36);
+      padding:22px;position:relative;overflow:hidden;
+    }
+    .paper::before{content:"";position:absolute;inset:0 0 auto;height:8px;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+    .paper-head{display:flex;justify-content:space-between;align-items:start;gap:16px;padding-top:7px;margin-bottom:17px}
+    .paper h2,.paper h3{color:#0f172a}
+    .paper .sub{color:var(--paper-muted);font-size:.95rem}
+    .page-label{font-weight:900;color:white;background:#0f172a;padding:8px 12px;border-radius:999px;white-space:nowrap}
+    .timeline{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .station{
+      background:white;border:1px solid #d7e2f2;border-radius:19px;overflow:hidden;
+      min-height:172px;box-shadow:0 12px 24px rgba(15,23,42,.08);
+    }
+    .station.highlight{outline:3px solid rgba(0,181,216,.55);box-shadow:0 0 0 8px rgba(0,181,216,.1)}
+    details.station>summary{
+      list-style:none;cursor:pointer;padding:15px;min-height:170px;
+      display:flex;flex-direction:column;gap:9px;
+    }
+    details.station>summary::-webkit-details-marker{display:none}
+    details.station>summary::after{content:"＋ vertiefen";font-size:.78rem;font-weight:900;color:#0e7490;margin-top:auto}
+    details.station[open]>summary::after{content:"− schließen"}
+    details.station[open]>summary{border-bottom:1px solid #dce8f7;min-height:auto}
+    .week{
+      display:inline-flex;align-self:start;border-radius:999px;padding:5px 9px;
+      font-size:.76rem;font-weight:900;color:#042f3a;background:#d8f8ff;border:1px solid #a8eefc;
+    }
+    .station-title{font-weight:920;color:#0f172a;font-size:1.05rem;line-height:1.15}
+    .station-goal{color:#475569;font-size:.9rem}
+    .checkline{display:flex;grid-template-columns:none;align-items:center;gap:8px;margin-top:4px;color:#334155;font-size:.84rem}
+    .zoom{padding:15px;background:#f8fbff;color:#1e293b}
+    .zoom>p:first-child{margin-top:0}
+    .five-questions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:10px 0}
+    .answer-card{border:1px solid #d8e3f2;background:white;border-radius:14px;padding:11px}
+    .answer-card b{display:block;color:#0f172a;margin-bottom:4px}
+    .answer-card p{font-size:.9rem;color:#475569}
+    .wide{grid-column:1/-1}
+    .tagrow{display:flex;flex-wrap:wrap;gap:7px;margin:.7rem 0}
+    .tag{font-size:.76rem;border:1px solid #cbd5e1;color:#334155;background:#f8fafc;border-radius:999px;padding:4px 8px;font-weight:740}
+    .callout{border-left:4px solid #0891b2;background:#e9f9fd;padding:11px 13px;border-radius:12px;margin:11px 0;color:#0f172a}
+    .callout.warn{border-left-color:#ca8a04;background:#fff9dc}
+    .nested details,details.nested{border:1px solid #d8e3f2;border-radius:14px;margin:8px 0;background:white;overflow:hidden}
+    .nested summary{cursor:pointer;font-weight:880;padding:10px 12px;color:#0f172a}
+    .nested details[open] summary,details.nested[open] summary{border-bottom:1px solid #e2e8f0}
+    .nested .inside{padding:10px 12px;color:#334155}
+    .nested ul,.nested ol{padding-left:1.2rem}
+    .nested li+li{margin-top:6px}
+
+    .formula{
+      display:inline-block;max-width:100%;overflow-x:auto;vertical-align:middle;
+      padding:.08em .34em;border-radius:.45em;white-space:nowrap;
+      font-family:"Cambria Math","STIX Two Math","Times New Roman",serif;font-weight:720;
+      background:rgba(0,213,255,.1);border:1px solid rgba(0,213,255,.24);color:inherit;
+    }
+    .paper .formula,.zoom .formula{background:#eef8ff;border-color:#cdeef8;color:#0f172a}
+    .formula math{font-family:"Cambria Math","STIX Two Math","STIXGeneral","Times New Roman",serif;font-size:1.08em}
+    .formula mtext{font-family:inherit;font-style:normal}
+
+    .dark-card{padding:19px}
+    .tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+    .tab[aria-selected="true"]{border:0;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#06101c}
+    .tab-panel{display:none}
+    .tab-panel.active{display:block}
+    .tool-intro{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:start}
+    .tool-intro p,.dark-card p,.dark-card li{color:var(--muted)}
+    .form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}
+    .form-grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .field-card{background:rgba(4,10,24,.42);border:1px solid var(--line);border-radius:16px;padding:12px}
+    .range-output{display:inline-flex;min-width:56px;justify-content:center;color:white}
+    .result{
+      margin-top:13px;border:1px solid rgba(0,213,255,.34);background:rgba(0,213,255,.075);
+      border-radius:16px;padding:14px;color:#e7fbff;min-height:58px;
+    }
+    .result.error{border-color:rgba(251,113,133,.55);background:rgba(251,113,133,.1);color:#ffd9df}
+    .result.good{border-color:rgba(94,234,212,.46);background:rgba(94,234,212,.09)}
+    .result-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:10px}
+    .mini-result{background:rgba(255,255,255,.065);border:1px solid var(--line);border-radius:14px;padding:11px}
+    .mini-result b{display:block;color:white;font-size:1.05rem}
+    .mini-result span{color:var(--muted);font-size:.84rem}
+    .chart-frame{margin-top:14px;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#071022}
+    canvas{display:block;width:100%;height:420px;max-width:100%;background:#071022}
+    .chart-note{padding:9px 12px;color:var(--muted);font-size:.84rem;border-top:1px solid var(--line)}
+    .matrix-wrap{overflow-x:auto;margin-top:12px}
+    .matrix{border-collapse:collapse;min-width:520px;width:100%;background:rgba(255,255,255,.04)}
+    .matrix th,.matrix td{padding:9px 11px;border:1px solid var(--line);text-align:right;color:var(--muted)}
+    .matrix th{color:white;background:rgba(255,255,255,.07)}
+    .step-list{margin:.5rem 0;padding-left:1.25rem;color:var(--muted)}
+
+    .compare-wrap{overflow-x:auto;border-radius:18px}
+    .compare{width:100%;min-width:760px;border-collapse:collapse;background:rgba(255,255,255,.05)}
+    .compare th,.compare td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+    .compare th{color:white;background:rgba(255,255,255,.085)}
+    .compare td{color:var(--muted)}
+    .compare tr:last-child td{border-bottom:0}
+
+    .quiz-summary{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:15px}
+    .score-pill{padding:9px 13px;border-radius:999px;background:rgba(94,234,212,.1);border:1px solid rgba(94,234,212,.38);font-weight:850}
+    .quiz-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .quiz-card{background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:19px;padding:15px}
+    .quiz-card h3{font-size:1.04rem}
+    .answers{display:flex;flex-direction:column;gap:8px;margin-top:11px}
+    .answers button{justify-content:flex-start;white-space:normal;text-align:left;border-radius:14px;line-height:1.35}
+    .answers button.correct{border-color:rgba(94,234,212,.68);background:rgba(94,234,212,.13)}
+    .answers button.wrong{border-color:rgba(251,113,133,.68);background:rgba(251,113,133,.12)}
+    .feedback{margin-top:11px;min-height:48px;font-weight:720;color:var(--muted)}
+    .feedback.ok{color:var(--good)}
+    .feedback.no{color:#ff9dad}
+
+    .glossary-tools{display:flex;gap:10px;align-items:center;margin-bottom:14px}
+    .glossary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    .term{background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:18px;padding:14px}
+    .term b{display:block;color:white;margin-bottom:5px}
+    .term span{color:var(--muted);font-size:.94rem}
+    .source-list{columns:2;column-gap:30px;color:var(--muted)}
+    .source-list li{break-inside:avoid;margin:0 0 12px}
+    .source-list a{overflow-wrap:anywhere}
+    .hidden{display:none!important}
+    .muted{color:var(--muted)}
+    .good-text{color:var(--good)}
+    .warn-text{color:var(--warn)}
+    .bad-text{color:var(--bad)}
+    .kbd{border:1px solid var(--line);border-bottom-width:2px;border-radius:8px;padding:1px 6px;color:#dbeafe;background:#0b1325;font-size:.86em}
+    footer{padding:30px 0 52px;color:var(--muted)}
+
+    @media (max-width:1020px){
+      .hero-grid{grid-template-columns:1fr}
+      .model-flow{min-height:280px}
+      .timeline{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .glossary{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .form-grid.three{grid-template-columns:repeat(2,minmax(0,1fr))}
+    }
+    @media (max-width:720px){
+      .wrap{width:min(100% - 20px,1180px)}
+      header.hero{padding-top:24px}
+      .topbar,.section-head,.paper-head{align-items:flex-start;flex-direction:column}
+      .hero-card{padding:22px}
+      .metric-grid,.timeline,.five-questions,.form-grid,.form-grid.three,.quiz-grid,.glossary,.result-grid{grid-template-columns:1fr}
+      .paper{padding:14px;border-radius:21px}
+      .status-strip{grid-template-columns:1fr}
+      .tool-intro{grid-template-columns:1fr}
+      canvas{height:380px}
+      .source-list{columns:1}
+      h1{letter-spacing:-.045em}
+    }
+    @media (prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+    }
+    @media print{
+      body{background:white;color:#111827}
+      .skip-link,nav.quick,.controls,.interactive-section,.quiz-section,.glossar,.sources,footer,.model-flow{display:none!important}
+      header.hero{padding:8mm 0}
+      .hero-grid{grid-template-columns:1fr}
+      .glass{background:white;color:#111827;border:0;box-shadow:none}
+      .lead,.pill,.metric span{color:#334155}
+      .metric{background:#f8fafc;border-color:#cbd5e1}
+      .metric b{color:#0f172a}
+      section{padding:0}
+      .wrap{width:100%}
+      .paper{box-shadow:none;border:0;border-radius:0;padding:8mm;background:white}
+      .timeline{grid-template-columns:repeat(2,1fr)}
+      .station{break-inside:avoid;box-shadow:none}
+      details.station>summary{min-height:auto}
+      details.station:not([open]) .zoom{display:none}
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#hauptinhalt">Zum Hauptinhalt</a>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="topbar">
+        <div class="brand"><span class="brand-mark" aria-hidden="true">M</span><span>Mathematik · 11.1</span></div>
+        <a class="btn ghost" href="#quellen">Quellen ansehen</a>
+      </div>
+
+      <div class="hero-grid">
+        <div class="glass hero-card">
+          <span class="eyebrow">Interaktive Halbjahres-Lernlandkarte</span>
+          <h1>Von Daten zu<br>Funktionen I</h1>
+          <p class="lead">Aus echten Daten wird ein mathematisches Modell: Du stellst Werte sinnvoll dar, findest Trendgeraden, liest Funktionsgraphen, modellierst Kosten, Erlös und Gewinn und entscheidest, wann eine exakte Steckbrief-Funktion oder eine näherungsweise Regression passt.</p>
+          <div class="pillbar" aria-label="Kurs-Eckdaten">
+            <span class="pill">Berufliches Gymnasium · Anlage D</span>
+            <span class="pill">Grundkurs Mathematik</span>
+            <span class="pill">Fachbereich Wirtschaft &amp; Verwaltung</span>
+            <span class="pill">Halbjahr 11.1</span>
+            <span class="pill">Offline nutzbar · eine Datei</span>
+          </div>
+          <div class="metric-grid" aria-label="Umfang">
+            <div class="metric"><b>8</b><span>Lernstationen</span></div>
+            <div class="metric"><b>5</b><span>Rechner &amp; Simulationen</span></div>
+            <div class="metric"><b>7</b><span>Quizfragen mit Erklärung</span></div>
+          </div>
+        </div>
+
+        <div class="glass model-flow" aria-label="Vom Datensatz über das Modell zur Entscheidung">
+          <svg viewBox="0 0 520 360" role="img" aria-labelledby="flowTitle flowDesc">
+            <title id="flowTitle">Vom Datensatz zum Modell</title>
+            <desc id="flowDesc">Eine schematische Lernroute führt von einer Datentabelle über eine Funktionsgleichung zu einer wirtschaftlichen Entscheidung.</desc>
+            <defs>
+              <linearGradient id="flowGradient" x1="0" x2="1">
+                <stop offset="0" stop-color="#00d5ff"/>
+                <stop offset="1" stop-color="#7c3cff"/>
+              </linearGradient>
+              <filter id="flowGlow"><feGaussianBlur stdDeviation="4" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            </defs>
+            <rect x="18" y="24" width="484" height="312" rx="28" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.17)"/>
+            <g transform="translate(46 76)">
+              <rect width="112" height="150" rx="18" fill="#0b1428" stroke="#00d5ff" stroke-opacity=".55"/>
+              <text x="18" y="28" fill="#e8f0ff" font-size="16" font-weight="800">DATEN</text>
+              <path d="M16 48H96M16 74H96M16 100H96M16 126H96M48 48V134" stroke="rgba(255,255,255,.23)"/>
+              <text x="23" y="67" fill="#a7b4ce" font-size="12">x</text><text x="63" y="67" fill="#a7b4ce" font-size="12">y</text>
+              <text x="21" y="93" fill="#5eead4" font-size="12">1</text><text x="60" y="93" fill="#5eead4" font-size="12">24</text>
+              <text x="21" y="119" fill="#5eead4" font-size="12">4</text><text x="60" y="119" fill="#5eead4" font-size="12">18</text>
+            </g>
+            <path d="M170 151H218" stroke="url(#flowGradient)" stroke-width="5" stroke-linecap="round" filter="url(#flowGlow)"/>
+            <path d="M211 142L224 151L211 160" fill="none" stroke="#7deaff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            <g transform="translate(226 76)">
+              <rect width="118" height="150" rx="18" fill="#0b1428" stroke="#7c3cff" stroke-opacity=".65"/>
+              <text x="16" y="28" fill="#e8f0ff" font-size="16" font-weight="800">MODELL</text>
+              <text x="16" y="68" fill="#c6bbff" font-size="18" font-weight="700">f(x) = mx + b</text>
+              <path d="M18 125L96 86" stroke="url(#flowGradient)" stroke-width="4" stroke-linecap="round"/>
+              <circle cx="30" cy="118" r="4" fill="#5eead4"/><circle cx="53" cy="105" r="4" fill="#5eead4"/><circle cx="76" cy="99" r="4" fill="#5eead4"/><circle cx="92" cy="86" r="4" fill="#5eead4"/>
+            </g>
+            <path d="M356 151H404" stroke="url(#flowGradient)" stroke-width="5" stroke-linecap="round" filter="url(#flowGlow)"/>
+            <path d="M397 142L410 151L397 160" fill="none" stroke="#aa89ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            <g transform="translate(414 76)">
+              <rect width="62" height="150" rx="18" fill="#0b1428" stroke="#5eead4" stroke-opacity=".65"/>
+              <text x="31" y="28" fill="#e8f0ff" font-size="13" font-weight="800" text-anchor="middle">ZIEL</text>
+              <circle cx="31" cy="77" r="20" fill="rgba(94,234,212,.12)" stroke="#5eead4"/>
+              <path d="M20 77L28 85L43 67" fill="none" stroke="#5eead4" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+              <text x="31" y="119" fill="#a7b4ce" font-size="11" text-anchor="middle">prüfen</text>
+              <text x="31" y="135" fill="#a7b4ce" font-size="11" text-anchor="middle">entscheiden</text>
+            </g>
+            <text x="260" y="280" fill="#e8f0ff" font-size="19" font-weight="850" text-anchor="middle">Daten → Funktion → Entscheidung</text>
+            <text x="260" y="306" fill="#a7b4ce" font-size="13" text-anchor="middle">Modellieren heißt vereinfachen, rechnen und kritisch prüfen.</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="quick" aria-label="Schnellnavigation">
+    <div class="wrap">
+      <a class="btn" href="#landkarte">Landkarte</a>
+      <a class="btn" href="#werkzeuge">Rechner &amp; Simulationen</a>
+      <a class="btn" href="#uebersicht">Übersicht</a>
+      <a class="btn" href="#quiz">Mini-Quiz</a>
+      <a class="btn" href="#glossar">Glossar</a>
+      <a class="btn" href="#quellen">Quellen</a>
+    </div>
+  </nav>
+
+  <main id="hauptinhalt">
+    <section id="landkarte">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Lernroute</span>
+            <h2>Die grobe Landkarte des Halbjahrs</h2>
+            <p>Die acht Stationen führen vom Datensatz zum geprüften Modell. Klappe eine Station auf, wenn du Ziele, Beispiele, typische Fehler oder passende Werkzeuge brauchst.</p>
+          </div>
+          <div class="controls" aria-label="Landkarte steuern">
+            <input class="search" id="stationSearch" type="search" placeholder="Stationen durchsuchen …" aria-label="Stationen durchsuchen">
+            <button id="openAll" type="button">Alle öffnen</button>
+            <button id="closeAll" type="button">Alle schließen</button>
+          </div>
+        </div>
+
+        <div class="glass status-strip" aria-live="polite">
+          <div>
+            <b id="progressText">0 von 8 Stationen markiert</b>
+            <div class="progress-track" aria-hidden="true"><div class="progress-fill" id="progressFill"></div></div>
+          </div>
+          <button class="danger-lite" id="resetProgress" type="button">Lernstand zurücksetzen</button>
+        </div>
+
+        <article class="paper" aria-labelledby="mapTitle">
+          <div class="paper-head">
+            <div>
+              <h2 id="mapTitle">Von Daten zu Funktionen I</h2>
+              <p class="sub">Lernlogik: darstellen → anpassen → verstehen → untersuchen → wirtschaftlich modellieren → Gleichungssysteme lösen → optimieren → Modellqualität beurteilen</p>
+            </div>
+            <span class="page-label">Halbjahr 11.1</span>
+          </div>
+
+          <div class="timeline">
+            <details class="station" data-key="s1">
+              <summary>
+                <span class="week">Station 1</span>
+                <span class="station-title">Daten lesen, prüfen und darstellen</span>
+                <span class="station-goal">Aus einer Werteliste wird eine verständliche Tabelle oder Grafik.</span>
+                <label class="checkline"><input type="checkbox" class="done" data-id="s1"> verstanden</label>
+              </summary>
+              <div class="zoom">
+                <div class="callout"><b>Merksatz:</b> Ein Diagramm ist nur dann aussagekräftig, wenn Achsen, Einheiten, Skala und Datenquelle klar sind.</div>
+                <div class="five-questions">
+                  <div class="answer-card"><b>Worum geht es?</b><p>Du ordnest ökonomische Daten, erkennst Variablen und überträgst Wertepaare in ein Koordinatensystem.</p></div>
+                  <div class="answer-card"><b>Warum wichtig?</b><p>Eine ungünstige Skala oder vertauschte Achsen können denselben Datensatz völlig anders wirken lassen.</p></div>
+                  <div class="answer-card"><b>Was muss ich können?</b><p>Unabhängige und abhängige Größe festlegen, Punkte eintragen, Achsen beschriften und Werte plausibel prüfen.</p></div>
+                  <div class="answer-card"><b>Praxisbeispiel</b><p>Absatzmenge in 100 Stück auf der x-Achse, Preis in Euro pro Stück auf der y-Achse.</p></div>
+                  <div class="answer-card wide"><b>Typischer Fehler</b><p>Die Achse beginnt nicht bei null, aber der Achsenbruch fehlt. Dadurch erscheinen kleine Unterschiede riesig.</p></div>
+                </div>
+                <div class="nested">
+                  <details><summary>Reinzoomen: Häufigkeiten und Kennzahlen</summary><div class="inside">
+                    <p>Bei gezählten Daten unterscheidest du absolute Häufigkeit <span class="formula" role="math" aria-label="n Index i"><math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>n</mi><mi>i</mi></msub></math></span> und relative Häufigkeit <span class="formula" role="math" aria-label="h Index i gleich n Index i durch n"><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>h</mi><mi>i</mi></msub><mo>=</mo><mfrac><msub><mi>n</mi><mi>i</mi></msub><mi>n</mi></mfrac></mrow></math></span>. Relative Häufigkeiten lassen sich als Anteil oder Prozentwert vergleichen.</p>
+                    <p>Als Ergänzung helfen Mittelwert, Median und Spannweite, eine Verteilung kompakt zu beschreiben.</p>
+                  </div></details>
+                  <details><summary>Diagramm-Check in 30 Sekunden</summary><div class="inside">
+                    <ol>
+                      <li>Welche Größe steht auf welcher Achse?</li>
+                      <li>Sind Einheit, Nullpunkt, Skalenwerte und Tick-Marks sichtbar?</li>
+                      <li>Ist die Skalierung gleichmäßig und passend?</li>
+                      <li>Gibt es Ausreißer, fehlende Werte oder Eingabefehler?</li>
+                      <li>Welche Aussage ist zulässig – und welche nicht?</li>
+                    </ol>
+                  </div></details>
+                </div>
+                <div class="tagrow"><span class="tag">Wertepaar</span><span class="tag">Koordinatensystem</span><span class="tag">Skala</span><span class="tag">Plausibilität</span></div>
+              </div>
+            </details>
+
+            <details class="station" data-key="s2">
+              <summary>
+                <span class="week">Station 2</span>
+                <span class="station-title">Trendgerade und lineare Regression</span>
+                <span class="station-goal">Eine Gerade beschreibt den Trend vieler Datenpunkte.</span>
+                <label class="checkline"><input type="checkbox" class="done" data-id="s2"> verstanden</label>
+              </summary>
+              <div class="zoom">
+                <div class="callout"><b>Kernidee:</b> Die Regressionsgerade trifft meist keinen Punkt exakt. Sie macht die Summe der quadrierten vertikalen Abweichungen möglichst klein.</div>
+                <div class="five-questions">
+                  <div class="answer-card"><b>Worum geht es?</b><p>Aus mehreren Streupunkten entsteht ein lineares Näherungsmodell.</p></div>
+                  <div class="answer-card"><b>Warum wichtig?</b><p>Reale Daten schwanken. Trotzdem brauchst du eine begründete Tendenz für Prognosen und Entscheidungen.</p></div>
+                  <div class="answer-card"><b>Was muss ich können?</b><p>Steigung und y-Achsenabschnitt deuten, Residuen erkennen und die Modellgüte kritisch einschätzen.</p></div>
+                  <div class="answer-card"><b>Praxisbeispiel</b><p>Eine sinkende Preis-Absatz-Beziehung: Bei höherer Absatzmenge ist oft nur ein niedrigerer Stückpreis erreichbar.</p></div>
+                  <div class="answer-card wide"><b>Typischer Fehler</b><p>Ein hoher Zusammenhang wird als Ursache gedeutet. Korrelation beschreibt gemeinsames Verhalten, beweist aber keine Kausalität.</p></div>
+                </div>
+                <div class="nested">
+                  <details open><summary>Formel und Deutung</summary><div class="inside">
+                    <p><span class="formula" role="math" aria-label="y Dach gleich m mal x plus b"><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mover><mi>y</mi><mo>^</mo></mover><mo>=</mo><mi>m</mi><mo>·</mo><mi>x</mi><mo>+</mo><mi>b</mi></mrow></math></span></p>
+                    <ul>
+                      <li><b>m:</b> erwartete Änderung von y, wenn x um eine Einheit steigt.</li>
+                      <li><b>b:</b> vorhergesagter y-Wert bei x = 0; nur deuten, wenn x = 0 sachlich sinnvoll ist.</li>
+                      <li><b>Residuum:</b> <span class="formula" role="math" aria-label="e gleich y minus y Dach"><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>e</mi><mo>=</mo><mi>y</mi><mo>−</mo><mover><mi>y</mi><mo>^</mo></mover></mrow></math></span>, also beobachteter minus vorhergesagter Wert.</li>
+                    </ul>
+                  </div></details>
+                  <details><summary>Interpolation oder Extrapolation?</summary><div class="inside">Innerhalb des beobachteten x-Bereichs interpolierst du. Außerhalb extrapolierst du – dort steigt das Risiko, dass der bisherige Trend nicht mehr gilt.</div></details>
+                </div>
+                <div class="tagrow"><span class="tag">Ausgleichsgerade</span><span class="tag">Residuum</span><span class="tag">Korrelation</span><span class="tag">Prognose</span></div>
+              </div>
+            </details>
+
+            <details class="station" data-key="s3">
+              <summary>
+                <span class="week">Station 3</span>
+                <span class="station-title">Funktionen und Darstellungen</span>
+                <span class="station-goal">Tabelle, Graph, Term und Text beschreiben dieselbe Zuordnung.</span>
+                <label class="checkline"><input type="checkbox" class="done" data-id="s3"> verstanden</label>
+              </summary>
+              <div class="zoom">
+                <div class="callout"><b>Funktionsregel:</b> Jedem zulässigen x-Wert wird genau ein Funktionswert f(x) zugeordnet.</div>
+                <div class="five-questions">
+                  <div class="answer-card"><b>Worum geht es?</b><p>Du wechselst sicher zwischen Sachtext, Wertetabelle, Graph und Funktionsgleichung.</p></div>
+                  <div class="answer-card"><b>Warum wichtig?</b><p>Jede Darstellung zeigt andere Stärken: Der Term rechnet, der Graph zeigt Trends, die Tabelle liefert konkrete Werte.</p></div>
+                  <div class="answer-card"><b>Was muss ich können?</b><p>Definitions- und Wertebereich angeben, Funktionswerte berechnen und Punkte korrekt benennen.</p></div>
+                  <div class="answer-card"><b>Praxisbeispiel</b><p>K(x) beschreibt die Gesamtkosten für x produzierte Stück. K(80) ist ein Geldbetrag, nicht die Produktionsmenge.</p></div>
+                  <div class="answer-card wide"><b>Typischer Fehler</b><p>Stelle, Funktionswert und Punkt werden verwechselt: x = 80, K(80) = 1450 und P(80 | 1450) sind drei unterschiedliche Angaben.</p></div>
+                </div>
+                <div class="nested">
+                  <details><summary>Definitionsbereich im Sachkontext</summary><div class="inside">Mathematisch kann ein Term für viele reelle Zahlen definiert sein. Wirtschaftlich gelten oft nur nichtnegative ganze Stückzahlen und eine begrenzte Kapazität.</div></details>
+                  <details><summary>CAS sinnvoll nutzen</summary><div class="inside">Ein CAS kann Werte, Nullstellen oder Graphen schnell liefern. Deine Aufgabe bleibt: Eingaben kontrollieren, Achsen sinnvoll einstellen, Ergebnis deuten und den zulässigen Bereich prüfen.</div></details>
+                </div>
+                <div class="tagrow"><span class="tag">Zuordnung</span><span class="tag">Definitionsbereich</span><span class="tag">Wertebereich</span><span class="tag">CAS</span></div>
+              </div>
+            </details>
+
+            <details class="station" data-key="s4">
+              <summary>
+                <span class="week">Station 4</span>
+                <span class="station-title">Ganzrationale Funktionen lesen</span>
+                <span class="station-goal">Grad, Achsenschnittpunkte und Verlauf aus Term und Graph erschließen.</span>
+                <label class="checkline"><input type="checkbox" class="done" data-id="s4"> verstanden</label>
+              </summary>
+              <div class="zoom">
+                <div class="callout"><b>Grundform:</b> <span class="formula" role="math" aria-label="f von x gleich a Index n mal x hoch n plus weitere Terme bis a Index null"><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><msub><mi>a</mi><mi>n</mi></msub><msup><mi>x</mi><mi>n</mi></msup><mo>+</mo><mo>…</mo><mo>+</mo><msub><mi>a</mi><mn>1</mn></msub><mi>x</mi><mo>+</mo><msub><mi>a</mi><mn>0</mn></msub></mrow></math></span>. Der höchste Exponent mit einem Koeffizienten ungleich null ist der Grad.</div>
+                <div class="five-questions">
+                  <div class="answer-card"><b>Worum geht es?</b><p>Du untersuchst lineare, quadratische und höhere Polynomfunktionen.</p></div>
+                  <div class="answer-card"><b>Warum wichtig?</b><p>Kosten-, Erlös- und Gewinnverläufe lassen sich häufig durch ganzrationale Funktionen modellieren.</p></div>
+                  <div class="answer-card"><b>Was muss ich können?</b><p>y-Achsenabschnitt, Nullstellen, Symmetrie, Monotonie im Graphen und Lagebeziehungen erkennen.</p></div>
+                  <div class="answer-card"><b>Praxisbeispiel</b><p>Die Nullstellen einer Gewinnfunktion markieren häufig Gewinnschwelle und Gewinngrenze.</p></div>
+                  <div class="answer-card wide"><b>Typischer Fehler</b><p>Eine Nullstelle wird nur am Graphen grob abgelesen, obwohl der faktorisierte Term sie exakt zeigt.</p></div>
+                </div>
+                <div class="nested">
+                  <details open><summary>Welche Termform hilft wobei?</summary><div class="inside">
+                    <ul>
+                      <li><b>Normalform:</b> Der konstante Term zeigt sofort den y-Achsenabschnitt.</li>
+                      <li><b>Faktorisierte Form:</b> Faktoren zeigen Nullstellen und ihre Vielfachheit.</li>
+                      <li><b>Scheitelpunktform bei Parabeln:</b> Der Scheitelpunkt ist direkt erkennbar.</li>
+                    </ul>
+                  </div></details>
+                  <details><summary>Monotonie ohne vorschnelles Rechnen</summary><div class="inside">Lies zunächst am Graphen: Wo steigen die Funktionswerte von links nach rechts, wo fallen sie? Eine formale Untersuchung mit Ableitungen folgt später; hier steht das sichere Deuten des Verlaufs im Vordergrund.</div></details>
+                </div>
+                <div class="tagrow"><span class="tag">Polynom</span><span class="tag">Grad</span><span class="tag">Nullstelle</span><span class="tag">Monotonie</span></div>
+              </div>
+            </details>
+
+            <details class="station" data-key="s5">
+              <summary>
+                <span class="week">Station 5</span>
+                <span class="station-title">Parameter, Stückelung und Schnittpunkte</span>
+                <span class="station-goal">Verstehen, wie Termänderungen den Graphen verändern.</span>
+                <label class="checkline"><input type="checkbox" class="done" data-id="s5"> verstanden</label>
+              </summary>
+              <div class="zoom">
+                <div class="callout"><b>Parameterblick:</b> Verändere immer nur einen Parameter und beschreibe zuerst die sichtbare Wirkung, bevor du verallgemeinerst.</div>
+                <div class="five-questions">
+                  <div class="answer-card"><b>Worum geht es?</b><p>Du vergleichst Funktionsscharen, Lagebeziehungen und stückweise definierte Funktionen.</p></div>
+                  <div class="answer-card"><b>Warum wichtig?</b><p>Fixkosten, Rabatte oder Kapazitätsgrenzen verändern Modelle oft abschnittsweise oder über Parameter.</p></div>
+                  <div class="answer-card"><b>Was muss ich können?</b><p>Verschiebung, Streckung, Spiegelung, Schnittpunkte und Gültigkeitsintervalle deuten.</p></div>
+                  <div class="answer-card"><b>Praxisbeispiel</b><p>Ein Versandtarif besitzt bis 10 kg einen Grundpreis und darüber einen anderen Preis pro Zusatzkilogramm.</p></div>
+                  <div class="answer-card wide"><b>Typischer Fehler</b><p>Bei einer stückweisen Funktion wird die falsche Teilformel eingesetzt oder die Grenze doppelt bzw. gar nicht zugeordnet.</p></div>
+                </div>
+                <div class="nested">
+                  <details><summary>Schnittpunkte zweier Funktionen</summary><div class="inside">An einem Schnittpunkt sind die Funktionswerte gleich. Deshalb setzt du <span class="formula" role="math" aria-label="f von x gleich g von x"><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mi>g</mi><mo>(</mo><mi>x</mi><mo>)</mo></mrow></math></span>, löst nach x und berechnest anschließend den gemeinsamen y-Wert.</div></details>
+                  <details><summary>Parameter a, b und c bei einer Parabel</summary><div class="inside">Bei <span class="formula" role="math" aria-label="f von x gleich a mal x minus h zum Quadrat plus k"><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mi>a</mi><msup><mrow><mo>(</mo><mi>x</mi><mo>−</mo><mi>h</mi><mo>)</mo></mrow><mn>2</mn></msup><mo>+</mo><mi>k</mi></mrow></math></span> steuert a Öffnung und Breite, h die horizontale und k die vertikale Lage.</div></details>
+                </div>
+                <div class="tagrow"><span class="tag">Parameter</span><span class="tag">Funktionsschar</span><span class="tag">Schnittpunkt</span><span class="tag">stückweise</span></div>
+              </div>
+            </details>
+
+            <details class="station" data-key="s6">
+              <summary>
+                <span class="week">Station 6</span>
+                <span class="station-title">Kosten, Erlös und Gewinn modellieren</span>
+                <span class="station-goal">Mathematische Funktionen beantworten wirtschaftliche Fragen.</span>
+                <label class="checkline"><input type="checkbox" class="done" data-id="s6"> verstanden</label>
+              </summary>
+              <div class="zoom">
+                <div class="callout"><b>Zusammenhang:</b> <span class="formula" role="math" aria-label="Gewinn gleich Erlös minus Kosten"><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>G</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mi>E</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>−</mo><mi>K</mi><mo>(</mo><mi>x</mi><mo>)</mo></mrow></math></span> und <span class="formula" role="math" aria-label="Erlös gleich Menge mal Preis"><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>E</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mi>x</mi><mo>·</mo><mi>p</mi><mo>(</mo><mi>x</mi><mo>)</mo></mrow></math></span>.</div>
+                <div class="five-questions">
+                  <div class="answer-card"><b>Worum geht es?</b><p>Du verknüpfst Preis-Absatz-, Kosten-, Erlös- und Gewinnfunktion.</p></div>
+                  <div class="answer-card"><b>Warum wichtig?</b><p>Erst das Zusammenspiel zeigt, welche Produktionsmengen Verlust, Gewinn oder maximalen Gewinn erzeugen.</p></div>
+                  <div class="answer-card"><b>Was muss ich können?</b><p>Funktionen aufstellen, Einheiten deuten, Gewinnzone erkennen und sinnvolle Definitionsbereiche festlegen.</p></div>
+                  <div class="answer-card"><b>Praxisbeispiel</b><p>Im Monopol sinkt der erzielbare Preis mit wachsender Menge; dadurch wird der Erlös oft quadratisch.</p></div>
+                  <div class="answer-card wide"><b>Typischer Fehler</b><p>Erlös und Gewinn werden verwechselt. Hoher Umsatz bedeutet nicht automatisch hohen Gewinn.</p></div>
+                </div>
+                <div class="nested">
+                  <details open><summary>Wirtschaftliche Bedeutung wichtiger Punkte</summary><div class="inside">
+                    <ul>
+                      <li><b>K(0):</b> Fixkosten.</li>
+                      <li><b>G(x) = 0:</b> Gewinnschwelle oder Gewinngrenze.</li>
+                      <li><b>G(x) &gt; 0:</b> Gewinnzone.</li>
+                      <li><b>x mit größtem G(x):</b> gewinnmaximale Menge; G(x) ist dann der maximale Gewinn.</li>
+                    </ul>
+                  </div></details>
+                  <details><summary>Polypol und Monopol</summary><div class="inside">Im vereinfachten Polypol-Modell wird der Preis oft als konstant angenommen. Im Monopol-Modell wird der Preis durch eine fallende Preis-Absatz-Funktion beschrieben. Modelle sind Vereinfachungen und gelten nur unter ihren Annahmen.</div></details>
+                </div>
+                <div class="tagrow"><span class="tag">Fixkosten</span><span class="tag">Erlös</span><span class="tag">Gewinnzone</span><span class="tag">Monopol</span></div>
+              </div>
+            </details>
+
+            <details class="station" data-key="s7">
+              <summary>
+                <span class="week">Station 7</span>
+                <span class="station-title">LGS, Gauß und Steckbrief</span>
+                <span class="station-goal">Aus Bedingungen entsteht eine eindeutig bestimmte Funktion.</span>
+                <label class="checkline"><input type="checkbox" class="done" data-id="s7"> verstanden</label>
+              </summary>
+              <div class="zoom">
+                <div class="callout"><b>Steckbriefprinzip:</b> Jede Bedingung wird in eine Gleichung übersetzt. Für drei unbekannte Koeffizienten brauchst du im Normalfall drei unabhängige Bedingungen.</div>
+                <div class="five-questions">
+                  <div class="answer-card"><b>Worum geht es?</b><p>Du löst lineare Gleichungssysteme mit dem Additions- bzw. Gauß-Verfahren.</p></div>
+                  <div class="answer-card"><b>Warum wichtig?</b><p>So leitest du Kosten- oder andere Polynomfunktionen exakt aus vorgegebenen Punkten ab.</p></div>
+                  <div class="answer-card"><b>Was muss ich können?</b><p>Bedingungen einsetzen, erweiterte Matrix aufstellen, Zeilen umformen und Lösung prüfen.</p></div>
+                  <div class="answer-card"><b>Praxisbeispiel</b><p>Drei bekannte Gesamtkostenwerte bestimmen eine quadratische Kostenfunktion.</p></div>
+                  <div class="answer-card wide"><b>Typischer Fehler</b><p>Zeilen werden nur teilweise verändert. Bei einer Zeilenoperation müssen alle Einträge einschließlich der rechten Seite mitgeführt werden.</p></div>
+                </div>
+                <div class="nested">
+                  <details open><summary>Gauß in vier Schritten</summary><div class="inside">
+                    <ol>
+                      <li>Gleichungen als erweiterte Matrix notieren.</li>
+                      <li>Durch erlaubte Zeilenoperationen Nullen unter der Diagonalen erzeugen.</li>
+                      <li>Von unten nach oben lösen.</li>
+                      <li>Lösung in den ursprünglichen Bedingungen prüfen.</li>
+                    </ol>
+                  </div></details>
+                  <details><summary>Keine, eine oder unendlich viele Lösungen?</summary><div class="inside">Eine Zeile der Form 0 = 5 bedeutet Widerspruch: keine Lösung. Eine vollständige Nullzeile kann auf freie Variablen und unendlich viele Lösungen hinweisen. Pivots in allen Variablenspalten führen zur eindeutigen Lösung.</div></details>
+                </div>
+                <div class="tagrow"><span class="tag">LGS</span><span class="tag">Gauß</span><span class="tag">Matrix</span><span class="tag">Steckbrief</span></div>
+              </div>
+            </details>
+
+            <details class="station" data-key="s8">
+              <summary>
+                <span class="week">Station 8</span>
+                <span class="station-title">Modell wählen, optimieren und prüfen</span>
+                <span class="station-goal">Exakt oder näherungsweise? Rechnen reicht erst nach dem Modellcheck.</span>
+                <label class="checkline"><input type="checkbox" class="done" data-id="s8"> verstanden</label>
+              </summary>
+              <div class="zoom">
+                <div class="callout"><b>Modellzyklus:</b> Situation verstehen → Annahmen treffen → mathematisieren → rechnen → Ergebnis deuten → an Daten und Realität prüfen.</div>
+                <div class="five-questions">
+                  <div class="answer-card"><b>Worum geht es?</b><p>Du vergleichst Steckbrief und Regression und löst einfache lineare Optimierungsprobleme.</p></div>
+                  <div class="answer-card"><b>Warum wichtig?</b><p>Ein formal korrektes Ergebnis kann unbrauchbar sein, wenn das Modell oder sein Gültigkeitsbereich nicht passt.</p></div>
+                  <div class="answer-card"><b>Was muss ich können?</b><p>Nebenbedingungen formulieren, zulässigen Bereich lesen, Ecken prüfen und Modellabweichungen beurteilen.</p></div>
+                  <div class="answer-card"><b>Praxisbeispiel</b><p>Zwei Produkte konkurrieren um begrenzte Maschinen- und Arbeitszeit; gesucht ist der größte Deckungsbeitrag.</p></div>
+                  <div class="answer-card wide"><b>Typischer Fehler</b><p>Die rechnerisch beste Lösung verletzt eine Kapazitätsgrenze oder verlangt negative bzw. nicht ganzzahlige Stückzahlen.</p></div>
+                </div>
+                <div class="nested">
+                  <details open><summary>Steckbrief oder Regression?</summary><div class="inside">
+                    <ul>
+                      <li><b>Steckbrief:</b> wenige als exakt angenommene Bedingungen, genau erfülltes Modell.</li>
+                      <li><b>Regression:</b> viele streuende Mess- oder Beobachtungswerte, bestmögliche Näherung.</li>
+                      <li><b>Überbestimmtes LGS:</b> mehr Bedingungen als Parameter; bei Streuung entstehen oft Widersprüche – genau hier ist Regression sinnvoll.</li>
+                    </ul>
+                  </div></details>
+                  <details><summary>Lineare Optimierung: Eckpunktprinzip</summary><div class="inside">Bei linearem Ziel und einem begrenzten polygonalen zulässigen Bereich liegt mindestens eine optimale Lösung an einer Ecke. Deshalb bestimmst du die Ecken und vergleichst dort die Zielfunktionswerte.</div></details>
+                </div>
+                <div class="tagrow"><span class="tag">Modellzyklus</span><span class="tag">Regression vs. Steckbrief</span><span class="tag">Nebenbedingung</span><span class="tag">Optimum</span></div>
+              </div>
+            </details>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="werkzeuge" class="interactive-section">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Ausprobieren</span>
+            <h2>Rechner &amp; Simulationen</h2>
+            <p>Alle Berechnungen laufen lokal in dieser Datei. Die Diagramme besitzen Achsentitel, Einheiten, Skalenwerte und gut lesbare Tick-Marks.</p>
+          </div>
+        </div>
+
+        <div class="dark-card">
+          <div class="tabs" role="tablist" aria-label="Werkzeug auswählen">
+            <button class="tab" id="tabButtonRegression" role="tab" aria-selected="true" aria-controls="toolRegression" data-tab="regression">Regression</button>
+            <button class="tab" id="tabButtonPolynomial" role="tab" aria-selected="false" aria-controls="toolPolynomial" data-tab="polynomial">Polynom-Labor</button>
+            <button class="tab" id="tabButtonBusiness" role="tab" aria-selected="false" aria-controls="toolBusiness" data-tab="business">Kosten · Erlös · Gewinn</button>
+            <button class="tab" id="tabButtonLgs" role="tab" aria-selected="false" aria-controls="toolLgs" data-tab="lgs">Steckbrief &amp; Gauß</button>
+            <button class="tab" id="tabButtonOptimize" role="tab" aria-selected="false" aria-controls="toolOptimize" data-tab="optimize">Lineare Optimierung</button>
+          </div>
+
+          <div class="tab-panel active" id="toolRegression" role="tabpanel" aria-labelledby="tabButtonRegression">
+            <div class="tool-intro">
+              <div>
+                <h3>Regressionslabor: Preis und Absatzmenge</h3>
+                <p>Gib mindestens zwei Wertepaare ein. Das Labor berechnet die Ausgleichsgerade, den Korrelationskoeffizienten und eine Prognose.</p>
+              </div>
+              <button class="primary" id="regressionCalc" type="button">Neu berechnen</button>
+            </div>
+            <div class="form-grid">
+              <label>Wertepaare: Absatzmenge x [100 Stück]; Preis p [€/Stück]
+                <textarea id="regressionData" spellcheck="false">1;23,8
+2;22,3
+3;20,1
+4;18,6
+5;16,4
+6;15,1
+7;13,0</textarea>
+              </label>
+              <div class="field-card">
+                <label>Prognose für x [100 Stück]
+                  <input id="regressionPredictX" type="number" value="5.5" step="0.1">
+                </label>
+                <p class="muted">Eine Zeile pro Wertepaar. Trenne x und p mit Semikolon. Dezimalkommas sind erlaubt.</p>
+                <button id="regressionPresetNoisy" type="button">Stärker streuende Daten laden</button>
+              </div>
+            </div>
+            <div class="chart-frame">
+              <canvas id="regressionCanvas" role="img" aria-label="Streudiagramm mit Absatzmenge auf der x-Achse und Preis auf der y-Achse sowie Regressionsgerade"></canvas>
+              <div class="chart-note">Cyan: Datenpunkte · Violett: Regressionsgerade · gestrichelt: Residuen</div>
+            </div>
+            <div class="result" id="regressionResult" aria-live="polite"></div>
+          </div>
+
+          <div class="tab-panel" id="toolPolynomial" role="tabpanel" aria-labelledby="tabButtonPolynomial" hidden>
+            <div class="tool-intro">
+              <div>
+                <h3>Polynom-Labor: Parameter verändern</h3>
+                <p>Untersuche <span class="formula" role="math" aria-label="f von x gleich a x hoch drei plus b x Quadrat plus c x plus d"><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mi>a</mi><msup><mi>x</mi><mn>3</mn></msup><mo>+</mo><mi>b</mi><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mi>c</mi><mi>x</mi><mo>+</mo><mi>d</mi></mrow></math></span>. Verändere jeweils nur einen Parameter.</p>
+              </div>
+              <div class="controls">
+                <button data-poly-preset="linear" type="button">linear</button>
+                <button data-poly-preset="quadratic" type="button">quadratisch</button>
+                <button data-poly-preset="cubic" class="primary" type="button">kubisch</button>
+              </div>
+            </div>
+            <div class="form-grid">
+              <label class="field-card">a – Koeffizient vor x³ <span class="range-output" id="polyAOut">0,20</span>
+                <input id="polyA" type="range" min="-1" max="1" value="0.2" step="0.05">
+              </label>
+              <label class="field-card">b – Koeffizient vor x² <span class="range-output" id="polyBOut">−0,80</span>
+                <input id="polyB" type="range" min="-3" max="3" value="-0.8" step="0.1">
+              </label>
+              <label class="field-card">c – Koeffizient vor x <span class="range-output" id="polyCOut">−0,60</span>
+                <input id="polyC" type="range" min="-6" max="6" value="-0.6" step="0.1">
+              </label>
+              <label class="field-card">d – y-Achsenabschnitt <span class="range-output" id="polyDOut">4,00</span>
+                <input id="polyD" type="range" min="-10" max="10" value="4" step="0.25">
+              </label>
+              <label>x-Wert zum Prüfen [ME]
+                <input id="polyXValue" type="number" value="2" step="0.25">
+              </label>
+              <label>Sichtbarer x-Bereich [ME]
+                <select id="polyRange">
+                  <option value="5">−5 bis 5</option>
+                  <option value="8" selected>−8 bis 8</option>
+                  <option value="12">−12 bis 12</option>
+                </select>
+              </label>
+            </div>
+            <div class="chart-frame">
+              <canvas id="polynomialCanvas" role="img" aria-label="Graph einer ganzrationalen Funktion mit x in Mengeneinheiten und f von x in Geldeinheiten"></canvas>
+              <div class="chart-note">Cyan: Funktionsgraph · Gelb: gewählter Punkt · Rosa: reelle Nullstellen im sichtbaren Bereich</div>
+            </div>
+            <div class="result" id="polynomialResult" aria-live="polite"></div>
+          </div>
+
+          <div class="tab-panel" id="toolBusiness" role="tabpanel" aria-labelledby="tabButtonBusiness" hidden>
+            <div class="tool-intro">
+              <div>
+                <h3>Unternehmenslabor: Kosten, Erlös und Gewinn</h3>
+                <p>Das Modell nutzt eine lineare Preis-Absatz-Funktion und lineare Kosten. Entdecke Gewinnschwellen und gewinnmaximale Menge ohne formale Differentialrechnung.</p>
+              </div>
+              <button class="primary" id="businessCalc" type="button">Modell auswerten</button>
+            </div>
+            <div class="form-grid three">
+              <label>Maximalpreis p₀ [€/Stück]<input id="bizP0" type="number" value="80" min="1" step="1"></label>
+              <label>Preissenkung m [€/Stück²]<input id="bizM" type="number" value="0.4" min="0.01" step="0.05"></label>
+              <label>Fixkosten K<sub>f</sub> [€]<input id="bizFixed" type="number" value="1200" min="0" step="50"></label>
+              <label>Variable Kosten k<sub>v</sub> [€/Stück]<input id="bizVariable" type="number" value="18" min="0" step="1"></label>
+              <label>Kapazität x<sub>max</sub> [Stück]<input id="bizCapacity" type="number" value="160" min="1" step="5"></label>
+              <div class="field-card"><p><b>Modell:</b> p(x) = p₀ − m·x, K(x) = K<sub>f</sub> + k<sub>v</sub>·x</p></div>
+            </div>
+            <div class="chart-frame">
+              <canvas id="businessCanvas" role="img" aria-label="Diagramm von Kosten, Erlös und Gewinn über der Produktionsmenge in Stück"></canvas>
+              <div class="chart-note">Cyan: Kosten K(x) · Violett: Erlös E(x) · Türkis: Gewinn G(x) · gelber Punkt: größter Gewinn im zulässigen Bereich</div>
+            </div>
+            <div class="result" id="businessResult" aria-live="polite"></div>
+          </div>
+
+          <div class="tab-panel" id="toolLgs" role="tabpanel" aria-labelledby="tabButtonLgs" hidden>
+            <div class="tool-intro">
+              <div>
+                <h3>Steckbrief-Labor: Quadratische Funktion durch drei Punkte</h3>
+                <p>Für <span class="formula" role="math" aria-label="f von x gleich a x Quadrat plus b x plus c"><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mi>a</mi><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mi>b</mi><mi>x</mi><mo>+</mo><mi>c</mi></mrow></math></span> erzeugt jeder Punkt eine lineare Gleichung in a, b und c.</p>
+              </div>
+              <button class="primary" id="lgsCalc" type="button">LGS lösen</button>
+            </div>
+            <div class="form-grid three">
+              <div class="field-card">
+                <h4>Punkt P₁</h4>
+                <label>x₁ [ME]<input id="lgsX1" type="number" value="0" step="0.5"></label>
+                <label>y₁ [GE]<input id="lgsY1" type="number" value="4" step="0.5"></label>
+              </div>
+              <div class="field-card">
+                <h4>Punkt P₂</h4>
+                <label>x₂ [ME]<input id="lgsX2" type="number" value="2" step="0.5"></label>
+                <label>y₂ [GE]<input id="lgsY2" type="number" value="2" step="0.5"></label>
+              </div>
+              <div class="field-card">
+                <h4>Punkt P₃</h4>
+                <label>x₃ [ME]<input id="lgsX3" type="number" value="5" step="0.5"></label>
+                <label>y₃ [GE]<input id="lgsY3" type="number" value="9" step="0.5"></label>
+              </div>
+            </div>
+            <div class="chart-frame">
+              <canvas id="lgsCanvas" role="img" aria-label="Quadratische Funktion durch drei gegebene Punkte mit x in Mengeneinheiten und y in Geldeinheiten"></canvas>
+              <div class="chart-note">Cyan: exakt bestimmte Parabel · Gelb: vorgegebene Punkte</div>
+            </div>
+            <div class="result" id="lgsResult" aria-live="polite"></div>
+          </div>
+
+          <div class="tab-panel" id="toolOptimize" role="tabpanel" aria-labelledby="tabButtonOptimize" hidden>
+            <div class="tool-intro">
+              <div>
+                <h3>Lineare Optimierung: Zwei Produkte, zwei Engpässe</h3>
+                <p>Produkt A benötigt 2 Maschinen- und 1 Arbeitszeiteinheit; Produkt B benötigt 1 Maschinen- und 3 Arbeitszeiteinheiten. Verändere Kapazitäten und Deckungsbeiträge.</p>
+              </div>
+              <button class="primary" id="optimizeCalc" type="button">Optimum bestimmen</button>
+            </div>
+            <div class="form-grid">
+              <label>Maschinenkapazität [ZE]<input id="optMachine" type="number" value="100" min="1" step="5"></label>
+              <label>Arbeitskapazität [ZE]<input id="optLabor" type="number" value="90" min="1" step="5"></label>
+              <label>Deckungsbeitrag A [€/Stück]<input id="optProfitA" type="number" value="30" min="0" step="1"></label>
+              <label>Deckungsbeitrag B [€/Stück]<input id="optProfitB" type="number" value="40" min="0" step="1"></label>
+            </div>
+            <div class="chart-frame">
+              <canvas id="optimizeCanvas" role="img" aria-label="Zulässiger Bereich einer linearen Optimierung mit Produkt A auf der x-Achse und Produkt B auf der y-Achse"></canvas>
+              <div class="chart-note">Cyan: Maschinenrestriktion 2x + y ≤ Kapazität · Violett: Arbeitsrestriktion x + 3y ≤ Kapazität · Türkis: zulässiger Bereich · Gelb: beste Ecke</div>
+            </div>
+            <div class="result" id="optimizeResult" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="uebersicht">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Entscheidungshilfe</span>
+            <h2>Welche Methode passt?</h2>
+            <p>Nutze die Tabelle, wenn du bei einer Aufgabe zuerst den Lösungsweg auswählen musst.</p>
+          </div>
+        </div>
+        <div class="compare-wrap">
+          <table class="compare">
+            <thead>
+              <tr><th>Ausgangslage</th><th>Passende Methode</th><th>Ergebnis</th><th>Prüffrage</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Viele Datenpunkte mit Streuung</td><td>Regression</td><td>Näherungsfunktion und Modellgüte</td><td>Sind Residuen klein und ohne auffälliges Muster?</td></tr>
+              <tr><td>Genauso viele unabhängige Bedingungen wie unbekannte Parameter</td><td>Steckbrief + LGS/Gauß</td><td>Exakt passende Funktion</td><td>Sind die Bedingungen widerspruchsfrei und unabhängig?</td></tr>
+              <tr><td>Mehr exakte Bedingungen als Parameter</td><td>Überbestimmtes LGS prüfen</td><td>Eventuell keine exakte Lösung</td><td>Sind die Daten wirklich exakt oder eigentlich Messwerte?</td></tr>
+              <tr><td>Zwei Graphen sollen denselben Wert haben</td><td>Funktionsterme gleichsetzen</td><td>Schnittpunkt oder Marktgleichgewicht</td><td>Liegt die Lösung im zulässigen Sachbereich?</td></tr>
+              <tr><td>Lineares Ziel unter linearen Grenzen</td><td>Lineare Optimierung</td><td>Beste zulässige Ecke</td><td>Erfüllt die Ecke alle Nebenbedingungen?</td></tr>
+              <tr><td>Prognose außerhalb der beobachteten Daten</td><td>Extrapolation mit Warnhinweis</td><td>Unsichere Vorhersage</td><td>Ist ein gleichbleibender Trend sachlich plausibel?</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="quiz" class="quiz-section">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Selbstcheck</span>
+            <h2>Mini-Quiz: Sitzen die Grundideen?</h2>
+            <p>Wähle jeweils eine Antwort. Du erhältst sofort eine Begründung; es gibt keine Note.</p>
+          </div>
+        </div>
+        <div class="quiz-summary">
+          <span class="score-pill" id="quizScore" aria-live="polite">0 von 7 richtig beantwortet</span>
+          <button id="resetQuiz" type="button">Quiz zurücksetzen</button>
+        </div>
+        <div class="quiz-grid">
+          <div class="quiz-card" data-quiz>
+            <h3>1 · Was gehört zwingend zu einem brauchbaren Koordinatensystem?</h3>
+            <div class="answers">
+              <button data-correct="false" data-explanation="Eine Überschrift allein erklärt weder Größen noch Ablesung.">Nur eine Überschrift über dem Diagramm.</button>
+              <button data-correct="true" data-explanation="Erst Achsentitel, Einheiten, Skalenwerte und Tick-Marks machen Werte eindeutig ablesbar.">Achsentitel, Einheiten, Skalenwerte und gut lesbare Tick-Marks.</button>
+              <button data-correct="false" data-explanation="Farben können helfen, ersetzen aber keine vollständige Achsenbeschriftung.">Möglichst viele Farben.</button>
+            </div>
+            <div class="feedback"></div>
+          </div>
+
+          <div class="quiz-card" data-quiz>
+            <h3>2 · Warum verläuft eine Regressionsgerade meist nicht durch alle Datenpunkte?</h3>
+            <div class="answers">
+              <button data-correct="true" data-explanation="Sie minimiert die Summe der quadrierten Abweichungen und bildet damit den Gesamttrend ab.">Sie ist eine bestmögliche Näherung für streuende Daten.</button>
+              <button data-correct="false" data-explanation="Eine Regression ist gerade für mehrere Datenpunkte gedacht.">Weil man nur zwei Datenpunkte verwenden darf.</button>
+              <button data-correct="false" data-explanation="Die Abweichungen sind Residuen und gehören zur Modellprüfung.">Weil unpassende Punkte einfach ignoriert werden.</button>
+            </div>
+            <div class="feedback"></div>
+          </div>
+
+          <div class="quiz-card" data-quiz>
+            <h3>3 · Was bedeutet K(80) = 1450?</h3>
+            <div class="answers">
+              <button data-correct="false" data-explanation="80 ist hier die eingesetzte Produktionsmenge, nicht der Kostenwert.">Die Kosten betragen 80 € bei 1450 Stück.</button>
+              <button data-correct="true" data-explanation="Die Stelle ist x = 80; der zugehörige Funktionswert ist K(80) = 1450 €.">Bei 80 Stück betragen die Gesamtkosten 1450 €.</button>
+              <button data-correct="false" data-explanation="Eine Koordinate braucht beide Werte: (80 | 1450).">Die Funktion hat die Nullstelle 80.</button>
+            </div>
+            <div class="feedback"></div>
+          </div>
+
+          <div class="quiz-card" data-quiz>
+            <h3>4 · Was zeigt eine Nullstelle der Gewinnfunktion im Sachkontext?</h3>
+            <div class="answers">
+              <button data-correct="false" data-explanation="Fixkosten liest du normalerweise bei G(0) beziehungsweise K(0), nicht an jeder Gewinnnullstelle.">Immer die Höhe der Fixkosten.</button>
+              <button data-correct="true" data-explanation="Bei G(x) = 0 sind Erlös und Kosten gleich. Das ist eine Gewinnschwelle oder Gewinngrenze.">Erlös und Kosten sind bei dieser Menge gleich.</button>
+              <button data-correct="false" data-explanation="Das Gewinnmaximum ist der höchste Funktionswert, nicht automatisch eine Nullstelle.">Dort ist der Gewinn immer maximal.</button>
+            </div>
+            <div class="feedback"></div>
+          </div>
+
+          <div class="quiz-card" data-quiz>
+            <h3>5 · Wann passt eine Steckbriefaufgabe besser als Regression?</h3>
+            <div class="answers">
+              <button data-correct="true" data-explanation="Exakte, unabhängige Bedingungen können durch ein passend großes LGS genau erfüllt werden.">Wenn wenige Bedingungen als exakt gelten und genau erfüllt werden sollen.</button>
+              <button data-correct="false" data-explanation="Bei vielen streuenden Messwerten ist eine Regression meist geeigneter.">Wenn viele Messwerte zufällig streuen.</button>
+              <button data-correct="false" data-explanation="Eine Steckbriefaufgabe ersetzt nicht die Prüfung von Einheiten und Gültigkeitsbereichen.">Wenn keine Einheiten bekannt sind.</button>
+            </div>
+            <div class="feedback"></div>
+          </div>
+
+          <div class="quiz-card" data-quiz>
+            <h3>6 · Was bedeutet im Gauß-Verfahren eine Zeile 0 = 5?</h3>
+            <div class="answers">
+              <button data-correct="false" data-explanation="Eine Nullzeile wäre 0 = 0. Hier steht rechts jedoch 5.">Es gibt eine freie Variable und unendlich viele Lösungen.</button>
+              <button data-correct="true" data-explanation="Die Aussage 0 = 5 ist falsch. Die Bedingungen widersprechen sich, also gibt es keine Lösung.">Das Gleichungssystem ist widersprüchlich.</button>
+              <button data-correct="false" data-explanation="Die Zahl 5 ist keine direkte Lösung einer Variablen, weil links alle Koeffizienten null sind.">Alle Variablen sind gleich 5.</button>
+            </div>
+            <div class="feedback"></div>
+          </div>
+
+          <div class="quiz-card" data-quiz>
+            <h3>7 · Wo liegt bei einem linearen Ziel im begrenzten zulässigen Polygon ein Optimum?</h3>
+            <div class="answers">
+              <button data-correct="false" data-explanation="Der Ursprung kann optimal sein, ist aber nicht grundsätzlich die beste Ecke.">Immer im Ursprung.</button>
+              <button data-correct="true" data-explanation="Beim linearen Optimieren genügt es, die zulässigen Eckpunkte zu bestimmen und die Zielwerte zu vergleichen.">An mindestens einem Eckpunkt des zulässigen Bereichs.</button>
+              <button data-correct="false" data-explanation="Der Mittelpunkt ist ohne weitere Begründung kein besonderer Kandidat.">Immer genau im Mittelpunkt.</button>
+            </div>
+            <div class="feedback"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="glossar" class="glossar">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Nachschlagen</span>
+            <h2>Glossar</h2>
+            <p>Zentrale Fachbegriffe des Halbjahrs – kurz und in Schülersprache.</p>
+          </div>
+        </div>
+        <div class="glossary-tools">
+          <input id="glossarySearch" type="search" placeholder="Begriff suchen …" aria-label="Glossar durchsuchen">
+        </div>
+        <div class="glossary" id="glossaryGrid">
+          <div class="term"><b>Absolute Häufigkeit</b><span>Wie oft eine Ausprägung tatsächlich gezählt wurde.</span></div>
+          <div class="term"><b>Definitionsbereich</b><span>Alle x-Werte, die in einer Funktion oder im Sachmodell zulässig sind.</span></div>
+          <div class="term"><b>Erlösfunktion</b><span>Ordnet jeder Absatzmenge den Umsatz zu; meist gilt E(x) = x · p(x).</span></div>
+          <div class="term"><b>Extrapolation</b><span>Vorhersage außerhalb des beobachteten Datenbereichs; besonders unsicher.</span></div>
+          <div class="term"><b>Fixkosten</b><span>Kosten, die auch bei Produktionsmenge null anfallen.</span></div>
+          <div class="term"><b>Funktion</b><span>Eindeutige Zuordnung: Jedem zulässigen x wird genau ein Wert f(x) zugeordnet.</span></div>
+          <div class="term"><b>Funktionswert</b><span>Der zu einer Stelle x gehörende y-Wert, zum Beispiel K(80).</span></div>
+          <div class="term"><b>Gauß-Verfahren</b><span>Systematisches Lösen linearer Gleichungssysteme durch Zeilenumformungen.</span></div>
+          <div class="term"><b>Gewinnfunktion</b><span>Differenz aus Erlös und Kosten: G(x) = E(x) − K(x).</span></div>
+          <div class="term"><b>Gewinnschwelle</b><span>Erste Produktionsmenge, bei der Gewinn null und danach positiv wird.</span></div>
+          <div class="term"><b>Interpolation</b><span>Schätzung innerhalb des beobachteten Datenbereichs.</span></div>
+          <div class="term"><b>Korrelation</b><span>Maß für Stärke und Richtung eines linearen Zusammenhangs; keine Ursache-Wirkungs-Aussage.</span></div>
+          <div class="term"><b>Kostenfunktion</b><span>Ordnet jeder Produktionsmenge die entstehenden Gesamtkosten zu.</span></div>
+          <div class="term"><b>Lineares Gleichungssystem</b><span>Mehrere lineare Gleichungen, die gleichzeitig erfüllt sein sollen.</span></div>
+          <div class="term"><b>Monotonie</b><span>Beschreibt, in welchen Bereichen eine Funktion steigt oder fällt.</span></div>
+          <div class="term"><b>Nebenbedingung</b><span>Begrenzung eines Optimierungsproblems, etwa verfügbare Maschinenzeit.</span></div>
+          <div class="term"><b>Nullstelle</b><span>Stelle x, an der der Funktionswert null ist.</span></div>
+          <div class="term"><b>Polynomfunktion</b><span>Ganzrationale Funktion aus Potenzen von x mit nichtnegativen ganzzahligen Exponenten.</span></div>
+          <div class="term"><b>Preis-Absatz-Funktion</b><span>Beschreibt, welcher Preis bei einer bestimmten Absatzmenge erzielbar ist.</span></div>
+          <div class="term"><b>Regression</b><span>Verfahren, das zu streuenden Daten eine bestmögliche Näherungsfunktion bestimmt.</span></div>
+          <div class="term"><b>Relative Häufigkeit</b><span>Anteil einer Ausprägung an allen Beobachtungen, oft als Prozentwert.</span></div>
+          <div class="term"><b>Residuum</b><span>Vertikale Abweichung eines Datenpunkts vom vorhergesagten Modellwert.</span></div>
+          <div class="term"><b>Steckbriefaufgabe</b><span>Bestimmung einer Funktion aus exakt formulierten Bedingungen.</span></div>
+          <div class="term"><b>Stückweise Funktion</b><span>Funktion, die in verschiedenen x-Bereichen durch verschiedene Terme beschrieben wird.</span></div>
+          <div class="term"><b>Wertebereich</b><span>Alle Funktionswerte, die im betrachteten Bereich auftreten können.</span></div>
+          <div class="term"><b>Zulässiger Bereich</b><span>Alle Lösungen, die sämtliche Nebenbedingungen gleichzeitig erfüllen.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="quellen" class="sources">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Fachliche Basis</span>
+            <h2>Kompaktes Quellenverzeichnis</h2>
+            <p>Die Jahresplanung ist die Primärquelle. Lehrplan und Fachquellen dienen der Präzisierung und fachlichen Absicherung.</p>
+          </div>
+        </div>
+        <div class="dark-card">
+          <ol class="source-list">
+            <li><b>Primärquelle:</b> Didaktische Jahresplanung „DiJaPlaWiSH2020-Mathe 11.1.doc“, Kurshalbjahr 11.1, Grundkurs Mathematik, Kursthema „Von Daten zu Funktionen I“. Personen- und schulinterne Verwaltungsangaben wurden nicht übernommen.</li>
+            <li><b>Ministerium für Schule und Weiterbildung NRW:</b> Fachlehrplan Mathematik, Grundkurs, Fachbereich Wirtschaft und Verwaltung, Berufliches Gymnasium nach Anlage D, insbesondere Abschnitt 3.2 „Von Daten zu Funktionen I“. <a href="https://berufsbildung.nrw.de/system/files/media/document/file/lp_mathe_grundkurs_wuv.pdf" target="_blank" rel="noopener noreferrer">Offizieller Bildungsplan (PDF)</a></li>
+            <li><b>Serlo Mathematik:</b> „Regression“ – Regressionsfunktion und Methode der kleinsten Quadrate. <a href="https://de.serlo.org/mathe/309797/regression" target="_blank" rel="noopener noreferrer">Fachseite öffnen</a></li>
+            <li><b>Serlo Mathematik:</b> „Ganzrationale Funktionen“ – Grundbegriffe, Nullstellen, Symmetrie und Monotonie. <a href="https://de.serlo.org/mathe/16322/ganzrationale-funktionen" target="_blank" rel="noopener noreferrer">Fachseite öffnen</a></li>
+            <li><b>Serlo Mathematik:</b> „Gaußverfahren“ – lineare Gleichungssysteme und Zeilenstufenform. <a href="https://de.serlo.org/mathe/1581/gaussverfahren" target="_blank" rel="noopener noreferrer">Fachseite öffnen</a></li>
+          </ol>
+          <p class="muted"><b>Offline-Hinweis:</b> Alle Lerntexte, Formeln, Rechner, Diagramme und Quizfunktionen sind in dieser Datei enthalten. Die Quellenlinks sind nur zum freiwilligen Weiterlesen nötig.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p><b>Modell-Hinweis:</b> Wirtschaftliche Modelle vereinfachen die Realität. Prüfe deshalb immer Einheiten, Definitionsbereich, Annahmen und die Plausibilität des Ergebnisses.</p>
+      <p>Bedien-Tipp: Nutze <span class="kbd">Strg</span> + <span class="kbd">F</span> oder die eingebauten Suchfelder. Dein markierter Lernstand wird – sofern der Browser es erlaubt – nur lokal auf deinem Gerät gespeichert.</p>
+    </div>
+  </footer>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const $ = (selector, root = document) => root.querySelector(selector);
+      const qsa = (selector, root = document) => [...root.querySelectorAll(selector)];
+      const EPS = 1e-9;
+      const chartState = {};
+
+      function escapeHtml(value){
+        return String(value).replace(/[&<>"']/g, character => ({
+          "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+        })[character]);
+      }
+
+      function numberFrom(elementOrSelector){
+        const element = typeof elementOrSelector === "string" ? $(elementOrSelector) : elementOrSelector;
+        return Number.parseFloat(String(element.value).replace(",", "."));
+      }
+
+      function formatNumber(value, digits = 2){
+        if(!Number.isFinite(value)) return "—";
+        const safe = Math.abs(value) < 1e-12 ? 0 : value;
+        return safe.toLocaleString("de-DE", {
+          maximumFractionDigits:digits,
+          minimumFractionDigits:0,
+          useGrouping:false
+        }).replace("-", "−");
+      }
+
+      function formatSigned(value, digits = 2){
+        if(!Number.isFinite(value)) return "";
+        if(Math.abs(value) < EPS) return "";
+        return `${value >= 0 ? " + " : " − "}${formatNumber(Math.abs(value), digits)}`;
+      }
+
+      function math(content, label = "Formel"){
+        return `<span class="formula" role="math" aria-label="${escapeHtml(label)}"><math xmlns="http://www.w3.org/1998/Math/MathML">${content}</math></span>`;
+      }
+      const mi = value => `<mi>${escapeHtml(value)}</mi>`;
+      const mn = value => `<mn>${escapeHtml(value)}</mn>`;
+      const mo = value => `<mo>${escapeHtml(value)}</mo>`;
+      const mtext = value => `<mtext>${escapeHtml(value)}</mtext>`;
+      const mrow = (...items) => `<mrow>${items.join("")}</mrow>`;
+      const msup = (base, exponent) => `<msup>${base}${exponent}</msup>`;
+      const msub = (base, subscript) => `<msub>${base}${subscript}</msub>`;
+
+      function polynomialMath(coefficients){
+        const [a,b,c,d] = coefficients;
+        const pieces = [mi("f"),mo("("),mi("x"),mo(")"),mo("=")];
+        let hasTerm = false;
+        [
+          {coef:a,power:3},
+          {coef:b,power:2},
+          {coef:c,power:1},
+          {coef:d,power:0}
+        ].forEach(({coef,power}) => {
+          if(Math.abs(coef) < EPS) return;
+          const negative = coef < 0;
+          const absolute = Math.abs(coef);
+          if(hasTerm) pieces.push(mo(negative ? "−" : "+"));
+          else if(negative) pieces.push(mo("−"));
+          const needsCoefficient = power === 0 || Math.abs(absolute - 1) > EPS;
+          if(needsCoefficient) pieces.push(mn(formatNumber(absolute,2)));
+          if(power >= 1){
+            pieces.push(power === 1 ? mi("x") : msup(mi("x"),mn(power)));
+          }
+          hasTerm = true;
+        });
+        if(!hasTerm) pieces.push(mn("0"));
+        return math(mrow(...pieces), "Funktionsgleichung");
+      }
+
+      function withStorage(action, fallback){
+        try{
+          const storage = window.localStorage;
+          return action(storage);
+        }catch(error){
+          return fallback;
+        }
+      }
+
+      function initProgress(){
+        const boxes = qsa(".done");
+        boxes.forEach(box => {
+          const key = `math111-progress-${box.dataset.id}`;
+          box.checked = withStorage(storage => storage.getItem(key) === "1", false);
+          box.addEventListener("click", event => event.stopPropagation());
+          box.addEventListener("change", () => {
+            withStorage(storage => storage.setItem(key, box.checked ? "1" : "0"));
+            updateProgress();
+          });
+        });
+        updateProgress();
+      }
+
+      function updateProgress(){
+        const boxes = qsa(".done");
+        const done = boxes.filter(box => box.checked).length;
+        $("#progressText").textContent = `${done} von ${boxes.length} Stationen markiert`;
+        $("#progressFill").style.width = `${boxes.length ? done / boxes.length * 100 : 0}%`;
+      }
+
+      $("#openAll").addEventListener("click", () => qsa("details.station").forEach(item => { item.open = true; }));
+      $("#closeAll").addEventListener("click", () => qsa("details.station").forEach(item => { item.open = false; }));
+      $("#resetProgress").addEventListener("click", () => {
+        if(!window.confirm("Möchtest du alle Markierungen der Lernstationen löschen?")) return;
+        qsa(".done").forEach(box => {
+          box.checked = false;
+          withStorage(storage => storage.removeItem(`math111-progress-${box.dataset.id}`));
+        });
+        updateProgress();
+      });
+
+      $("#stationSearch").addEventListener("input", event => {
+        const query = event.target.value.trim().toLowerCase();
+        qsa("details.station").forEach(station => {
+          const matches = !query || station.textContent.toLowerCase().includes(query);
+          station.classList.toggle("hidden", !matches);
+          station.classList.toggle("highlight", Boolean(query && matches));
+          if(query && matches) station.open = true;
+        });
+      });
+
+      function activateTab(button){
+        const name = button.dataset.tab;
+        qsa(".tab").forEach(tab => tab.setAttribute("aria-selected", String(tab === button)));
+        qsa(".tab-panel").forEach(panel => {
+          const active = panel.id === `tool${name.charAt(0).toUpperCase()}${name.slice(1)}`;
+          panel.classList.toggle("active", active);
+          panel.hidden = !active;
+        });
+        window.requestAnimationFrame(() => drawTool(name));
+      }
+
+      qsa(".tab").forEach((button,index,tabs) => {
+        button.addEventListener("click", () => activateTab(button));
+        button.addEventListener("keydown", event => {
+          if(!["ArrowLeft","ArrowRight","Home","End"].includes(event.key)) return;
+          event.preventDefault();
+          let nextIndex = index;
+          if(event.key === "ArrowRight") nextIndex = (index + 1) % tabs.length;
+          if(event.key === "ArrowLeft") nextIndex = (index - 1 + tabs.length) % tabs.length;
+          if(event.key === "Home") nextIndex = 0;
+          if(event.key === "End") nextIndex = tabs.length - 1;
+          tabs[nextIndex].focus();
+          activateTab(tabs[nextIndex]);
+        });
+      });
+
+      function prepareCanvas(canvas, preferredHeight = 420){
+        const rect = canvas.getBoundingClientRect();
+        const width = Math.max(300, rect.width || canvas.parentElement.getBoundingClientRect().width || 800);
+        const height = window.innerWidth < 720 ? Math.min(preferredHeight,380) : preferredHeight;
+        const ratio = Math.min(window.devicePixelRatio || 1,2);
+        canvas.width = Math.round(width * ratio);
+        canvas.height = Math.round(height * ratio);
+        canvas.style.height = `${height}px`;
+        const context = canvas.getContext("2d");
+        context.setTransform(ratio,0,0,ratio,0,0);
+        return {context,width,height};
+      }
+
+      function niceStep(range,targetTicks = 6){
+        if(!Number.isFinite(range) || range <= 0) return 1;
+        const rough = range / targetTicks;
+        const power = Math.pow(10,Math.floor(Math.log10(rough)));
+        const fraction = rough / power;
+        const niceFraction = fraction <= 1 ? 1 : fraction <= 2 ? 2 : fraction <= 5 ? 5 : 10;
+        return niceFraction * power;
+      }
+
+      function niceDomain(min,max,targetTicks = 6,includeZero = false){
+        let lower = Number.isFinite(min) ? min : -1;
+        let upper = Number.isFinite(max) ? max : 1;
+        if(includeZero){
+          lower = Math.min(0,lower);
+          upper = Math.max(0,upper);
+        }
+        if(Math.abs(upper - lower) < EPS){
+          const padding = Math.max(1,Math.abs(upper) * .2);
+          lower -= padding;
+          upper += padding;
+        }
+        const padding = (upper - lower) * .08;
+        lower -= padding;
+        upper += padding;
+        const step = niceStep(upper - lower,targetTicks);
+        return {
+          min:Math.floor(lower / step) * step,
+          max:Math.ceil(upper / step) * step,
+          step
+        };
+      }
+
+      function drawAxes(canvas,options){
+        const {context:ctx,width,height} = prepareCanvas(canvas,options.height || 420);
+        const margin = {
+          left:Math.max(66,options.leftMargin || 76),
+          right:24,
+          top:options.topMargin || 40,
+          bottom:72
+        };
+        const plot = {
+          left:margin.left,
+          right:width - margin.right,
+          top:margin.top,
+          bottom:height - margin.bottom
+        };
+        const xDomain = options.xDomain;
+        const yDomain = options.yDomain;
+        const mapX = value => plot.left + (value - xDomain.min) / (xDomain.max - xDomain.min) * (plot.right - plot.left);
+        const mapY = value => plot.bottom - (value - yDomain.min) / (yDomain.max - yDomain.min) * (plot.bottom - plot.top);
+
+        ctx.clearRect(0,0,width,height);
+        ctx.fillStyle = "#071022";
+        ctx.fillRect(0,0,width,height);
+        ctx.font = "12px system-ui, sans-serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "top";
+
+        function tickValues(domain){
+          const first = Math.ceil((domain.min - EPS) / domain.step) * domain.step;
+          const values = [];
+          for(let value = first,count = 0; value <= domain.max + EPS && count < 30; value += domain.step,count++){
+            values.push(Math.abs(value) < EPS ? 0 : value);
+          }
+          return values;
+        }
+
+        const xTicks = tickValues(xDomain);
+        const yTicks = tickValues(yDomain);
+        ctx.lineWidth = 1;
+        xTicks.forEach(value => {
+          const x = mapX(value);
+          ctx.strokeStyle = "rgba(255,255,255,.10)";
+          ctx.beginPath();ctx.moveTo(x,plot.top);ctx.lineTo(x,plot.bottom);ctx.stroke();
+          ctx.strokeStyle = "rgba(255,255,255,.45)";
+          ctx.beginPath();ctx.moveTo(x,plot.bottom);ctx.lineTo(x,plot.bottom + 7);ctx.stroke();
+          ctx.fillStyle = "#cbd5e1";
+          ctx.fillText(formatNumber(value,Math.abs(xDomain.step) < 1 ? 2 : 1),x,plot.bottom + 11);
+        });
+
+        ctx.textAlign = "right";
+        ctx.textBaseline = "middle";
+        yTicks.forEach(value => {
+          const y = mapY(value);
+          ctx.strokeStyle = "rgba(255,255,255,.10)";
+          ctx.beginPath();ctx.moveTo(plot.left,y);ctx.lineTo(plot.right,y);ctx.stroke();
+          ctx.strokeStyle = "rgba(255,255,255,.45)";
+          ctx.beginPath();ctx.moveTo(plot.left - 7,y);ctx.lineTo(plot.left,y);ctx.stroke();
+          ctx.fillStyle = "#cbd5e1";
+          ctx.fillText(formatNumber(value,Math.abs(yDomain.step) < 1 ? 2 : 1),plot.left - 11,y);
+        });
+
+        ctx.strokeStyle = "rgba(255,255,255,.68)";
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();ctx.moveTo(plot.left,plot.top);ctx.lineTo(plot.left,plot.bottom);ctx.lineTo(plot.right,plot.bottom);ctx.stroke();
+
+        if(xDomain.min < 0 && xDomain.max > 0){
+          ctx.strokeStyle = "rgba(0,213,255,.34)";
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();ctx.moveTo(mapX(0),plot.top);ctx.lineTo(mapX(0),plot.bottom);ctx.stroke();
+        }
+        if(yDomain.min < 0 && yDomain.max > 0){
+          ctx.strokeStyle = "rgba(0,213,255,.34)";
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();ctx.moveTo(plot.left,mapY(0));ctx.lineTo(plot.right,mapY(0));ctx.stroke();
+        }
+
+        ctx.fillStyle = "#e8f0ff";
+        ctx.font = "600 14px system-ui, sans-serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "bottom";
+        ctx.fillText(options.xLabel,(plot.left + plot.right) / 2,height - 10);
+        ctx.save();
+        ctx.translate(17,(plot.top + plot.bottom) / 2);
+        ctx.rotate(-Math.PI / 2);
+        ctx.fillText(options.yLabel,0,0);
+        ctx.restore();
+
+        if(options.title){
+          ctx.font = "700 14px system-ui, sans-serif";
+          ctx.textAlign = "left";
+          ctx.textBaseline = "top";
+          ctx.fillStyle = "#e8f0ff";
+          ctx.fillText(options.title,plot.left,10);
+        }
+
+        return {ctx,width,height,plot,mapX,mapY,xDomain,yDomain};
+      }
+
+      function parsePairs(text){
+        const pairs = [];
+        const errors = [];
+        text.split(/\r?\n/).forEach((raw,index) => {
+          const line = raw.trim();
+          if(!line) return;
+          let parts;
+          if(line.includes(";")) parts = line.split(";");
+          else if(line.includes("\t")) parts = line.split("\t");
+          else parts = line.split(/\s+/);
+          if(parts.length < 2){
+            errors.push(`Zeile ${index + 1}: zwei Werte erwartet`);
+            return;
+          }
+          const x = Number.parseFloat(parts[0].trim().replace(",","."));
+          const y = Number.parseFloat(parts[1].trim().replace(",","."));
+          if(!Number.isFinite(x) || !Number.isFinite(y)){
+            errors.push(`Zeile ${index + 1}: ungültige Zahl`);
+            return;
+          }
+          pairs.push({x,y});
+        });
+        return {pairs,errors};
+      }
+
+      function computeRegression(points){
+        const n = points.length;
+        const meanX = points.reduce((sum,point) => sum + point.x,0) / n;
+        const meanY = points.reduce((sum,point) => sum + point.y,0) / n;
+        const sxx = points.reduce((sum,point) => sum + Math.pow(point.x - meanX,2),0);
+        const syy = points.reduce((sum,point) => sum + Math.pow(point.y - meanY,2),0);
+        const sxy = points.reduce((sum,point) => sum + (point.x - meanX) * (point.y - meanY),0);
+        if(Math.abs(sxx) < EPS) throw new Error("Alle x-Werte sind gleich. Eine Regressionsgerade ist so nicht bestimmbar.");
+        const slope = sxy / sxx;
+        const intercept = meanY - slope * meanX;
+        const r = syy < EPS ? 0 : sxy / Math.sqrt(sxx * syy);
+        const residuals = points.map(point => point.y - (slope * point.x + intercept));
+        const sse = residuals.reduce((sum,value) => sum + value * value,0);
+        const r2 = syy < EPS ? 1 : Math.max(0,1 - sse / syy);
+        return {slope,intercept,r,r2,residuals,sse};
+      }
+
+      function drawRegression(){
+        const canvas = $("#regressionCanvas");
+        const result = $("#regressionResult");
+        const parsed = parsePairs($("#regressionData").value);
+        if(parsed.errors.length || parsed.pairs.length < 2){
+          result.className = "result error";
+          result.innerHTML = `<b>Eingabe prüfen:</b> ${escapeHtml(parsed.errors[0] || "Mindestens zwei Wertepaare sind nötig.")}`;
+          return;
+        }
+        try{
+          const model = computeRegression(parsed.pairs);
+          const xs = parsed.pairs.map(point => point.x);
+          const ys = parsed.pairs.map(point => point.y);
+          const xDomain = niceDomain(Math.min(...xs),Math.max(...xs),6,false);
+          const lineY1 = model.slope * xDomain.min + model.intercept;
+          const lineY2 = model.slope * xDomain.max + model.intercept;
+          const yDomain = niceDomain(Math.min(...ys,lineY1,lineY2),Math.max(...ys,lineY1,lineY2),6,false);
+          const chart = drawAxes(canvas,{
+            xDomain,yDomain,
+            xLabel:"Absatzmenge x [100 Stück]",
+            yLabel:"Preis p [€/Stück]",
+            title:"Streudiagramm und lineare Regression"
+          });
+          const {ctx,mapX,mapY,plot} = chart;
+          parsed.pairs.forEach((point,index) => {
+            const predicted = model.slope * point.x + model.intercept;
+            ctx.strokeStyle = "rgba(251,113,133,.72)";
+            ctx.lineWidth = 1.2;
+            ctx.setLineDash([4,4]);
+            ctx.beginPath();ctx.moveTo(mapX(point.x),mapY(point.y));ctx.lineTo(mapX(point.x),mapY(predicted));ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.fillStyle = "#00d5ff";
+            ctx.beginPath();ctx.arc(mapX(point.x),mapY(point.y),5.5,0,Math.PI * 2);ctx.fill();
+            ctx.fillStyle = "#06101c";
+            ctx.beginPath();ctx.arc(mapX(point.x),mapY(point.y),2,0,Math.PI * 2);ctx.fill();
+            chartState[`regPoint${index}`] = point;
+          });
+
+          ctx.strokeStyle = "#a78bfa";
+          ctx.lineWidth = 3.5;
+          ctx.beginPath();
+          ctx.moveTo(mapX(xDomain.min),mapY(lineY1));
+          ctx.lineTo(mapX(xDomain.max),mapY(lineY2));
+          ctx.stroke();
+
+          const predictX = numberFrom("#regressionPredictX");
+          const predictY = model.slope * predictX + model.intercept;
+          const relation = Math.abs(model.r) >= .9 ? "sehr starker" : Math.abs(model.r) >= .7 ? "starker" : Math.abs(model.r) >= .4 ? "mittlerer" : "schwacher";
+          const direction = model.r < 0 ? "negativer" : model.r > 0 ? "positiver" : "kein";
+          const formula = math(mrow(
+            msub(mi("p"),mtext("reg")),mo("("),mi("x"),mo(")"),mo("="),
+            mn(formatNumber(model.slope,3)),mo("·"),mi("x"),
+            mo(model.intercept >= 0 ? "+" : "−"),mn(formatNumber(Math.abs(model.intercept),3))
+          ),`Regressionsfunktion p von x gleich ${formatNumber(model.slope,3)} mal x ${model.intercept >= 0 ? "plus" : "minus"} ${formatNumber(Math.abs(model.intercept),3)}`);
+          const prediction = Number.isFinite(predictX)
+            ? math(mrow(msub(mi("p"),mtext("reg")),mo("("),mn(formatNumber(predictX,2)),mo(")"),mo("="),mn(formatNumber(predictY,2)),mtext(" €/Stück")),`Prognose ${formatNumber(predictY,2)} Euro pro Stück`)
+            : "—";
+          result.className = "result good";
+          result.innerHTML = `
+            <b>Regressionsmodell:</b> ${formula}
+            <div class="result-grid">
+              <div class="mini-result"><b>r = ${formatNumber(model.r,3)}</b><span>${relation} ${direction} linearer Zusammenhang</span></div>
+              <div class="mini-result"><b>R² = ${formatNumber(model.r2,3)}</b><span>${formatNumber(model.r2 * 100,1)} % der y-Streuung werden linear erklärt</span></div>
+              <div class="mini-result"><b>${prediction}</b><span>Modellwert für die eingegebene Menge</span></div>
+            </div>
+            <p><small>Deutung der Steigung: Pro zusätzlichen 100 Stück sinkt der Modellpreis hier um etwa ${formatNumber(Math.abs(model.slope),2)} €/Stück. ${predictX < Math.min(...xs) || predictX > Math.max(...xs) ? "<span class='warn-text'>Die Prognose ist eine Extrapolation außerhalb der Daten.</span>" : "Die Prognose liegt innerhalb des beobachteten Bereichs."}</small></p>`;
+          canvas.setAttribute("aria-label",`Streudiagramm mit ${parsed.pairs.length} Punkten. Regressionsgerade mit Steigung ${formatNumber(model.slope,3)} und Achsenabschnitt ${formatNumber(model.intercept,3)}.`);
+          chartState.regression = {points:parsed.pairs,model};
+        }catch(error){
+          result.className = "result error";
+          result.textContent = error.message;
+        }
+      }
+
+      $("#regressionCalc").addEventListener("click",drawRegression);
+      $("#regressionData").addEventListener("input",drawRegression);
+      $("#regressionPredictX").addEventListener("input",drawRegression);
+      $("#regressionPresetNoisy").addEventListener("click",() => {
+        $("#regressionData").value = "1;24,0\n2;20,8\n3;22,1\n4;17,9\n5;18,7\n6;13,9\n7;15,4";
+        drawRegression();
+      });
+
+      function polynomialValue(coefficients,x){
+        return ((coefficients[0] * x + coefficients[1]) * x + coefficients[2]) * x + coefficients[3];
+      }
+
+      function uniqueSorted(values){
+        return values.filter(Number.isFinite).sort((a,b) => a - b).filter((value,index,array) => index === 0 || Math.abs(value - array[index - 1]) > 1e-6);
+      }
+
+      function realPolynomialRoots([a,b,c,d]){
+        if(Math.abs(a) < EPS){
+          if(Math.abs(b) < EPS){
+            if(Math.abs(c) < EPS) return [];
+            return [-d / c];
+          }
+          const discriminant = c * c - 4 * b * d;
+          if(discriminant < -EPS) return [];
+          if(Math.abs(discriminant) <= EPS) return [-c / (2 * b)];
+          const root = Math.sqrt(Math.max(0,discriminant));
+          return uniqueSorted([(-c - root) / (2 * b),(-c + root) / (2 * b)]);
+        }
+        const normalizedB = b / a;
+        const normalizedC = c / a;
+        const normalizedD = d / a;
+        const p = normalizedC - normalizedB * normalizedB / 3;
+        const q = 2 * Math.pow(normalizedB,3) / 27 - normalizedB * normalizedC / 3 + normalizedD;
+        const discriminant = Math.pow(q / 2,2) + Math.pow(p / 3,3);
+        const shift = normalizedB / 3;
+        if(discriminant > EPS){
+          const sqrt = Math.sqrt(discriminant);
+          return [Math.cbrt(-q / 2 + sqrt) + Math.cbrt(-q / 2 - sqrt) - shift];
+        }
+        if(Math.abs(discriminant) <= EPS){
+          const u = Math.cbrt(-q / 2);
+          return uniqueSorted([2 * u - shift,-u - shift]);
+        }
+        const radius = 2 * Math.sqrt(-p / 3);
+        const angle = Math.acos((3 * q / (2 * p)) * Math.sqrt(-3 / p)) / 3;
+        return uniqueSorted([
+          radius * Math.cos(angle) - shift,
+          radius * Math.cos(angle - 2 * Math.PI / 3) - shift,
+          radius * Math.cos(angle - 4 * Math.PI / 3) - shift
+        ]);
+      }
+
+      function drawPolynomial(){
+        const coefficients = [
+          numberFrom("#polyA"),numberFrom("#polyB"),numberFrom("#polyC"),numberFrom("#polyD")
+        ];
+        const xLimit = Math.max(1,numberFrom("#polyRange"));
+        const xValue = numberFrom("#polyXValue");
+        ["A","B","C","D"].forEach((letter,index) => {
+          $(`#poly${letter}Out`).textContent = formatNumber(coefficients[index],2);
+        });
+        const samples = [];
+        for(let i = 0;i <= 400;i++){
+          const x = -xLimit + 2 * xLimit * i / 400;
+          samples.push({x,y:polynomialValue(coefficients,x)});
+        }
+        const finiteY = samples.map(point => point.y).filter(Number.isFinite);
+        let minY = Math.min(...finiteY);
+        let maxY = Math.max(...finiteY);
+        const rawSpan = Math.max(1,maxY - minY);
+        const center = (minY + maxY) / 2;
+        if(rawSpan > 160){
+          minY = center - 80;
+          maxY = center + 80;
+        }
+        const xDomain = niceDomain(-xLimit,xLimit,8,true);
+        const yDomain = niceDomain(minY,maxY,7,true);
+        const chart = drawAxes($("#polynomialCanvas"),{
+          xDomain,yDomain,
+          xLabel:"Stelle x [ME]",
+          yLabel:"Funktionswert f(x) [GE]",
+          title:"Ganzrationale Funktion und Parameterwirkung"
+        });
+        const {ctx,mapX,mapY,plot} = chart;
+        ctx.strokeStyle = "#00d5ff";
+        ctx.lineWidth = 3.2;
+        ctx.beginPath();
+        let drawing = false;
+        samples.forEach(point => {
+          const visible = point.y >= yDomain.min - (yDomain.max - yDomain.min) * .2 && point.y <= yDomain.max + (yDomain.max - yDomain.min) * .2;
+          if(!visible){ drawing = false; return; }
+          if(!drawing){ ctx.moveTo(mapX(point.x),mapY(point.y)); drawing = true; }
+          else ctx.lineTo(mapX(point.x),mapY(point.y));
+        });
+        ctx.stroke();
+
+        const roots = realPolynomialRoots(coefficients);
+        roots.filter(root => root >= xDomain.min - EPS && root <= xDomain.max + EPS).forEach(root => {
+          ctx.fillStyle = "#fb7185";
+          ctx.beginPath();ctx.arc(mapX(root),mapY(0),6,0,Math.PI * 2);ctx.fill();
+        });
+        const selectedY = polynomialValue(coefficients,xValue);
+        if(Number.isFinite(xValue) && xValue >= xDomain.min && xValue <= xDomain.max && selectedY >= yDomain.min && selectedY <= yDomain.max){
+          ctx.fillStyle = "#facc15";
+          ctx.beginPath();ctx.arc(mapX(xValue),mapY(selectedY),6.5,0,Math.PI * 2);ctx.fill();
+          ctx.strokeStyle = "rgba(250,204,21,.55)";
+          ctx.setLineDash([5,5]);
+          ctx.beginPath();ctx.moveTo(mapX(xValue),mapY(0));ctx.lineTo(mapX(xValue),mapY(selectedY));ctx.stroke();
+          ctx.setLineDash([]);
+        }
+        const degree = Math.abs(coefficients[0]) >= EPS ? 3 : Math.abs(coefficients[1]) >= EPS ? 2 : Math.abs(coefficients[2]) >= EPS ? 1 : 0;
+        const symmetry = Math.abs(coefficients[0]) < EPS && Math.abs(coefficients[2]) < EPS
+          ? "achsensymmetrisch zur y-Achse"
+          : Math.abs(coefficients[1]) < EPS && Math.abs(coefficients[3]) < EPS
+            ? "punktsymmetrisch zum Ursprung"
+            : "keine der beiden einfachen Symmetrien";
+        const zeroFunction = coefficients.every(value => Math.abs(value) < EPS);
+        const rootText = zeroFunction
+          ? "jede reelle Zahl"
+          : roots.length
+            ? roots.map(root => formatNumber(root,3)).join("; ")
+            : "keine reellen Nullstellen";
+        const result = $("#polynomialResult");
+        result.className = "result";
+        result.innerHTML = `
+          <b>Aktuelle Funktion:</b> ${polynomialMath(coefficients)}
+          <div class="result-grid">
+            <div class="mini-result"><b>Grad ${degree}</b><span>höchster wirksamer Exponent</span></div>
+            <div class="mini-result"><b>f(0) = ${formatNumber(coefficients[3],2)}</b><span>y-Achsenabschnitt [GE]</span></div>
+            <div class="mini-result"><b>${roots.length ? `x = ${rootText}` : rootText}</b><span>reelle Nullstellen</span></div>
+          </div>
+          <p><small>Gewählter Wert: f(${formatNumber(xValue,2)}) = ${formatNumber(selectedY,3)} GE · Symmetriecheck: ${symmetry}. Beschreibe Monotonie zunächst am Graphen.</small></p>`;
+        $("#polynomialCanvas").setAttribute("aria-label",`Graph einer Polynomfunktion vom Grad ${degree}. Reelle Nullstellen: ${rootText}.`);
+        chartState.polynomial = {coefficients,xLimit};
+      }
+
+      ["#polyA","#polyB","#polyC","#polyD","#polyXValue","#polyRange"].forEach(selector => $(selector).addEventListener("input",drawPolynomial));
+      qsa("[data-poly-preset]").forEach(button => button.addEventListener("click",() => {
+        const presets = {
+          linear:[0,0,-1.5,5],
+          quadratic:[0,.55,-1.2,-4],
+          cubic:[.2,-.8,-.6,4]
+        };
+        const values = presets[button.dataset.polyPreset];
+        ["A","B","C","D"].forEach((letter,index) => { $(`#poly${letter}`).value = values[index]; });
+        drawPolynomial();
+      }));
+
+      function quadraticRoots(a,b,c){
+        if(Math.abs(a) < EPS){
+          return Math.abs(b) < EPS ? [] : [-c / b];
+        }
+        const discriminant = b * b - 4 * a * c;
+        if(discriminant < -EPS) return [];
+        if(Math.abs(discriminant) <= EPS) return [-b / (2 * a)];
+        const root = Math.sqrt(discriminant);
+        return uniqueSorted([(-b - root) / (2 * a),(-b + root) / (2 * a)]);
+      }
+
+      function drawBusiness(){
+        const p0 = numberFrom("#bizP0");
+        const slope = numberFrom("#bizM");
+        const fixed = numberFrom("#bizFixed");
+        const variable = numberFrom("#bizVariable");
+        const capacity = numberFrom("#bizCapacity");
+        const result = $("#businessResult");
+        if(![p0,slope,fixed,variable,capacity].every(Number.isFinite) || p0 <= 0 || slope <= 0 || fixed < 0 || variable < 0 || capacity <= 0){
+          result.className = "result error";
+          result.textContent = "Bitte nutze positive Werte; Fixkosten und variable Kosten dürfen nicht negativ sein.";
+          return;
+        }
+        const marketLimit = p0 / slope;
+        const maxX = Math.max(1,Math.min(capacity,marketLimit));
+        const price = x => p0 - slope * x;
+        const cost = x => fixed + variable * x;
+        const revenue = x => x * price(x);
+        const profit = x => revenue(x) - cost(x);
+        const unconstrainedOptimum = (p0 - variable) / (2 * slope);
+        const optimumX = Math.max(0,Math.min(maxX,unconstrainedOptimum));
+        const breakEven = quadraticRoots(-slope,p0 - variable,-fixed).filter(root => root >= -EPS && root <= maxX + EPS);
+        const series = [];
+        for(let i = 0;i <= 300;i++){
+          const x = maxX * i / 300;
+          series.push({x,cost:cost(x),revenue:revenue(x),profit:profit(x)});
+        }
+        const allY = series.flatMap(point => [point.cost,point.revenue,point.profit]);
+        const xDomain = niceDomain(0,maxX,7,true);
+        xDomain.min = 0;
+        const yDomain = niceDomain(Math.min(...allY),Math.max(...allY),7,true);
+        const chart = drawAxes($("#businessCanvas"),{
+          xDomain,yDomain,
+          xLabel:"Produktions- und Absatzmenge x [Stück]",
+          yLabel:"Betrag [€]",
+          title:"Kosten-, Erlös- und Gewinnmodell"
+        });
+        const {ctx,mapX,mapY,plot} = chart;
+        function drawSeries(key,color){
+          ctx.strokeStyle = color;
+          ctx.lineWidth = 3;
+          ctx.beginPath();
+          series.forEach((point,index) => {
+            const x = mapX(point.x);
+            const y = mapY(point[key]);
+            if(index === 0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+          });
+          ctx.stroke();
+        }
+        drawSeries("cost","#00d5ff");
+        drawSeries("revenue","#a78bfa");
+        drawSeries("profit","#5eead4");
+        ctx.fillStyle = "#facc15";
+        ctx.beginPath();ctx.arc(mapX(optimumX),mapY(profit(optimumX)),7,0,Math.PI * 2);ctx.fill();
+        breakEven.forEach(root => {
+          ctx.fillStyle = "#fb7185";
+          ctx.beginPath();ctx.arc(mapX(root),mapY(0),5,0,Math.PI * 2);ctx.fill();
+        });
+
+        const priceFormula = math(mrow(mi("p"),mo("("),mi("x"),mo(")"),mo("="),mn(formatNumber(p0,2)),mo("−"),mn(formatNumber(slope,2)),mo("·"),mi("x")), "Preis-Absatz-Funktion");
+        const costFormula = math(mrow(mi("K"),mo("("),mi("x"),mo(")"),mo("="),mn(formatNumber(fixed,2)),mo("+"),mn(formatNumber(variable,2)),mo("·"),mi("x")), "Kostenfunktion");
+        const profitLinear = p0 - variable;
+        const profitFormula = math(mrow(
+          mi("G"),mo("("),mi("x"),mo(")"),mo("="),
+          mo("−"),mn(formatNumber(slope,2)),msup(mi("x"),mn("2")),
+          mo(profitLinear >= 0 ? "+" : "−"),mn(formatNumber(Math.abs(profitLinear),2)),mi("x"),
+          mo("−"),mn(formatNumber(fixed,2))
+        ), "Gewinnfunktion");
+        result.className = "result good";
+        result.innerHTML = `
+          <b>Modellfunktionen:</b> ${priceFormula} · ${costFormula} · ${profitFormula}
+          <div class="result-grid">
+            <div class="mini-result"><b>x ≈ ${formatNumber(optimumX,2)} Stück</b><span>gewinnmaximale zulässige Menge</span></div>
+            <div class="mini-result"><b>G ≈ ${formatNumber(profit(optimumX),2)} €</b><span>größter Gewinn im Modellbereich</span></div>
+            <div class="mini-result"><b>${breakEven.length ? breakEven.map(value => formatNumber(value,2)).join(" / ") : "keine"}</b><span>Gewinnnullstellen im zulässigen Bereich [Stück]</span></div>
+          </div>
+          <p><small>Bei der optimalen Menge beträgt der Modellpreis ${formatNumber(price(optimumX),2)} €/Stück. Gültiger Bereich hier: 0 ≤ x ≤ ${formatNumber(maxX,2)} Stück. ${capacity < marketLimit ? "Die Kapazität begrenzt das Modell vor dem Preisnullpunkt." : "Der Preisnullpunkt begrenzt den sinnvollen Absatzbereich."}</small></p>`;
+        $("#businessCanvas").setAttribute("aria-label",`Kosten, Erlös und Gewinn über der Menge von null bis ${formatNumber(maxX,1)} Stück. Größter Gewinn bei etwa ${formatNumber(optimumX,1)} Stück.`);
+        chartState.business = {p0,slope,fixed,variable,capacity};
+      }
+
+      $("#businessCalc").addEventListener("click",drawBusiness);
+      ["#bizP0","#bizM","#bizFixed","#bizVariable","#bizCapacity"].forEach(selector => $(selector).addEventListener("input",drawBusiness));
+
+      function solveLinearSystem(matrix){
+        const a = matrix.map(row => row.slice());
+        const steps = [];
+        const n = a.length;
+        for(let column = 0;column < n;column++){
+          let pivot = column;
+          for(let row = column + 1;row < n;row++){
+            if(Math.abs(a[row][column]) > Math.abs(a[pivot][column])) pivot = row;
+          }
+          if(Math.abs(a[pivot][column]) < EPS) throw new Error("Das Gleichungssystem ist nicht eindeutig lösbar. Prüfe, ob die x-Werte verschieden sind.");
+          if(pivot !== column){
+            [a[pivot],a[column]] = [a[column],a[pivot]];
+            steps.push(`Z${pivot + 1} und Z${column + 1} vertauschen`);
+          }
+          const divisor = a[column][column];
+          for(let entry = column;entry <= n;entry++) a[column][entry] /= divisor;
+          steps.push(`Z${column + 1} durch ${formatNumber(divisor,3)} teilen`);
+          for(let row = 0;row < n;row++){
+            if(row === column) continue;
+            const factor = a[row][column];
+            if(Math.abs(factor) < EPS) continue;
+            for(let entry = column;entry <= n;entry++) a[row][entry] -= factor * a[column][entry];
+            steps.push(`Z${row + 1} um ${formatNumber(factor,3)} · Z${column + 1} vermindern`);
+          }
+        }
+        return {solution:a.map((row,index) => row[n]),reduced:a,steps};
+      }
+
+      function matrixTable(matrix,caption){
+        return `<div class="matrix-wrap"><table class="matrix"><caption class="muted">${escapeHtml(caption)}</caption><thead><tr><th>a</th><th>b</th><th>c</th><th>rechte Seite</th></tr></thead><tbody>${matrix.map(row => `<tr>${row.map(value => `<td>${formatNumber(value,3)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+      }
+
+      function drawLgs(){
+        const points = [1,2,3].map(index => ({
+          x:numberFrom(`#lgsX${index}`),
+          y:numberFrom(`#lgsY${index}`)
+        }));
+        const result = $("#lgsResult");
+        if(!points.every(point => Number.isFinite(point.x) && Number.isFinite(point.y))){
+          result.className = "result error";
+          result.textContent = "Bitte fülle alle sechs Koordinaten mit Zahlen.";
+          return;
+        }
+        const matrix = points.map(point => [point.x * point.x,point.x,1,point.y]);
+        try{
+          const solved = solveLinearSystem(matrix);
+          const [a,b,c] = solved.solution;
+          const minX = Math.min(...points.map(point => point.x));
+          const maxX = Math.max(...points.map(point => point.x));
+          const spanX = Math.max(2,maxX - minX);
+          const viewMinX = minX - spanX * .35;
+          const viewMaxX = maxX + spanX * .35;
+          const samples = [];
+          for(let i = 0;i <= 300;i++){
+            const x = viewMinX + (viewMaxX - viewMinX) * i / 300;
+            samples.push({x,y:a * x * x + b * x + c});
+          }
+          const xDomain = niceDomain(viewMinX,viewMaxX,7,true);
+          const yValues = samples.map(point => point.y).concat(points.map(point => point.y));
+          const yDomain = niceDomain(Math.min(...yValues),Math.max(...yValues),7,true);
+          const chart = drawAxes($("#lgsCanvas"),{
+            xDomain,yDomain,
+            xLabel:"Stelle x [ME]",
+            yLabel:"Funktionswert f(x) [GE]",
+            title:"Exakte quadratische Steckbrief-Funktion"
+          });
+          const {ctx,mapX,mapY,plot} = chart;
+          ctx.strokeStyle = "#00d5ff";
+          ctx.lineWidth = 3;
+          ctx.beginPath();
+          samples.forEach((point,index) => {
+            if(index === 0) ctx.moveTo(mapX(point.x),mapY(point.y));
+            else ctx.lineTo(mapX(point.x),mapY(point.y));
+          });
+          ctx.stroke();
+          points.forEach((point,index) => {
+            ctx.fillStyle = "#facc15";
+            ctx.beginPath();ctx.arc(mapX(point.x),mapY(point.y),6.5,0,Math.PI * 2);ctx.fill();
+            ctx.fillStyle = "#e8f0ff";
+            ctx.font = "600 12px system-ui, sans-serif";
+            ctx.textAlign = "left";
+            ctx.textBaseline = "bottom";
+            ctx.fillText(`P${index + 1}`,mapX(point.x) + 8,mapY(point.y) - 4);
+          });
+          const coefficientFormula = polynomialMath([0,a,b,c]);
+          result.className = "result good";
+          result.innerHTML = `
+            <b>Eindeutige Lösung:</b> ${coefficientFormula}
+            ${matrixTable(matrix,"Erweiterte Ausgangsmatrix")}
+            <details class="nested"><summary>Zeilenoperationen anzeigen</summary><div class="inside"><ol class="step-list">${solved.steps.map(step => `<li>${escapeHtml(step)}</li>`).join("")}</ol>${matrixTable(solved.reduced,"Reduzierte Matrix")}</div></details>
+            <p><small>Probe: Die berechnete Funktion erfüllt alle drei Punktbedingungen bis auf Rundungsfehler. Bei zusätzlichen streuenden Daten wäre eine Regression statt eines exakt lösbaren Steckbriefs meist sinnvoller.</small></p>`;
+          $("#lgsCanvas").setAttribute("aria-label",`Quadratische Funktion durch die drei Punkte. Koeffizienten a gleich ${formatNumber(a,3)}, b gleich ${formatNumber(b,3)}, c gleich ${formatNumber(c,3)}.`);
+          chartState.lgs = {points};
+        }catch(error){
+          result.className = "result error";
+          result.innerHTML = `<b>Keine eindeutige Steckbrief-Funktion:</b> ${escapeHtml(error.message)}`;
+        }
+      }
+
+      $("#lgsCalc").addEventListener("click",drawLgs);
+      ["#lgsX1","#lgsY1","#lgsX2","#lgsY2","#lgsX3","#lgsY3"].forEach(selector => $(selector).addEventListener("input",drawLgs));
+
+      function feasibleVertices(machine,labor){
+        const candidates = [
+          {x:0,y:0,label:"O"},
+          {x:Math.min(machine / 2,labor),y:0,label:"A-Achse"},
+          {x:0,y:Math.min(machine,labor / 3),label:"B-Achse"}
+        ];
+        const determinant = 2 * 3 - 1 * 1;
+        const intersection = {
+          x:(3 * machine - labor) / determinant,
+          y:(2 * labor - machine) / determinant,
+          label:"Schnitt"
+        };
+        candidates.push(intersection);
+        return candidates
+          .filter(point => point.x >= -EPS && point.y >= -EPS && 2 * point.x + point.y <= machine + EPS && point.x + 3 * point.y <= labor + EPS)
+          .map(point => ({...point,x:Math.max(0,point.x),y:Math.max(0,point.y)}))
+          .filter((point,index,array) => array.findIndex(other => Math.abs(other.x - point.x) < 1e-7 && Math.abs(other.y - point.y) < 1e-7) === index)
+          .sort((a,b) => Math.atan2(a.y,a.x) - Math.atan2(b.y,b.x));
+      }
+
+      function drawOptimize(){
+        const machine = numberFrom("#optMachine");
+        const labor = numberFrom("#optLabor");
+        const profitA = numberFrom("#optProfitA");
+        const profitB = numberFrom("#optProfitB");
+        const result = $("#optimizeResult");
+        if(![machine,labor,profitA,profitB].every(Number.isFinite) || machine <= 0 || labor <= 0 || profitA < 0 || profitB < 0){
+          result.className = "result error";
+          result.textContent = "Kapazitäten müssen positiv, Deckungsbeiträge dürfen nicht negativ sein.";
+          return;
+        }
+        const vertices = feasibleVertices(machine,labor);
+        vertices.forEach(point => { point.objective = profitA * point.x + profitB * point.y; });
+        const optimum = vertices.reduce((best,point) => point.objective > best.objective ? point : best,vertices[0]);
+        const maxX = Math.max(machine / 2,labor, ...vertices.map(point => point.x));
+        const maxY = Math.max(machine,labor / 3, ...vertices.map(point => point.y));
+        const xDomain = niceDomain(0,maxX,7,true);
+        const yDomain = niceDomain(0,maxY,7,true);
+        xDomain.min = 0;
+        yDomain.min = 0;
+        const chart = drawAxes($("#optimizeCanvas"),{
+          xDomain,yDomain,
+          xLabel:"Produkt A: x [Stück]",
+          yLabel:"Produkt B: y [Stück]",
+          title:"Zulässiger Bereich und Zielfunktion"
+        });
+        const {ctx,mapX,mapY,plot} = chart;
+        const polygon = vertices.slice().sort((a,b) => Math.atan2(a.y - vertices.reduce((s,p) => s + p.y,0) / vertices.length,a.x - vertices.reduce((s,p) => s + p.x,0) / vertices.length) - Math.atan2(b.y - vertices.reduce((s,p) => s + p.y,0) / vertices.length,b.x - vertices.reduce((s,p) => s + p.x,0) / vertices.length));
+        if(polygon.length){
+          ctx.fillStyle = "rgba(94,234,212,.14)";
+          ctx.strokeStyle = "rgba(94,234,212,.65)";
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          polygon.forEach((point,index) => {
+            if(index === 0) ctx.moveTo(mapX(point.x),mapY(point.y));
+            else ctx.lineTo(mapX(point.x),mapY(point.y));
+          });
+          ctx.closePath();ctx.fill();ctx.stroke();
+        }
+
+        function drawConstraint(interceptX,interceptY,color){
+          ctx.strokeStyle = color;
+          ctx.lineWidth = 3;
+          ctx.beginPath();ctx.moveTo(mapX(0),mapY(interceptY));ctx.lineTo(mapX(interceptX),mapY(0));ctx.stroke();
+        }
+        drawConstraint(machine / 2,machine,"#00d5ff");
+        drawConstraint(labor,labor / 3,"#a78bfa");
+
+        if(profitA > EPS && profitB > EPS){
+          const objective = optimum.objective;
+          const xAtZeroY = objective / profitA;
+          const yAtZeroX = objective / profitB;
+          ctx.strokeStyle = "#facc15";
+          ctx.lineWidth = 2;
+          ctx.setLineDash([7,5]);
+          ctx.beginPath();ctx.moveTo(mapX(0),mapY(yAtZeroX));ctx.lineTo(mapX(xAtZeroY),mapY(0));ctx.stroke();
+          ctx.setLineDash([]);
+        }
+        vertices.forEach(point => {
+          ctx.fillStyle = point === optimum ? "#facc15" : "#e8f0ff";
+          ctx.beginPath();ctx.arc(mapX(point.x),mapY(point.y),point === optimum ? 7 : 4.5,0,Math.PI * 2);ctx.fill();
+        });
+
+        const objectiveFormula = math(mrow(mi("Z"),mo("="),mn(formatNumber(profitA,2)),mi("x"),mo("+"),mn(formatNumber(profitB,2)),mi("y")), "Zielfunktion");
+        result.className = "result good";
+        result.innerHTML = `
+          <b>Zielfunktion:</b> ${objectiveFormula}
+          <div class="result-grid">
+            <div class="mini-result"><b>x = ${formatNumber(optimum.x,2)}</b><span>Produkt A [Stück]</span></div>
+            <div class="mini-result"><b>y = ${formatNumber(optimum.y,2)}</b><span>Produkt B [Stück]</span></div>
+            <div class="mini-result"><b>Z = ${formatNumber(optimum.objective,2)} €</b><span>größter Deckungsbeitrag</span></div>
+          </div>
+          <p><small>Geprüfte Ecken: ${vertices.map(point => `(${formatNumber(point.x,2)} | ${formatNumber(point.y,2)}) → ${formatNumber(point.objective,2)} €`).join("; ")}. Bei tatsächlich nur ganzzahligen Stückzahlen müssen gegebenenfalls benachbarte Gitterpunkte geprüft werden.</small></p>`;
+        $("#optimizeCanvas").setAttribute("aria-label",`Zulässiger Bereich mit ${vertices.length} Ecken. Beste Ecke bei ${formatNumber(optimum.x,2)} Stück Produkt A und ${formatNumber(optimum.y,2)} Stück Produkt B.`);
+        chartState.optimize = {machine,labor,profitA,profitB};
+      }
+
+      $("#optimizeCalc").addEventListener("click",drawOptimize);
+      ["#optMachine","#optLabor","#optProfitA","#optProfitB"].forEach(selector => $(selector).addEventListener("input",drawOptimize));
+
+      function drawTool(name){
+        if(name === "regression") drawRegression();
+        if(name === "polynomial") drawPolynomial();
+        if(name === "business") drawBusiness();
+        if(name === "lgs") drawLgs();
+        if(name === "optimize") drawOptimize();
+      }
+
+      let resizeTimer;
+      window.addEventListener("resize",() => {
+        window.clearTimeout(resizeTimer);
+        resizeTimer = window.setTimeout(() => {
+          const active = $(".tab[aria-selected='true']");
+          if(active) drawTool(active.dataset.tab);
+        },150);
+      });
+
+      let quizCorrect = 0;
+      function updateQuizScore(){
+        $("#quizScore").textContent = `${quizCorrect} von ${qsa("[data-quiz]").length} richtig beantwortet`;
+      }
+      qsa("[data-quiz]").forEach(card => {
+        qsa(".answers button",card).forEach(button => button.addEventListener("click",() => {
+          const wasCorrect = card.dataset.correctAnswered === "true";
+          const isCorrect = button.dataset.correct === "true";
+          if(isCorrect && !wasCorrect){
+            quizCorrect++;
+            card.dataset.correctAnswered = "true";
+          }
+          qsa(".answers button",card).forEach(answer => answer.classList.remove("correct","wrong"));
+          button.classList.add(isCorrect ? "correct" : "wrong");
+          if(!isCorrect){
+            const correctButton = $(".answers button[data-correct='true']",card);
+            if(correctButton) correctButton.classList.add("correct");
+          }
+          const feedback = $(".feedback",card);
+          feedback.className = `feedback ${isCorrect ? "ok" : "no"}`;
+          feedback.textContent = `${isCorrect ? "Richtig." : "Noch nicht."} ${button.dataset.explanation}`;
+          updateQuizScore();
+        }));
+      });
+      $("#resetQuiz").addEventListener("click",() => {
+        quizCorrect = 0;
+        qsa("[data-quiz]").forEach(card => {
+          delete card.dataset.correctAnswered;
+          qsa(".answers button",card).forEach(button => button.classList.remove("correct","wrong"));
+          const feedback = $(".feedback",card);
+          feedback.className = "feedback";
+          feedback.textContent = "";
+        });
+        updateQuizScore();
+      });
+
+      $("#glossarySearch").addEventListener("input",event => {
+        const query = event.target.value.trim().toLowerCase();
+        qsa(".term","#glossaryGrid").forEach(term => {
+          term.classList.toggle("hidden",Boolean(query && !term.textContent.toLowerCase().includes(query)));
+        });
+      });
+
+      initProgress();
+      updateQuizScore();
+      window.requestAnimationFrame(drawRegression);
+    })();
+  </script>
+</body>
+</html>
