@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; script-src-attr 'none'; style-src 'unsafe-inline'; img-src data:; font-src 'none'; connect-src 'none'; media-src 'none'; object-src 'none'; frame-src 'none'; child-src 'none'; worker-src 'none'; manifest-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>11BC · Mathematik · Woche 5 · Funktionsbegriff und Definitionsbereich</title>
+<style>
+:root{--ink:#172033;--muted:#526079;--paper:#fff;--soft:#eef5f8;--soft2:#f8fafc;--accent:#0b6b8a;--accent2:#8b4a1f;--line:#bcc9d4;--good:#e8f6ee;--warn:#fff5d9;--teacher:#f3effb;--solution:#eef8f3;--radius:14px;--danger:#9e2f2f}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#e9eef3;color:var(--ink);font-family:Arial,Helvetica,sans-serif;line-height:1.48;font-size:16px}button,input,select{font:inherit}button{touch-action:manipulation;min-height:42px}
+.appbar{position:sticky;top:0;z-index:20;background:#162434;color:#fff;border-bottom:4px solid var(--accent);box-shadow:0 2px 12px #0003}.appbar .inner{max-width:1180px;margin:auto;padding:.7rem 1rem;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}.brand{font-weight:800;margin-right:auto}.viewbtn,.printbtn{border:1px solid #ffffff66;background:#ffffff12;color:#fff;border-radius:999px;padding:.48rem .75rem;cursor:pointer}.viewbtn.active{background:#fff;color:#162434}.print-mode{font-size:.84rem;color:#dce8ee;min-width:160px}
+main{max-width:1180px;margin:1.3rem auto 3rem;background:var(--paper);box-shadow:0 12px 35px #1f293733;border-radius:18px;overflow:hidden}.hero{padding:2rem 2.2rem;background:linear-gradient(135deg,#0b6b8a,#193a53);color:#fff}.hero h1{margin:.15rem 0 .55rem;font-size:clamp(1.8rem,4vw,3rem);line-height:1.08}.hero p{max-width:940px;margin:.4rem 0}.kicker{font-size:.82rem;text-transform:uppercase;letter-spacing:.08em;font-weight:800;color:#c7e7f1}.meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.7rem;margin-top:1.2rem}.meta div{background:#ffffff18;border:1px solid #ffffff33;border-radius:12px;padding:.65rem}.meta b{display:block;font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;color:#d9edf4}
+section{padding:1.6rem 2.2rem;border-bottom:1px solid #dde5ec}h2{font-size:1.55rem;margin:.1rem 0 1rem;color:#183b52}h3{font-size:1.18rem;margin:1rem 0 .55rem}h4{margin:.8rem 0 .35rem}p{margin:.45rem 0}ul,ol{margin:.45rem 0 .8rem;padding-left:1.3rem}li{margin:.22rem 0}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+.card{border:1px solid var(--line);border-radius:var(--radius);padding:1rem;background:#fff;break-inside:avoid;page-break-inside:avoid}.card.soft{background:var(--soft2)}.card.problem{border-left:7px solid var(--accent);background:#f4fbfd}.card.teacher{background:var(--teacher);border-color:#cabde5}.card.solution{background:var(--solution);border-color:#a9d4bd}.note{padding:.75rem .9rem;border-radius:10px;background:var(--warn);border-left:5px solid #d69a00}.good{padding:.75rem .9rem;border-radius:10px;background:var(--good);border-left:5px solid #2f8b56}.tag{display:inline-block;padding:.17rem .5rem;border-radius:999px;background:#e3eef3;color:#173e52;font-size:.78rem;font-weight:700;margin:.1rem .12rem .1rem 0}.small{font-size:.9rem;color:var(--muted)}
+table{width:100%;border-collapse:collapse;margin:.7rem 0 1rem;page-break-inside:auto}th,td{border:1px solid #aebbc7;padding:.5rem .58rem;vertical-align:top}th{background:#e7f0f4;text-align:left}tr{break-inside:avoid;page-break-inside:avoid}.timeline th:nth-child(1){width:7%}.timeline th:nth-child(2){width:12%}.timeline th:nth-child(5){width:9%}.timeline th:nth-child(6){width:11%}
+.material{border:2px solid #29475d;border-radius:12px;padding:1rem;background:#fff;break-inside:avoid;page-break-inside:avoid}.protocol-head{display:grid;grid-template-columns:155px 1fr;gap:.25rem .8rem;border-bottom:1px solid #bfcad3;padding-bottom:.55rem;margin-bottom:.7rem;font-size:.94rem}.protocol-head b{color:#34495e}.protocol-mark{display:inline-block;border:2px solid var(--accent);color:var(--accent);font-weight:900;letter-spacing:.06em;padding:.18rem .48rem;margin:.2rem 0 .6rem}.task-with-hints{border-left:5px solid var(--accent2);padding:.72rem .9rem;margin:.85rem 0;background:#fffaf6;break-inside:avoid-page;page-break-inside:auto}.task-with-hints h3{margin:.05rem 0 .45rem}.afb{font-size:.76rem;font-weight:700;background:#efe8df;color:#6d3b19;border-radius:999px;padding:.15rem .42rem;white-space:nowrap}.answerline{border-bottom:1px solid #5f6b76;height:1.25rem;margin:.24rem 0}.answerbox{border:1px dashed #73808c;min-height:3.7rem;margin:.4rem 0;background:#fff}.answerbox.tall{min-height:6.5rem}.answerbox.medium{min-height:8rem}.answerbox.xlarge{min-height:12rem}.compact-table td,.compact-table th{padding:.34rem .4rem}.inline-hints{margin:.55rem 0 .2rem;padding:.25rem .55rem .4rem;border-left:3px solid #d69a00;background:#fffdf5;border-radius:0 10px 10px 0}.inline-hints details{margin:.35rem 0;background:#fff9e8;border:1px solid #d2b977;border-radius:10px;break-inside:avoid;page-break-inside:avoid}.inline-hints summary{cursor:pointer;font-weight:700;padding:.62rem .75rem;color:#5f4512}.inline-hints details>div{padding:0 .75rem .72rem}.sim-task-note{margin:.45rem 0 .2rem;padding:.6rem .75rem;border-left:4px solid var(--accent);background:#eef8fb;border-radius:8px;color:#16465d;break-inside:avoid}.sim-task-note b{color:#0b536d}.sim-link,.sim-button{border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:999px;padding:.5rem .8rem;cursor:pointer;font-weight:700;margin:.45rem .2rem .05rem 0}.sim-button.secondary{background:#fff;color:var(--accent)}.board{background:#1c2c2b;color:#f5fff9;border:9px solid #8b6a45;border-radius:8px;padding:1rem 1.2rem;box-shadow:inset 0 0 0 2px #5d4530;break-inside:avoid}.board h3{color:#fff;margin-top:0}.formula{font-family:"Cambria Math","Times New Roman",serif;font-weight:700;white-space:nowrap}.pagebreak{break-before:page;page-break-before:always}.student-pagebreak{break-before:auto}.source-list li{margin:.45rem 0}.worksheet-header{display:flex;justify-content:space-between;gap:1rem;border-bottom:2px solid #29475d;padding-bottom:.55rem;margin-bottom:.8rem}.product-sheet{border:2px solid #29475d;border-radius:12px;padding:.85rem;background:#fff}.product-sheet h3{margin-top:0}.criterion-list{display:grid;grid-template-columns:1fr 1fr;gap:.25rem .9rem}.decision-grid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}.decision-box{border:1px solid #8b99a6;border-radius:10px;padding:.65rem;min-height:5.4rem;background:#fff}.page-note{font-size:.83rem;color:var(--muted)}
+.simulation-only{display:none}[data-view="all"] .simulation-only,[data-view="simulations"] .simulation-only{display:block}[data-view="simulations"] main>section:not(.simulation-only){display:none!important}[data-view="student"] .teacher-only,[data-view="student"] .solution-only,[data-view="student"] .simulation-only{display:none!important}[data-view="teacher"] .student-only,[data-view="teacher"] .solution-only,[data-view="teacher"] .simulation-only{display:none!important}[data-view="solution"] .student-only,[data-view="solution"] .teacher-only,[data-view="solution"] .simulation-only{display:none!important}
+.sim-intro{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin:1rem 0}.sim-card{border:1px solid var(--line);border-radius:var(--radius);background:#f8fbfd;padding:1rem;break-inside:avoid}.sim-tag{display:inline-block;padding:.18rem .52rem;border-radius:999px;background:#dceef4;color:#16465d;font-size:.78rem;font-weight:800;margin-bottom:.45rem}.sim-panel{border:1px solid #aebdca;border-radius:14px;background:#fff;padding:1rem;margin:1rem 0;box-shadow:0 6px 18px #1f293710;scroll-margin-top:90px}.sim-panel h3{margin-top:.05rem;color:#183b52}.sim-controls{display:flex;flex-wrap:wrap;align-items:end;gap:.7rem;margin:.75rem 0}.sim-controls label{display:grid;gap:.3rem;font-weight:700;color:#34495e;min-width:205px}.sim-controls select,.sim-controls input{border:1px solid #8797a6;border-radius:9px;padding:.5rem .6rem;background:#fff;color:#172033;min-height:42px}.sim-feedback{min-height:3.2rem;border-left:5px solid #78909c;background:#f3f7f9;border-radius:9px;padding:.65rem .8rem;margin:.65rem 0;color:#253546}.sim-feedback.ok{border-left-color:#2f8b56;background:#e8f6ee}.sim-feedback.warn{border-left-color:#d69a00;background:#fff5d9}.sim-feedback.bad{border-left-color:#b74343;background:#fff0f0}.sim-canvas{display:block;width:100%;height:auto;border:1px solid #aebbc7;border-radius:12px;background:#fff;touch-action:manipulation;margin:.75rem 0}.lab-equation{border:1px solid var(--line);border-radius:10px;background:#f8fafc;padding:.7rem;margin:.55rem 0;font-family:"Cambria Math","Times New Roman",serif;font-weight:700}.range-output{font-weight:800;color:#0b536d}
+.email-card{border:1px solid #9aabb8;border-radius:12px;background:#fff;overflow:hidden;box-shadow:0 6px 18px #1f293715;break-inside:avoid}.email-bar{display:grid;grid-template-columns:92px 1fr;gap:.25rem .75rem;padding:.7rem 1rem;background:#edf3f6;border-bottom:1px solid #b9c6cf;font-size:.93rem}.email-bar b{color:#34495e}.email-body{padding:1rem}.email-body .subject{font-size:1.18rem;font-weight:800;color:#183b52;margin:0 0 .5rem}
+.workpath{counter-reset:path;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.45rem;margin:.55rem 0}.workpath div{position:relative;border:1px solid var(--line);border-radius:10px;padding:.58rem .52rem .52rem 2rem;background:#f8fafc}.workpath div:before{counter-increment:path;content:counter(path);position:absolute;left:.5rem;top:.5rem;width:1.1rem;height:1.1rem;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:#fff;font-size:.72rem;font-weight:900}
+.ascan-svg{width:100%;height:auto;border:1px solid #aebbc7;border-radius:10px;background:#fff;display:block;margin:.55rem 0}.echo-key{display:flex;flex-wrap:wrap;gap:.45rem;margin:.4rem 0}.echo-key span{border:1px solid var(--line);border-radius:999px;padding:.22rem .52rem;background:#f8fafc;font-size:.86rem}.scan-strip{display:grid;grid-template-columns:48px repeat(8,minmax(54px,1fr));gap:.22rem;align-items:stretch;margin:.5rem 0;overflow-x:auto}.scan-strip>div{border:1px solid #aebbc7;border-radius:7px;min-height:2.2rem;padding:.25rem;display:grid;place-items:center;text-align:center;background:#fff}.scan-strip .head{background:#e7f0f4;font-weight:800;min-height:auto}.scan-strip .rowhead{background:#f0f4f7;font-weight:800}.status-chip{display:inline-block;border-radius:999px;padding:.13rem .4rem;font-size:.76rem;font-weight:800}.status-chip.indication{background:#fff0f0;color:#7e2828}.status-chip.geometry{background:#e8f6ee;color:#245f3d}.status-chip.backwall{background:#eef5f8;color:#264b5e}.evidence-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.55rem;margin:.55rem 0}.evidence-box{border:1px solid var(--line);border-radius:10px;padding:.58rem;background:#f8fafc}.evidence-box b{display:block;color:#34495e}.formula-strip{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;padding:.65rem;border:1px solid var(--line);border-radius:10px;background:#f7fbfd}.formula-strip .step{font-weight:800}.formula-strip .arrow{color:var(--accent);font-size:1.2rem}
+@media(max-width:850px){.meta,.grid2,.grid3,.sim-intro,.evidence-grid{grid-template-columns:1fr}.appbar .inner{align-items:flex-start}main{margin:0;border-radius:0}section,.hero{padding:1.2rem}.timeline{font-size:.88rem;display:block;overflow-x:auto}.criterion-list,.decision-grid{grid-template-columns:1fr}.sim-controls label{min-width:min(100%,280px)}.workpath{grid-template-columns:1fr}.scan-strip{grid-template-columns:44px repeat(8,minmax(70px,1fr))}}
+@page{size:A4;margin:11mm}
+@media print{
+ body{background:#fff;font-size:8.8pt;line-height:1.21}.appbar,.no-print,.sim-task-note,.simulation-only{display:none!important}main{max-width:none;margin:0;box-shadow:none;border-radius:0}.hero{background:#fff;color:#111;padding:0 0 4mm;border-bottom:2px solid #111}.hero .kicker{color:#333}.meta div{background:#fff;border:1px solid #999;padding:.25rem}.meta b{color:#333}section{padding:2.2mm 0;border-bottom:0}h2{color:#111;margin-bottom:.38rem;break-after:avoid-page;page-break-after:avoid}h3{margin:.38rem 0 .2rem;break-after:avoid-page;page-break-after:avoid}p{margin:.16rem 0}ul,ol{margin:.16rem 0 .3rem}.card,.material,.task-with-hints,.product-sheet{box-shadow:none}.task-with-hints{margin:.2rem 0;padding:.28rem .42rem}.compact-table td,.compact-table th{padding:.16rem .22rem}.answerline{height:.72rem}.answerbox{min-height:1.7rem;margin:.16rem 0}.answerbox.tall{min-height:3rem}.answerbox.medium{min-height:25mm}.answerbox.xlarge{min-height:48mm}.student-only .inline-hints{display:none!important}body.print-hints .student-only .inline-hints{display:block!important}body.print-hints .student-only .task-with-hints{break-inside:auto;page-break-inside:auto}body.print-hints .student-only .product-sheet{break-inside:avoid-page;page-break-inside:avoid}body.print-hints .student-only .inline-hints details{display:block!important;margin:.14rem 0}body.print-hints .student-only .inline-hints details>div{display:block!important;padding:0 .42rem .3rem}body.print-hints .student-only .inline-hints summary{padding:.28rem .42rem}[data-view="student"] .hero{display:none!important}[data-view="student"] .teacher-only,[data-view="student"] .solution-only{display:none!important}[data-view="teacher"] .student-only,[data-view="teacher"] .solution-only{display:none!important}[data-view="solution"] .student-only,[data-view="solution"] .teacher-only{display:none!important}[data-view="all"] .simulation-only{display:none!important}.pagebreak{break-before:page;page-break-before:always}.student-pagebreak{break-before:page;page-break-before:always}body.print-hints .student-pagebreak{break-before:auto;page-break-before:auto}.worksheet-header{margin-bottom:.25rem}.material{padding:.42rem}.protocol-mark{margin:0 0 .16rem}.protocol-head{margin-bottom:.22rem;padding-bottom:.18rem}.product-sheet{padding:.42rem}.ascan-svg{max-height:42mm;width:100%;margin:.2rem 0}.criterion-list{grid-template-columns:1fr 1fr}.decision-grid{grid-template-columns:1fr 1fr;gap:.35rem}.decision-box{min-height:18mm;padding:.35rem}.email-card{box-shadow:none}.email-bar{padding:.35rem .5rem}.email-body{padding:.45rem}.workpath{grid-template-columns:repeat(4,1fr);gap:.18rem}.workpath div{padding:.26rem .18rem .26rem 1.25rem}.workpath div:before{left:.18rem;top:.22rem}.scan-strip>div{min-height:1.45rem;padding:.14rem}.evidence-grid{grid-template-columns:repeat(3,1fr);gap:.22rem}.evidence-box{padding:.28rem}.formula-strip{padding:.28rem}.page-note{font-size:7.5pt}.timeline{font-size:6.7pt;line-height:1.12;table-layout:fixed;width:100%}.timeline th,.timeline td{padding:.12rem .15rem;overflow-wrap:anywhere}.timeline th:nth-child(1){width:6%}.timeline th:nth-child(2){width:11%}.timeline th:nth-child(3){width:22%}.timeline th:nth-child(4){width:22%}.timeline th:nth-child(5){width:10%}.timeline th:nth-child(6){width:10%}.timeline th:nth-child(7){width:19%}
+}
+
+.data-dossier{border:2px solid #29475d;border-radius:12px;padding:1rem;background:#fff;break-inside:avoid}.raw-flag{font-weight:800;color:var(--danger)}.source-note{background:#eef5f8;border-left:4px solid var(--accent);padding:.55rem .7rem;border-radius:8px;margin:.4rem 0}.audit-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6rem}.audit-box{border:1px solid var(--line);border-radius:10px;padding:.6rem;background:#f8fafc}.audit-box b{display:block;color:#34495e}.graph-sheet{border:2px solid #29475d;border-radius:12px;padding:.7rem;background:#fff}.graph-svg{display:block;width:100%;height:auto;border:1px solid #aebbc7;border-radius:10px;background:#fff}.draft-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem}.draft-card{border:1px solid var(--line);border-radius:12px;padding:.7rem;background:#fff}.decision-line{display:grid;grid-template-columns:145px 1fr;gap:.4rem .7rem;margin:.35rem 0}.decision-line b{color:#34495e}.release-table td:nth-child(1),.release-table th:nth-child(1){width:12%}.release-table td:nth-child(2),.release-table th:nth-child(2){width:22%}.release-table td:nth-child(3),.release-table th:nth-child(3){width:22%}.release-table td:nth-child(4),.release-table th:nth-child(4){width:44%}.sim-readout{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.5rem;margin:.5rem 0}.sim-readout div{border:1px solid var(--line);border-radius:10px;padding:.55rem;background:#f8fafc}.sim-readout b{display:block;color:#34495e}.axis-choice{font-weight:800;color:#0b536d}.checklist-inline{display:flex;flex-wrap:wrap;gap:.45rem;margin:.45rem 0}.checklist-inline span{border:1px solid var(--line);border-radius:999px;padding:.2rem .5rem;background:#f8fafc;font-size:.86rem}.data-status{display:inline-block;border-radius:999px;padding:.12rem .42rem;font-size:.76rem;font-weight:800}.data-status.ok{background:#e8f6ee;color:#245f3d}.data-status.check{background:#fff5d9;color:#6b5000}.data-status.stop{background:#fff0f0;color:#7e2828}
+@media(max-width:850px){.audit-grid,.draft-grid,.sim-readout{grid-template-columns:1fr}.decision-line{grid-template-columns:1fr}}
+@media print{.data-dossier,.graph-sheet{padding:.38rem}.draft-grid{grid-template-columns:1fr 1fr;gap:.3rem}.draft-card{padding:.35rem}.graph-svg{max-height:92mm}.audit-grid{grid-template-columns:repeat(3,1fr);gap:.2rem}.audit-box{padding:.25rem}.release-table td,.release-table th{padding:.14rem .2rem}.decision-line{grid-template-columns:28mm 1fr;gap:.15rem .35rem;margin:.1rem 0}}
+
+.delivery-dossier{border:2px solid #29475d;border-radius:12px;padding:1rem;background:#fff;break-inside:avoid}.provider-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem}.provider-card{border:1px solid var(--line);border-radius:12px;padding:.75rem;background:#fff}.provider-card h3{margin-top:0}.number-strip{display:flex;flex-wrap:wrap;gap:.35rem;margin:.5rem 0}.number-strip span{min-width:2.3rem;text-align:center;border:1px solid #8797a6;border-radius:8px;padding:.32rem .45rem;background:#f8fafc;font-weight:800}.formula-card{border:1px solid var(--line);border-radius:10px;padding:.65rem;background:#f7fbfd;margin:.45rem 0}.stat-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.45rem}.stat-box{border:1px solid var(--line);border-radius:10px;padding:.55rem;background:#f8fafc;min-height:4.4rem}.stat-box b{display:block;color:#34495e}.class-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.35rem;margin:.5rem 0}.class-cell{border:1px solid #8797a6;border-radius:9px;padding:.45rem;text-align:center;background:#fff;min-height:4rem}.class-cell b{display:block}.briefing-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem}.briefing-box{border:1px solid #8b99a6;border-radius:10px;padding:.65rem;background:#fff;min-height:6rem}.briefing-box.wide{grid-column:1/-1}.bar-sheet{border:2px solid #29475d;border-radius:12px;padding:.65rem;background:#fff}.bar-svg{display:block;width:100%;height:auto;border:1px solid #aebbc7;border-radius:10px;background:#fff}.comparison-chip{display:inline-block;border-radius:999px;padding:.15rem .48rem;font-size:.78rem;font-weight:800;background:#e7f0f4;color:#183b52}.calc-table td,.calc-table th{text-align:center}.calc-table td:first-child,.calc-table th:first-child{text-align:left}.sim-bars{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.35rem;align-items:end;height:190px;border-left:2px solid #34495e;border-bottom:2px solid #34495e;padding:.5rem .45rem 0;margin:.75rem 0 1.2rem}.sim-bar-wrap{height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:.25rem}.sim-bar{width:78%;min-height:2px;border:1px solid #0b6b8a;background:#dceef4;border-radius:7px 7px 0 0;transition:height .2s}.sim-bar-label{font-size:.75rem;text-align:center}.prediction-row{display:flex;flex-wrap:wrap;gap:.55rem;margin:.5rem 0}.prediction-row label{display:flex;align-items:center;gap:.3rem;min-width:auto;font-weight:600}.prediction-row input{width:20px;height:20px}.decision-matrix{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem}.decision-metric{border:1px solid var(--line);border-radius:10px;padding:.55rem;background:#f8fafc}.decision-metric b{display:block;color:#34495e}.status-line{font-weight:800;color:#0b536d}.math-scroll{overflow-x:auto}.worksheet-split{break-inside:avoid;page-break-inside:avoid}
+@media(max-width:850px){.provider-grid,.stat-grid,.briefing-grid,.decision-matrix{grid-template-columns:1fr}.class-grid{grid-template-columns:1fr}.briefing-box.wide{grid-column:auto}.sim-bars{height:160px}.number-strip span{min-width:2.1rem}}
+@media print{.delivery-dossier,.bar-sheet{padding:.38rem}.provider-grid{grid-template-columns:1fr 1fr;gap:.3rem}.provider-card{padding:.35rem}.number-strip{gap:.16rem}.number-strip span{padding:.12rem .22rem;min-width:6mm}.stat-grid{grid-template-columns:repeat(4,1fr);gap:.2rem}.stat-box{padding:.25rem;min-height:13mm}.class-grid{grid-template-columns:repeat(5,1fr);gap:.15rem}.class-cell{padding:.2rem;min-height:14mm}.briefing-grid{grid-template-columns:1fr 1fr;gap:.25rem}.briefing-box{padding:.3rem;min-height:22mm}.briefing-box.wide{grid-column:1/-1}.bar-svg{max-height:76mm}.calc-table td,.calc-table th{padding:.13rem .18rem}.formula-card{padding:.25rem;margin:.18rem 0}.worksheet-split{break-inside:auto;page-break-inside:auto}}
+
+@media print{body.print-hints #w2-task4{break-before:page;page-break-before:always}}
+
+
+/* Woche 3: fachlich notwendige Ergänzungen innerhalb des bestehenden Designsystems */
+.market-dossier{border:2px solid #29475d;border-radius:12px;padding:1rem;background:#fff;break-inside:avoid}.market-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:.8rem;align-items:start}.market-card{border:1px solid var(--line);border-radius:12px;padding:.75rem;background:#fff}.market-card h3{margin-top:0}.scatter-sheet{border:2px solid #29475d;border-radius:12px;padding:.65rem;background:#fff}.scatter-svg{display:block;width:100%;height:auto;border:1px solid #aebbc7;border-radius:10px;background:#fff}.data-table td,.data-table th{text-align:center}.data-table td:first-child,.data-table th:first-child{text-align:left}.trend-brief{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem}.trend-field{border:1px solid #8b99a6;border-radius:10px;padding:.65rem;background:#fff;min-height:5.7rem}.trend-field.wide{grid-column:1/-1;min-height:7rem}.support-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.55rem}.support-box{border:1px solid var(--line);border-radius:10px;padding:.55rem;background:#f8fafc}.support-box b{display:block;color:#34495e}.interpret-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.55rem}.interpret-box{border:1px solid var(--line);border-radius:10px;padding:.55rem;background:#f8fafc;min-height:5rem}.canvas-wrap{border:1px solid #aebbc7;border-radius:12px;background:#fff;overflow:hidden;margin:.75rem 0}.canvas-wrap canvas{display:block;width:100%;height:auto;min-height:320px;background:#fff;touch-action:manipulation}.sim-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.45rem;margin:.55rem 0}.sim-metric{border:1px solid var(--line);border-radius:10px;padding:.55rem;background:#f8fafc;min-height:4rem}.sim-metric b{display:block;color:#34495e}.triangle-readout{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.45rem;margin:.55rem 0}.triangle-readout div{border:1px solid var(--line);border-radius:10px;padding:.55rem;background:#f8fafc}.triangle-readout b{display:block;color:#34495e}.formula-work{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.45rem;align-items:center;padding:.65rem;border:1px solid var(--line);border-radius:10px;background:#f7fbfd}.formula-work div{text-align:center;font-weight:800}.formula-work .arrow{font-size:1.25rem;color:var(--accent)}.range-pair{display:grid;grid-template-columns:1fr auto;gap:.45rem;align-items:center}.range-pair output{min-width:5.5rem;text-align:right;font-weight:800;color:#0b536d}.task-check{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.35rem;margin:.45rem 0}.task-check span{border:1px solid var(--line);border-radius:9px;padding:.4rem;background:#f8fafc;text-align:center;font-size:.86rem}.axis-note{font-size:.84rem;color:var(--muted);text-align:center;margin-top:.2rem}button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #f0b429;outline-offset:2px}button{min-height:44px}.inline-hints summary{min-height:44px;display:flex;align-items:center}
+@media(max-width:850px){.market-grid,.trend-brief,.support-grid,.interpret-grid,.sim-metrics,.triangle-readout,.formula-work,.task-check{grid-template-columns:1fr}.trend-field.wide{grid-column:auto}.canvas-wrap canvas{min-height:280px}}
+@media print{.market-dossier,.scatter-sheet{padding:.38rem}.market-grid{grid-template-columns:1.1fr .9fr;gap:.3rem}.market-card{padding:.35rem}.scatter-svg{max-height:92mm}.data-table td,.data-table th{padding:.13rem .18rem}.trend-brief{grid-template-columns:1fr 1fr;gap:.25rem}.trend-field{padding:.3rem;min-height:22mm}.trend-field.wide{grid-column:1/-1;min-height:28mm}.support-grid,.interpret-grid{grid-template-columns:1fr 1fr;gap:.22rem}.support-box,.interpret-box{padding:.28rem;min-height:15mm}.formula-work{grid-template-columns:1fr auto 1fr auto 1fr;padding:.25rem;gap:.15rem}.task-check{grid-template-columns:repeat(3,1fr);gap:.15rem}.task-check span{padding:.2rem}.canvas-wrap{display:none!important}}
+@media print{#w3-arbeitsblatt .student-pagebreak{break-before:auto!important;page-break-before:auto!important}body:not(.print-hints) #w3-task2{break-inside:avoid-page;page-break-inside:avoid}.page-note{display:none!important}}
+
+
+/* Woche 4: Regression, Residuen und Modellgüte innerhalb des bestehenden Designsystems */
+.audit-dossier{border:2px solid #29475d;border-radius:12px;padding:1rem;background:#fff;break-inside:avoid}.audit-grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.5rem}.audit-metric{border:1px solid var(--line);border-radius:10px;padding:.55rem;background:#f8fafc;min-height:4.6rem}.audit-metric b{display:block;color:#34495e}.regression-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:.8rem;align-items:start}.reg-card{border:1px solid var(--line);border-radius:12px;padding:.75rem;background:#fff}.reg-card h3{margin-top:0}.residual-table td,.residual-table th{text-align:center}.residual-table td:first-child,.residual-table th:first-child{text-align:left}.model-release{border:2px solid #29475d;border-radius:12px;padding:.8rem;background:#fff}.release-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem}.release-field{border:1px solid #8b99a6;border-radius:10px;padding:.65rem;background:#fff;min-height:5.4rem}.release-field.wide{grid-column:1/-1;min-height:7rem}.residual-key{display:flex;flex-wrap:wrap;gap:.45rem;margin:.4rem 0}.residual-key span{border:1px solid var(--line);border-radius:999px;padding:.22rem .52rem;background:#f8fafc;font-size:.86rem}.formula-row{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:.4rem;align-items:center;padding:.65rem;border:1px solid var(--line);border-radius:10px;background:#f7fbfd}.formula-row div{text-align:center;font-weight:800}.formula-row .arrow{color:var(--accent);font-size:1.2rem}.decision-chips{display:flex;flex-wrap:wrap;gap:.45rem;margin:.45rem 0}.decision-chips span{border:1px solid var(--line);border-radius:999px;padding:.2rem .5rem;background:#f8fafc;font-size:.86rem}.lab-table{width:100%;border-collapse:collapse}.lab-table td,.lab-table th{padding:.35rem .45rem}.residual-readout{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.45rem;margin:.55rem 0}.residual-readout div{border:1px solid var(--line);border-radius:10px;padding:.55rem;background:#f8fafc}.residual-readout b{display:block;color:#34495e}.forecast-readout{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.45rem;margin:.55rem 0}.forecast-readout div{border:1px solid var(--line);border-radius:10px;padding:.55rem;background:#f8fafc}.forecast-readout b{display:block;color:#34495e}.lab-canvas{display:block;width:100%;height:auto;border:1px solid #aebbc7;border-radius:12px;background:#fff;touch-action:manipulation;margin:.75rem 0}.status-allow{background:#e8f6ee;color:#245f3d}.status-caution{background:#fff5d9;color:#6b5000}.status-stop{background:#fff0f0;color:#7e2828}.model-status{display:inline-block;border-radius:999px;padding:.15rem .48rem;font-size:.78rem;font-weight:800}.print-keep{break-inside:avoid;page-break-inside:avoid}
+@media(max-width:850px){.audit-grid4,.regression-grid,.release-grid,.residual-readout,.forecast-readout,.formula-row{grid-template-columns:1fr}.release-field.wide{grid-column:auto}}
+@media print{.audit-dossier,.model-release{padding:.38rem}.audit-grid4{grid-template-columns:repeat(4,1fr);gap:.2rem}.audit-metric{padding:.25rem;min-height:13mm}.regression-grid{grid-template-columns:1.08fr .92fr;gap:.3rem}.reg-card{padding:.35rem}.residual-table td,.residual-table th{padding:.13rem .18rem}.release-grid{grid-template-columns:1fr 1fr;gap:.25rem}.release-field{padding:.3rem;min-height:20mm}.release-field.wide{grid-column:1/-1;min-height:28mm}.formula-row{grid-template-columns:1fr auto 1fr auto 1fr;padding:.25rem;gap:.15rem}.lab-canvas{display:none!important}}
+@media print{#w4-arbeitsblatt .student-pagebreak{break-before:auto!important;page-break-before:auto!important}body:not(.print-hints) #w4-task3{break-inside:avoid-page;page-break-inside:avoid}body.print-hints #w4-task4{break-before:page;page-break-before:always}.page-note{display:none!important}}
+
+
+/* Woche 5: Funktionsbegriff, Stelle–Wert–Punkt und Sachbereich */
+.function-dossier{border:2px solid #29475d;border-radius:12px;padding:1rem;background:#fff;break-inside:avoid}.candidate-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.55rem}.candidate-card{border:1px solid var(--line);border-radius:11px;padding:.6rem;background:#f8fafc}.candidate-card h3{margin:.05rem 0 .4rem}.pair-list{display:flex;flex-wrap:wrap;gap:.3rem}.pair-list span{border:1px solid #8797a6;border-radius:8px;padding:.24rem .38rem;background:#fff;font-family:"Cambria Math","Times New Roman",serif;font-weight:700}.rule-banner{display:grid;grid-template-columns:1fr auto;gap:.7rem;align-items:center;border:1px solid var(--line);border-radius:11px;padding:.65rem;background:#eef8fb;margin:.65rem 0}.rule-banner strong{font-family:"Cambria Math","Times New Roman",serif;font-size:1.12rem}.domain-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.45rem;margin:.55rem 0}.domain-strip div{border:1px solid var(--line);border-radius:10px;padding:.55rem;background:#f8fafc}.domain-strip b{display:block;color:#34495e}.notation-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.55rem}.notation-box{border:1px solid #8b99a6;border-radius:10px;padding:.6rem;background:#fff;min-height:5rem}.notation-box b{display:block;color:#34495e}.release-form{border:2px solid #29475d;border-radius:12px;padding:.8rem;background:#fff}.release-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem}.release-form-field{border:1px solid #8b99a6;border-radius:10px;padding:.65rem;background:#fff;min-height:5.3rem}.release-form-field.wide{grid-column:1/-1;min-height:7rem}.gate-table td,.gate-table th{text-align:center}.gate-table td:first-child,.gate-table th:first-child{text-align:left}.function-svg{display:block;width:100%;height:auto;border:1px solid #aebbc7;border-radius:10px;background:#fff}.mapping-svg{display:block;width:100%;height:auto;border:1px solid #aebbc7;border-radius:12px;background:#fff;margin:.65rem 0}.function-readout{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.45rem;margin:.55rem 0}.function-readout div{border:1px solid var(--line);border-radius:10px;padding:.55rem;background:#f8fafc}.function-readout b{display:block;color:#34495e}.notation-readout{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.45rem;margin:.55rem 0}.notation-readout div{border:1px solid var(--line);border-radius:10px;padding:.55rem;background:#f8fafc}.notation-readout b{display:block;color:#34495e}.gate-track{position:relative;height:72px;border:1px solid #aebbc7;border-radius:12px;background:#f8fafc;margin:.75rem 0 1rem;overflow:hidden}.gate-zone{position:absolute;left:10%;right:10%;top:23px;height:18px;border-radius:999px;background:#d9efe2;border:1px solid #2f8b56}.gate-tick{position:absolute;top:17px;width:2px;height:30px;background:#34495e}.gate-label{position:absolute;top:49px;transform:translateX(-50%);font-size:.78rem;color:#526079}.gate-marker{position:absolute;top:12px;width:18px;height:18px;border-radius:50%;background:#d69a00;border:3px solid #fff;box-shadow:0 0 0 2px #d69a00;transform:translateX(-50%)}.system-note{padding:.65rem .75rem;border-left:5px solid var(--accent2);background:#fffaf6;border-radius:9px}.choice-row{display:flex;flex-wrap:wrap;gap:.55rem}.choice-row label{display:flex;align-items:center;gap:.35rem;min-width:auto;font-weight:600}.choice-row input{width:20px;height:20px}.mini-status{display:inline-block;border-radius:999px;padding:.15rem .48rem;font-size:.78rem;font-weight:800}.mini-status.release{background:#e8f6ee;color:#245f3d}.mini-status.reject{background:#fff0f0;color:#7e2828}.mini-status.review{background:#fff5d9;color:#6b5000}
+@media(max-width:850px){.candidate-grid,.domain-strip,.notation-grid,.release-form-grid,.function-readout,.notation-readout,.rule-banner{grid-template-columns:1fr}.release-form-field.wide{grid-column:auto}}
+@media print{.function-dossier,.release-form{padding:.38rem}.candidate-grid{grid-template-columns:repeat(3,1fr);gap:.2rem}.candidate-card{padding:.28rem}.pair-list{gap:.12rem}.pair-list span{padding:.1rem .18rem}.rule-banner{grid-template-columns:1fr auto;padding:.28rem;margin:.2rem 0}.domain-strip,.notation-grid{grid-template-columns:repeat(3,1fr);gap:.2rem}.domain-strip div,.notation-box{padding:.25rem;min-height:13mm}.release-form-grid{grid-template-columns:1fr 1fr;gap:.25rem}.release-form-field{padding:.3rem;min-height:19mm}.release-form-field.wide{grid-column:1/-1;min-height:28mm}.gate-table td,.gate-table th{padding:.13rem .18rem}.function-svg{max-height:56mm}.mapping-svg{display:none!important}}
+@media print{#w5-arbeitsblatt .student-pagebreak{break-before:auto!important;page-break-before:auto!important}body:not(.print-hints) #w5-task3{break-before:page!important;page-break-before:always!important}body:not(.print-hints) #w5-task4{break-before:page!important;page-break-before:always!important}body:not(.print-hints) #w5-task3 .answerbox.tall{min-height:55mm}body:not(.print-hints) #w5-task4 .release-form-field{min-height:31mm}body:not(.print-hints) #w5-task4 .release-form-field.wide{min-height:60mm}body.print-hints #w5-task2,body.print-hints #w5-task3,body.print-hints #w5-task4{break-before:page!important;page-break-before:always!important}.page-note{display:none!important}}
+
+</style>
+
+</head>
+<body data-view="all">
+<nav class="appbar no-print" aria-label="Ansichts- und Drucksteuerung">
+  <div class="inner">
+    <div class="brand">11BC · Mathematik · Woche 5</div>
+    <button type="button" class="viewbtn active" data-view-target="all">Gesamt</button>
+    <button type="button" class="viewbtn" data-view-target="student">Schülerarbeitsblatt</button>
+    <button type="button" class="viewbtn" data-view-target="simulations">Simulationen</button>
+    <button type="button" class="viewbtn" data-view-target="teacher">Lehrkraftfassung</button>
+    <button type="button" class="viewbtn" data-view-target="solution">Musterlösung</button>
+    <button type="button" class="printbtn" id="w5PrintHintToggle">Hilfen beim Drucken: aus</button>
+    <button type="button" class="printbtn" id="w5PrintBtn">Drucken</button>
+    <span class="print-mode" id="w5PrintModeText">Schülerdruck ohne Hilfen</span>
+  </div>
+</nav>
+<main id="w5-main">
+<section class="hero">
+  <div class="kicker">Von Daten zu Funktionen I · Halbjahr 11.1</div>
+  <h1>Wann darf ein EU-Angebotsrechner als Funktion freigegeben werden?</h1>
+  <p>Zwei getrennte Lernstunden à 45 Minuten mit gemeinsamem Auftrag: Zuordnungen auf Eindeutigkeit prüfen, Stelle, Funktionswert und Punkt sicher unterscheiden und den mathematischen Term durch einen sachlich zulässigen Bestellbereich begrenzen.</p>
+  <div class="meta">
+    <div><b>Klasse</b>11BC · Berufliches Gymnasium D28</div>
+    <div><b>Woche</b>5 · Datum durch Lehrkraft ergänzen</div>
+    <div><b>Stundenlage</b>2 × 45 Minuten · Übungsstunde separat</div>
+    <div><b>Handlungsprodukt</b>Systemfreigabe F-52</div>
+  </div>
+</section>
+
+<section class="teacher-only" id="w5-einordnung">
+  <h2>1. Einordnung, Rückblick und Lernziele</h2>
+  <div class="grid2">
+    <div class="card">
+      <h3>Letzter gesicherter Stand</h3>
+      <p><span class="tag">Woche 4 abgeschlossen</span><span class="tag">lineare Regression</span></p>
+      <p>Die Lernenden haben die Regressionsgerade <span class="formula">p̂(x)=−2,071x+34,321</span> als eindeutige rechnerische Zuordnung genutzt, Residuen mit <span class="formula">e=p−p̂</span> gedeutet, <span class="formula">r</span> und <span class="formula">r²</span> begrenzt interpretiert und Interpolation von Extrapolation getrennt. Die Freigabe endete am beobachteten Datenbereich.</p>
+      <p><b>Voraussetzungen:</b> Wertepaare lesen, lineare Terme einsetzen, Punkte im Koordinatensystem benennen, Einheiten deuten und mathematische Berechenbarkeit von sachlicher Zulässigkeit unterscheiden.</p>
+    </div>
+    <div class="card soft">
+      <h3>Nächster offener Teilschritt</h3>
+      <p><b>Folgethema:</b> Funktion als eindeutige Zuordnung; Stelle, Funktionswert und Punkt; mathematischer Definitionsbereich und sachlich zulässiger Definitionsbereich.</p>
+      <p><b>Didaktische Brücke:</b> In Woche 4 wurde mit Modellwerten gerechnet, ohne die zugrunde liegende Funktionssprache systematisch zu sichern. Der Angebotsrechner macht sichtbar, warum eine Eingabe genau eine Ausgabe benötigt und warum ein berechenbarer Term nicht automatisch jede Eingabe erlaubt.</p>
+      <p><b>Bewusste Grenze:</b> kein systematischer Darstellungswechsel zwischen Text, Tabelle, Graph und Term; keine formale Bestimmung von Wertebereichen komplexerer Funktionen; keine Umkehrfunktion und keine mehrdimensionale Funktionstheorie.</p>
+      <p><b>Folgestoff:</b> Woche 6 wechselt systematisch zwischen Sachtext, Tabelle, Graph und Term und vergleicht deren Stärken und Grenzen.</p>
+    </div>
+  </div>
+  <h3>Lernziele</h3>
+  <ul>
+    <li>Die Lernenden prüfen Zuordnungen über das Eindeutigkeitskriterium und begründen, warum gleiche Ausgabewerte erlaubt, doppelte verschiedene Ausgaben zu derselben Eingabe aber unzulässig sind.</li>
+    <li>Sie unterscheiden die Stelle <span class="formula">x</span>, den Funktionswert <span class="formula">K(x)</span> und den Graphenpunkt <span class="formula">P(x|K(x))</span> sprachlich und symbolisch.</li>
+    <li>Sie berechnen Funktionswerte einer linearen Kostenfunktion und deuten diese mit Größen und Einheiten.</li>
+    <li>Sie trennen den mathematischen Definitionsbereich eines linearen Terms vom sachlich zulässigen, diskreten Bestellbereich.</li>
+    <li>Sie formulieren eine fachlich begrenzte Systemfreigabe und erkennen, wann eine weitere Einflussgröße in das Modell aufgenommen werden muss.</li>
+  </ul>
+</section>
+
+<section class="teacher-only" id="w5-problem-produkt">
+  <h2>2. Problemsituation und Handlungsprodukt</h2>
+  <div class="email-card">
+    <div class="email-bar">
+      <b>Von</b><span>Leonie van den Berg · European Sales, EuroTrade Solutions GmbH</span>
+      <b>An</b><span>Junior-Analysegruppe 11BC</span>
+      <b>Betreff</b><span>F-52: Freigabe des Benelux-Angebotsrechners</span>
+    </div>
+    <div class="email-body">
+      <p class="subject">Warum liefert dieselbe Bestellmenge im Test zwei verschiedene Kosten?</p>
+      <p>Für gebündelte Benelux-Sendungen soll ein Angebotsrechner jeder Zahl von Exportkartons genau einen Abwicklungsbetrag zuordnen. Das Systemteam hat drei Testzuordnungen importiert. In einer Liste erscheint die Eingabe 50 jedoch mit zwei verschiedenen Ausgaben. Zusätzlich rechnet der Term <b>K(x)=480+16x</b> auch für Mengen, die unser Lager weder annimmt noch verarbeiten kann.</p>
+      <p><b>Bedingungen:</b> Eine reale Sendung umfasst 5 bis 150 Kartons, ausschließlich in vollständigen Fünferbündeln. Der Betrag K wird in Euro angegeben.</p>
+      <p><b>Auftrag:</b> Prüft die Testzuordnungen, klärt die korrekte Funktionssprache, legt den zulässigen Bestellbereich fest und gebt den Rechner nur mit eindeutigen Sperrregeln frei.</p>
+    </div>
+  </div>
+  <p class="small"><span class="tag">didaktisch konstruierter Fall</span> Unternehmen, Person, Systemkennung und Daten sind fiktiv. Der wirtschaftliche Kontext ist notwendig, weil Eindeutigkeit, Mengeneinheit, Kapazitätsgrenze, Bündelung und Systemfreigabe den Definitionsbereich bestimmen.</p>
+  <p><b>Untersuchungsfrage:</b> Welche Zuordnung ist eine Funktion der Kartonzahl, und für welche Eingaben darf der Angebotsrechner tatsächlich einen Betrag ausgeben?</p>
+  <div class="grid2">
+    <div class="card problem"><h3>Zwischenergebnis Stunde 1</h3><p><b>Zuordnungs-Audit:</b> Entscheidung zu den drei Testlisten sowie sichere Trennung von Stelle, Funktionswert und Punkt.</p></div>
+    <div class="card solution"><h3>Gesamtprodukt Stunde 2</h3><p><b>Systemfreigabe F-52:</b> freigegebene Funktionsregel, sachlicher Definitionsbereich, Prüffälle, Sperrgründe und Umgang mit einer zusätzlichen Zielzone.</p></div>
+  </div>
+  <p><b>Produktkriterien:</b> Eindeutigkeitskriterium korrekt angewandt · Funktionsregel genannt · Stelle, Wert und Punkt nicht verwechselt · mindestens zwei Funktionswerte belegt · mathematischer und sachlicher Definitionsbereich getrennt · Fünferbündel und Kapazität berücksichtigt · Prüffälle eindeutig freigegeben oder gesperrt · zusätzliche Einflussgröße fachlich erkannt.</p>
+</section>
+
+<section class="teacher-only" id="w5-verlauf">
+  <h2>3. Verlaufsplan für beide Lernstunden</h2>
+  <table class="timeline">
+    <thead><tr><th>Zeit</th><th>Phase</th><th>Lehrkrafthandeln</th><th>Lernendenhandeln</th><th>Sozialform</th><th>Material</th><th>Erwartetes Ergebnis / Produktbezug</th></tr></thead>
+    <tbody>
+      <tr><td>0–7</td><td>Problemöffnung</td><td>Zeigt E-Mail und die doppelte Ausgabe zur Eingabe 50. Fragt, ob das nur ein Datenfehler oder ein grundsätzliches Modellproblem ist.</td><td>Formulieren die Anforderung „eine Eingabe – genau eine Ausgabe“ und unterscheiden Systemfunktion von beliebiger Tabelle.</td><td>Plenum → EA</td><td>E-Mail, Datendossier</td><td>Handlungsdruck: Ein Angebotsrechner darf nicht mehrdeutig antworten.</td></tr>
+      <tr><td>7–20</td><td>Eindeutigkeit prüfen</td><td>Lässt die Testlisten A–C ohne Formel prüfen und kontrastiert doppelte x- mit doppelten y-Werten.</td><td>Ordnen jede Liste begründet als Funktion oder Nicht-Funktion ein.</td><td>Think–Pair–Share</td><td>AB Aufgabe 1, Labor 1</td><td>Eindeutigkeitskriterium als Zuordnungs-Audit.</td></tr>
+      <tr><td>20–34</td><td>Funktionssprache</td><td>Modelliert an x=95 die drei Ebenen Stelle, Wert und Punkt; fordert Einheiten und vollständigen Antwortsatz.</td><td>Berechnen Werte und übersetzen zwischen <span class="formula">x</span>, <span class="formula">K(x)</span> und <span class="formula">P(x|K(x))</span>.</td><td>PA → EA</td><td>AB Aufgabe 2, Labor 2</td><td>Notation als prüfbarer Systemdatensatz.</td></tr>
+      <tr><td>34–42</td><td>Fehleranalyse</td><td>Legt die Aussagen „K(95) ist ein Punkt“ und „gleiche Kostenwerte sind verboten“ vor.</td><td>Korrigieren beide Aussagen fachsprachlich.</td><td>Lerntempoduett</td><td>Fehlerkarten</td><td>Begriffe und Eindeutigkeit gesichert.</td></tr>
+      <tr><td>42–45</td><td>Zwischensicherung</td><td>Bündelt drei Fragen: Was ist eine Funktion? Was ist die Stelle? Was ist der Punkt?</td><td>Erstellen das Zuordnungs-Audit in drei Sätzen.</td><td>Plenum</td><td>Tafelbild</td><td>Zwischenergebnis Stunde 1.</td></tr>
+      <tr><td>45–57</td><td>Definitionsbereiche</td><td>Kontrastiert die rechnerisch mögliche Eingabe x=0 mit den bestätigten Lagerbedingungen.</td><td>Trennen mathematischen Definitionsbereich von sachlichem Bestellbereich.</td><td>Think–Pair</td><td>AB Aufgabe 3</td><td>Diskreter Sachbereich mit Unter-, Ober- und Bündelgrenze.</td></tr>
+      <tr><td>57–72</td><td>Prüffälle</td><td>Fordert Entscheidungen vor dem Rechnen und lässt Sperrgründe priorisieren.</td><td>Prüfen 0, 37, 125 und 175 Kartons; berechnen nur den zulässigen Fall.</td><td>PA</td><td>AB Aufgabe 3, Labor 3</td><td>System-Gate statt unkritischer Termauswertung.</td></tr>
+      <tr><td>72–86</td><td>Handlungsprodukt</td><td>Ergänzt die Anforderung: 75 Kartons kosten je nach Zielzone unterschiedlich. Fordert eine modellgerechte Lösung.</td><td>Erstellen F-52, sperren unzulässige Eingaben und schlagen getrennte Zonenfunktionen oder eine zusätzliche Eingabe vor.</td><td>EA → PA</td><td>AB Aufgabe 4</td><td>Entscheidungsfähige Systemfreigabe.</td></tr>
+      <tr><td>86–90</td><td>Sicherung</td><td>Stellt die Behauptung „Der lineare Term ist für alle reellen Zahlen definiert, also sind alle Eingaben erlaubt“ zur Entscheidung.</td><td>Widerlegen mit Sachbereich, Einheit, Bündelung und Kapazität.</td><td>Plenum</td><td>Tafelbild</td><td>Gesamtprodukt fachlich abgesichert.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="teacher-only" id="w5-didaktik">
+  <h2>4. Differenzierung, Hilfesteuerung und typische Reaktionen</h2>
+  <div class="grid3">
+    <div class="card"><h3>Basisweg</h3><p>Testlisten farbig nach Eingaben sortieren; Eindeutigkeits-Satzstarter; vorbereitete Dreierspalte „Stelle – Wert – Punkt“; Sachbereich als Entscheidungsbaum mit drei Bedingungen.</p></div>
+    <div class="card"><h3>Standardweg</h3><p>Alle Testlisten selbst begründen, drei Funktionswerte berechnen, vier Prüffälle entscheiden und die Freigabe mit korrekter Mengenschreibweise formulieren.</p></div>
+    <div class="card"><h3>Erweiterungsweg</h3><p>Wertebereich des diskreten Modells beschreiben, die Bedeutung der Fixkomponente K(0)=480 trotz unzulässiger Live-Eingabe diskutieren und eine saubere Zonenmodellierung begründen.</p></div>
+  </div>
+  <h3>Sprachliche und fachliche Unterstützung</h3>
+  <div class="grid2">
+    <div class="card soft"><p><b>Satzstarter:</b> „Die Zuordnung ist (k)eine Funktion, weil der Eingabe …“ · „Die Stelle … bedeutet …; der Funktionswert … bedeutet …“ · „Mathematisch ist … einsetzbar, sachlich wird … ausgeschlossen, weil …“</p></div>
+    <div class="card soft"><p><b>Begriffskontrast:</b> gleiche Ausgabe ≠ Mehrdeutigkeit · Funktionswert ≠ Punkt · mathematisch definiert ≠ wirtschaftlich zulässig · Eingabefehler ≠ fehlende Modellvariable.</p></div>
+  </div>
+  <h3>Typische Fehler und unmittelbare Reaktion</h3>
+  <table>
+    <thead><tr><th>Fehler</th><th>Diagnose</th><th>Unterstützungsmaßnahme</th></tr></thead>
+    <tbody>
+      <tr><td>Doppelte y-Werte werden verboten.</td><td>Eindeutigkeit wird auf Ausgaben statt Eingaben bezogen.</td><td>Frage: „Erhält irgendein einzelnes x zwei verschiedene Ergebnisse?“</td></tr>
+      <tr><td><span class="formula">K(95)</span> wird als Punkt notiert.</td><td>Funktionswert und Koordinatenpaar vermischt.</td><td>Dreischritt laut lesen: x=95; K(95)=2000; P(95|2000).</td></tr>
+      <tr><td><span class="formula">D=ℝ</span> wird als Bestellbereich übernommen.</td><td>Term- und Sachbereich nicht getrennt.</td><td>Jede Eingabe nacheinander gegen Mindestmenge, Bündelung und Kapazität prüfen.</td></tr>
+      <tr><td>Bei gesperrten Eingaben wird trotzdem gerechnet.</td><td>Rechnen wird vor Modellprüfung gesetzt.</td><td>Arbeitsregel: erst zulässig? – dann rechnen – dann deuten.</td></tr>
+      <tr><td>Zwei Zielzonenwerte werden als „keine Funktion“ verworfen.</td><td>Zusätzliche Einflussgröße fehlt im Modell.</td><td>Frage: „Welche Information unterscheidet die beiden Fälle außer x?“; getrennte Funktionen benennen.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="teacher-only" id="w5-simulationskonzept">
+  <h2>5. Simulationskonzept und Einsatz</h2>
+  <div class="grid3">
+    <div class="card"><span class="tag">Aufgabe 1</span><h3>Eindeutigkeitsprüfer</h3><p>Visualisiert, ob eine Eingabe mehrere Pfeile zu verschiedenen Ausgaben besitzt, und trennt dies von wiederholten Ausgaben.</p></div>
+    <div class="card"><span class="tag">Aufgabe 2</span><h3>Stelle–Wert–Punkt-Lupe</h3><p>Verknüpft Termauswertung, sprachliche Bedeutung und markierten Graphenpunkt.</p></div>
+    <div class="card"><span class="tag">Aufgabe 3</span><h3>Sachbereich-Gate</h3><p>Prüft Mindestmenge, Fünferbündel und Kapazität vor der Berechnung eines Funktionswerts.</p></div>
+  </div>
+  <p class="note"><b>Einsatzregel:</b> Jedes Labor folgt auf eine schriftliche Prognose oder Rechnung. Die Rückmeldung prüft eine Teilentscheidung; sie erzeugt weder die vollständige Aufgabenlösung noch den Freigabetext F-52.</p>
+</section>
+
+<section class="student-only" id="w5-arbeitsblatt">
+  <div class="worksheet-header">
+    <div><b>11BC · Mathematik · Woche 5</b><br><span class="small">Schülerarbeitsblatt: Systemfreigabe F-52</span></div>
+    <div>Name: ____________________<br>Datum: ____________________</div>
+  </div>
+  <div class="function-dossier">
+    <span class="protocol-mark">EUROPEAN SALES · ANGEBOTSRECHNER F-52</span>
+    <div class="protocol-head">
+      <b>Systemziel</b><span>Jeder zulässigen Kartonzahl x wird genau ein Abwicklungsbetrag K(x) zugeordnet.</span>
+      <b>Kostenregel</b><span><span class="formula">K(x)=480+16x</span>; x in Exportkartons, K(x) in Euro.</span>
+      <b>Live-Bedingungen</b><span>5 bis 150 Kartons; nur vollständige Fünferbündel.</span>
+      <b>Prüffrage</b><span>Welche Testzuordnung ist eine Funktion, und welche Eingaben darf das System annehmen?</span>
+    </div>
+    <div class="candidate-grid" aria-label="Drei Testzuordnungen">
+      <div class="candidate-card"><h3>Testliste A</h3><div class="pair-list"><span>(5|560)</span><span>(25|880)</span><span>(50|1280)</span><span>(75|1680)</span></div></div>
+      <div class="candidate-card"><h3>Testliste B</h3><div class="pair-list"><span>(25|880)</span><span>(50|1280)</span><span>(50|1360)</span><span>(75|1680)</span></div></div>
+      <div class="candidate-card"><h3>Testliste C</h3><div class="pair-list"><span>(5|560)</span><span>(25|880)</span><span>(50|880)</span><span>(75|1680)</span></div></div>
+    </div>
+    <div class="rule-banner"><span><b>Systemhinweis:</b> „Funktion“ beschreibt Eindeutigkeit. Ob Werte außerdem zur freigegebenen Kostenregel passen, ist eine zweite Prüfung.</span><strong>K(x)=480+16x</strong></div>
+  </div>
+
+  <div class="task-with-hints" id="w5-task1">
+    <h3>Aufgabe 1 – Zuordnungs-Audit <span class="afb">AFB II</span></h3>
+    <p><b>a)</b> Entscheide für A, B und C jeweils, ob eine Funktion vorliegt. Begründe am Eindeutigkeitskriterium.</p>
+    <table class="compact-table"><thead><tr><th>Liste</th><th>Funktion?</th><th>Begründung</th></tr></thead><tbody><tr><td>A</td><td></td><td></td></tr><tr><td>B</td><td></td><td></td></tr><tr><td>C</td><td></td><td></td></tr></tbody></table>
+    <p><b>b)</b> Welche Liste kann für die angegebene Kostenregel freigegeben werden? Erkläre, warum „Funktion“ und „inhaltlich korrekt“ nicht dasselbe bedeuten.</p>
+    <div class="answerbox tall"></div>
+    <p class="sim-task-note"><b>Nach der eigenen Entscheidung:</b> Prüfe die Pfeilstruktur im <button type="button" class="sim-link" data-sim-target="w5-lab1">Eindeutigkeitsprüfer</button>.</p>
+    <div class="inline-hints">
+      <details><summary>Hilfe 1 · Denkimpuls</summary><div>Suche zuerst nach einem x-Wert, der mehr als einmal vorkommt. Entscheidend ist, ob dabei verschiedene y-Werte entstehen.</div></details>
+      <details><summary>Hilfe 2 · Struktur-/Begriffshilfe</summary><div>Eine Funktion ordnet jedem Eingabewert genau einen Ausgabewert zu. Verschiedene Eingaben dürfen denselben Ausgabewert besitzen.</div></details>
+      <details><summary>Hilfe 3 · Erster Zwischenschritt</summary><div>Markiere in Liste B beide Paare mit x=50 und vergleiche ihre zweiten Koordinaten.</div></details>
+    </div>
+  </div>
+
+  <div class="task-with-hints" id="w5-task2">
+    <h3>Aufgabe 2 – Stelle, Funktionswert und Punkt <span class="afb">AFB I–II</span></h3>
+    <p><b>a)</b> Berechne <span class="formula">K(30)</span>, <span class="formula">K(95)</span> und <span class="formula">K(150)</span>.</p>
+    <table class="compact-table"><thead><tr><th>Stelle</th><th>Einsetzen und rechnen</th><th>Funktionswert</th></tr></thead><tbody><tr><td>x=30</td><td></td><td></td></tr><tr><td>x=95</td><td></td><td></td></tr><tr><td>x=150</td><td></td><td></td></tr></tbody></table>
+    <p><b>b)</b> Trage für x=95 die drei verschiedenen Angaben ein und formuliere einen Antwortsatz.</p>
+    <div class="notation-grid"><div class="notation-box"><b>Stelle</b></div><div class="notation-box"><b>Funktionswert</b></div><div class="notation-box"><b>Punkt</b></div></div>
+    <div class="answerbox tall"></div>
+    <p><b>c)</b> Korrigiere fachlich: „K(95) ist der Punkt 2.000 auf der x-Achse.“</p>
+    <div class="answerbox"></div>
+    <p class="sim-task-note"><b>Nach dem eigenen Rechenweg:</b> Verbinde Notation und Graph im <button type="button" class="sim-link" data-sim-target="w5-lab2">Stelle–Wert–Punkt-Labor</button>.</p>
+    <div class="inline-hints">
+      <details><summary>Hilfe 1 · Denkimpuls</summary><div>Welche Zahl wird eingesetzt, welche Zahl kommt heraus und welche zwei Zahlen braucht ein Punkt?</div></details>
+      <details><summary>Hilfe 2 · Struktur-/Begriffshilfe</summary><div>Stelle: x. Funktionswert: K(x). Punkt: P(x|K(x)). Ergänze bei x und K(x) die passenden Einheiten.</div></details>
+      <details><summary>Hilfe 3 · Erster Zwischenschritt</summary><div>Beginne mit <span class="formula">K(95)=480+16·95</span>.</div></details>
+    </div>
+  </div>
+
+  <div class="task-with-hints student-pagebreak" id="w5-task3">
+    <h3>Aufgabe 3 – Mathematischer Bereich und System-Gate <span class="afb">AFB II</span></h3>
+    <p><b>a)</b> Gib den mathematischen Definitionsbereich des linearen Terms und den sachlich zulässigen Bestellbereich an.</p>
+    <div class="domain-strip"><div><b>Mathematischer Bereich</b></div><div><b>Sachlicher Bereich in Worten</b></div><div><b>Sachlicher Bereich als Menge</b></div></div>
+    <p><b>b)</b> Entscheide vor dem Rechnen über die vier Prüffälle. Berechne den Betrag nur, wenn die Eingabe zulässig ist.</p>
+    <table class="compact-table gate-table"><thead><tr><th>Prüffall</th><th>zulässig?</th><th>Begründung / Sperrgrund</th><th>K(x), falls zulässig</th></tr></thead><tbody><tr><td>x=0</td><td></td><td></td><td></td></tr><tr><td>x=37</td><td></td><td></td><td></td></tr><tr><td>x=125</td><td></td><td></td><td></td></tr><tr><td>x=175</td><td></td><td></td><td></td></tr></tbody></table>
+    <p><b>c)</b> Erkläre, warum <span class="formula">K(0)=480</span> rechnerisch korrekt sein kann, obwohl x=0 vom Live-System gesperrt wird.</p>
+    <div class="answerbox tall"></div>
+    <p class="sim-task-note"><b>Nach der eigenen Bereichsprüfung:</b> Teste weitere Eingaben im <button type="button" class="sim-link" data-sim-target="w5-lab3">Sachbereich-Gate</button>.</p>
+    <div class="inline-hints">
+      <details><summary>Hilfe 1 · Denkimpuls</summary><div>Prüfe jede Eingabe nacheinander gegen Mindestmenge, Fünferbündel und Höchstmenge.</div></details>
+      <details><summary>Hilfe 2 · Struktur-/Begriffshilfe</summary><div>Der lineare Term ist mathematisch für alle reellen x definiert. Der Sachbereich enthält nur natürliche Kartonzahlen von 5 bis 150, die durch 5 teilbar sind.</div></details>
+      <details><summary>Hilfe 3 · Erster Zwischenschritt</summary><div>Schreibe die drei Systemfragen auf: <span class="formula">x≥5?</span> · <span class="formula">x≤150?</span> · <span class="formula">x mod 5=0?</span></div></details>
+    </div>
+  </div>
+
+  <div class="task-with-hints student-pagebreak" id="w5-task4">
+    <h3>Aufgabe 4 – Systemfreigabe F-52 <span class="afb">AFB III</span></h3>
+    <p>Erstelle den Freigabevermerk. Beachte zusätzlich: Für 75 Kartons nennt der Test für Zielzone NL 1.680 €, für Zielzone BE wegen eines Zuschlags 1.760 €. Entscheide, ob <span class="formula">K(x)</span> allein dafür ausreicht, und formuliere eine modellgerechte Lösung.</p>
+    <div class="release-form">
+      <h3>F-52 · Freigabevermerk</h3>
+      <div class="release-form-grid">
+        <div class="release-form-field"><b>1. Eindeutigkeits-Audit der Listen</b></div>
+        <div class="release-form-field"><b>2. Freigegebene Regel und Notationsbeleg</b></div>
+        <div class="release-form-field"><b>3. Zulässiger Bestellbereich</b></div>
+        <div class="release-form-field"><b>4. Prüffälle und Sperrlogik</b></div>
+        <div class="release-form-field wide"><b>5. Zielzonenproblem, Modellgrenze und Systementscheidung</b></div>
+      </div>
+    </div>
+    <div class="inline-hints">
+      <details><summary>Hilfe 1 · Denkimpuls</summary><div>Welche einzelne Information fehlt, wenn dieselbe Kartonzahl je nach Land einen anderen Betrag erzeugt?</div></details>
+      <details><summary>Hilfe 2 · Struktur-/Begriffshilfe</summary><div>Reihenfolge: Eindeutigkeit → Regel → Stelle/Wert/Punkt → Sachbereich → Prüffälle → zusätzliche Einflussgröße → Freigabe.</div></details>
+      <details><summary>Hilfe 3 · Erster Zwischenschritt</summary><div>Beginne: „Als Funktion der Kartonzahl ist Liste … eindeutig. Für die Live-Berechnung wird K(x)=… nur auf … freigegeben.“</div></details>
+    </div>
+  </div>
+  <p class="page-note">Schülerarbeitsblatt ohne geöffnete Hilfen: für höchstens drei A4-Seiten im Hochformat ausgelegt. Die tatsächliche Seitenzahl hängt vom Browser-Druckdialog ab.</p>
+</section>
+
+<section class="simulation-only" id="w5-simulationen">
+  <h2>Simulationen – lokale Funktions- und Bereichs-Labore</h2>
+  <p>Jedes Labor wird erst nach einem eigenen schriftlichen Ansatz genutzt. Es prüft Teilentscheidungen und visualisiert Zusammenhänge, erstellt aber keinen vollständigen Freigabevermerk.</p>
+  <div class="sim-intro">
+    <div class="sim-card"><span class="sim-tag">Aufgabe 1</span><h3>Eindeutigkeitsprüfer</h3><p>Unterscheide doppelte Eingaben von wiederholten Ausgaben.</p></div>
+    <div class="sim-card"><span class="sim-tag">Aufgabe 2</span><h3>Stelle–Wert–Punkt</h3><p>Verbinde Term, Bedeutung und Graphenpunkt.</p></div>
+    <div class="sim-card"><span class="sim-tag">Aufgabe 3</span><h3>Sachbereich-Gate</h3><p>Prüfe Bedingungen vor der Berechnung.</p></div>
+  </div>
+
+  <div class="sim-panel" id="w5-lab1">
+    <h3>Labor 1 · Ist die Zuordnung eindeutig?</h3>
+    <p><b>Auftrag:</b> Wähle eine Testliste und entscheide vor der Anzeige, ob sie eine Funktion ist. Begründe anschließend am Pfeilbild.</p>
+    <div class="sim-controls">
+      <label>Testliste<select id="mapCandidate"><option value="A">Liste A</option><option value="B">Liste B</option><option value="C">Liste C</option></select></label>
+      <label>Deine Prognose<select id="mapGuess"><option value="">Bitte wählen</option><option value="yes">Funktion</option><option value="no">keine Funktion</option></select></label>
+      <button type="button" id="checkMapping">Eindeutigkeit prüfen</button>
+      <button type="button" class="sim-button secondary" id="resetMapping">Reset</button>
+    </div>
+    <svg id="mappingSvg" class="mapping-svg" viewBox="0 0 760 330" role="img" aria-labelledby="mappingTitle mappingDesc"><title id="mappingTitle">Pfeildiagramm der gewählten Zuordnung</title><desc id="mappingDesc">Eingabewerte links werden mit Ausgabewerten rechts verbunden.</desc></svg>
+    <div class="function-readout"><div><b>verschiedene Eingaben</b><span id="mapInputs">–</span></div><div><b>verschiedene Ausgaben</b><span id="mapOutputs">–</span></div><div><b>Mehrfachausgabe zu einem x</b><span id="mapConflict">–</span></div><div><b>Status</b><span id="mapStatus">–</span></div></div>
+    <div class="sim-feedback" id="mapFeedback" aria-live="polite">Startzustand: Liste wählen und Prognose abgeben.</div>
+    <p><b>Deutungsfrage:</b> Warum darf derselbe Eurobetrag zu zwei verschiedenen Kartonzahlen gehören, ohne die Funktionseigenschaft zu verletzen?</p>
+  </div>
+
+  <div class="sim-panel" id="w5-lab2">
+    <h3>Labor 2 · Stelle, Funktionswert und Punkt</h3>
+    <p><b>Auftrag:</b> Wähle eine Stelle, berechne K(x) schriftlich und gib den Wert ein. Ordne anschließend die drei Schreibweisen richtig zu.</p>
+    <div class="sim-controls">
+      <label>Stelle x<select id="notationX"><option value="5">5 Kartons</option><option value="30">30 Kartons</option><option value="95">95 Kartons</option><option value="150">150 Kartons</option></select></label>
+      <label>Dein K(x) in €<input id="notationInput" inputmode="decimal" aria-label="Berechneter Funktionswert in Euro"></label>
+      <label>Was ist P(x|K(x))?<select id="notationChoice"><option value="">Bitte wählen</option><option value="place">nur die Stelle</option><option value="value">nur der Funktionswert</option><option value="point">der Graphenpunkt</option></select></label>
+      <button type="button" id="checkNotation">Notation prüfen</button>
+      <button type="button" class="sim-button secondary" id="resetNotation">Reset</button>
+    </div>
+    <canvas id="notationCanvas" class="lab-canvas" width="760" height="360" aria-label="Graph der Kostenfunktion mit ausgewähltem Punkt"></canvas>
+    <div class="notation-readout"><div><b>Stelle</b><span id="notationPlace">–</span></div><div><b>Funktionswert</b><span id="notationValue">–</span></div><div><b>Punkt</b><span id="notationPoint">–</span></div></div>
+    <div class="sim-feedback" id="notationFeedback" aria-live="polite">Startzustand: Stelle wählen, Wert berechnen und Punktbegriff einordnen.</div>
+    <p><b>Deutungsfrage:</b> Welche falsche Geschäftsentscheidung könnte entstehen, wenn eine Menge mit einem Geldbetrag vertauscht wird?</p>
+  </div>
+
+  <div class="sim-panel" id="w5-lab3">
+    <h3>Labor 3 · Sachbereich-Gate</h3>
+    <p><b>Auftrag:</b> Wähle eine Kartonzahl. Entscheide vor der Prüfung, ob das Live-System sie annehmen darf, und nenne den wichtigsten Grund.</p>
+    <div class="sim-controls">
+      <label>Prüfmenge<select id="gateX"><option value="0">0 Kartons</option><option value="5">5 Kartons</option><option value="37">37 Kartons</option><option value="125">125 Kartons</option><option value="150">150 Kartons</option><option value="175">175 Kartons</option></select></label>
+      <label>Deine Entscheidung<select id="gateDecision"><option value="">Bitte wählen</option><option value="allow">zulässig</option><option value="reject">sperren</option></select></label>
+      <label>Hauptgrund<select id="gateReason"><option value="">Bitte wählen</option><option value="ok">alle Bedingungen erfüllt</option><option value="min">unter Mindestmenge</option><option value="bundle">kein Fünferbündel</option><option value="max">über Kapazität</option></select></label>
+      <button type="button" id="checkGate">Gate prüfen</button>
+      <button type="button" class="sim-button secondary" id="resetGate">Reset</button>
+    </div>
+    <div class="gate-track" aria-label="Zulässiger Bereich von 5 bis 150 Kartons in Fünferschritten"><div class="gate-zone"></div><span class="gate-tick" style="left:10%"></span><span class="gate-label" style="left:10%">5</span><span class="gate-tick" style="left:50%"></span><span class="gate-label" style="left:50%">75</span><span class="gate-tick" style="left:90%"></span><span class="gate-label" style="left:90%">150</span><span id="gateMarker" class="gate-marker" hidden></span></div>
+    <div class="notation-readout"><div><b>Eingabe</b><span id="gateInputOut">–</span></div><div><b>Systemstatus</b><span id="gateStatus">–</span></div><div><b>K(x), falls freigegeben</b><span id="gateValue">–</span></div></div>
+    <div class="sim-feedback" id="gateFeedback" aria-live="polite">Startzustand: Menge wählen, Entscheidung und Grund prognostizieren.</div>
+    <p><b>Deutungsfrage:</b> Warum ist die Prüfung des Sachbereichs ein Teil des mathematischen Modellierens und nicht nur eine technische Zusatzregel?</p>
+  </div>
+</section>
+
+<section class="teacher-only" id="w5-sicherung">
+  <h2>6. Ergebnissicherung und Übergang</h2>
+  <div class="board">
+    <h3>Tafelbild: Funktion prüfen, lesen und begrenzen</h3>
+    <div class="formula-strip"><span class="step">1. Eindeutigkeit</span><span class="arrow">→</span><span class="step">2. Stelle x</span><span class="arrow">→</span><span class="step">3. Wert K(x)</span><span class="arrow">→</span><span class="step">4. Punkt P(x|K(x))</span><span class="arrow">→</span><span class="step">5. Sachbereich prüfen</span></div>
+    <ul>
+      <li><b>Funktion:</b> Jede zulässige Eingabe erhält genau eine Ausgabe. Gleiche Ausgaben zu verschiedenen Eingaben sind erlaubt.</li>
+      <li><b>Notation:</b> x ist eine Menge, K(x) ein Geldbetrag, P(x|K(x)) ein Punkt im Graphen.</li>
+      <li><b>Bereich:</b> Der Term <span class="formula">K(x)=480+16x</span> ist für reelle x berechenbar; das Live-System akzeptiert nur <span class="formula">D<sub>S</sub>={5,10,15,…,150}</span>.</li>
+      <li><b>Modellgrenze:</b> Liefert dieselbe x-Eingabe wegen einer Zielzone verschiedene Beträge, fehlt eine Einflussgröße; das Modell muss getrennt oder erweitert werden.</li>
+    </ul>
+  </div>
+  <div class="grid2">
+    <div class="card"><h3>Übergang zur separaten Übungsstunde</h3><p>Gemischte Zuordnungen prüfen, Funktionswerte berechnen, Stelle–Wert–Punkt sprachlich sichern und Sachbereiche aus verschiedenen wirtschaftlichen Bedingungen formulieren. Die Übungsstunde wird nicht in dieser Planung ausgearbeitet.</p></div>
+    <div class="card soft"><h3>Übergang zu Woche 6</h3><p>Dieselbe Funktion wird anschließend systematisch als Sachtext, Tabelle, Graph und Term gelesen. Dabei werden Informationsgewinn, Genauigkeit und typische Fehler der Darstellungen verglichen.</p></div>
+  </div>
+</section>
+
+<section class="solution-only" id="w5-musterloesung">
+  <h2>7. Vollständige Musterlösung</h2>
+  <div class="card solution">
+    <h3>Aufgabe 1 – Zuordnungs-Audit</h3>
+    <p><b>a)</b> Liste A ist eine Funktion: Jede Eingabe 5, 25, 50 und 75 besitzt genau eine Ausgabe. Liste B ist keine Funktion der Kartonzahl, weil x=50 sowohl 1.280 € als auch 1.360 € zugeordnet wird. Liste C ist eine Funktion: Zwar kommt der Ausgabewert 880 € zweimal vor, aber jede einzelne Eingabe hat nur eine Ausgabe. Gleiche y-Werte sind erlaubt.</p>
+    <p><b>b)</b> Für die angegebene Kostenregel kann Liste A freigegeben werden, denn alle Werte erfüllen <span class="formula">K(x)=480+16x</span>. Liste C ist zwar eindeutig und damit eine Funktion, aber die Paare (25|880) und (50|880) können nicht beide zur linearen Kostenregel gehören; für x=50 müsste K(50)=1.280 gelten. „Funktion“ beschreibt die Eindeutigkeit einer Zuordnung, nicht automatisch ihre sachliche oder rechnerische Richtigkeit.</p>
+  </div>
+  <div class="card solution">
+    <h3>Aufgabe 2 – Stelle, Funktionswert und Punkt</h3>
+    <p><b>a)</b> <span class="formula">K(30)=480+16·30=480+480=960 €</span>. <span class="formula">K(95)=480+16·95=480+1.520=2.000 €</span>. <span class="formula">K(150)=480+16·150=480+2.400=2.880 €</span>.</p>
+    <p><b>b)</b> Stelle: <span class="formula">x=95 Kartons</span>. Funktionswert: <span class="formula">K(95)=2.000 €</span>. Punkt: <span class="formula">P(95|2.000)</span>. Antwortsatz: Bei einer Sendung mit 95 Exportkartons berechnet das Modell einen Abwicklungsbetrag von 2.000 €.</p>
+    <p><b>c)</b> K(95) ist der Funktionswert 2.000 € und liegt auf der y-Achsenrichtung. Der vollständige Graphenpunkt lautet P(95|2.000); 95 ist die x-Koordinate und bezeichnet die Kartonzahl.</p>
+  </div>
+  <div class="card solution">
+    <h3>Aufgabe 3 – Mathematischer Bereich und System-Gate</h3>
+    <p><b>a)</b> Der lineare Term ist mathematisch für alle reellen Zahlen definiert: <span class="formula">D<sub>math</sub>=ℝ</span>. Sachlich sind nur ganze Kartonzahlen von 5 bis 150 in Fünferschritten zulässig: <span class="formula">D<sub>S</sub>={x∈ℕ | 5≤x≤150 und 5 teilt x}={5,10,15,…,150}</span>.</p>
+    <table class="compact-table"><thead><tr><th>Prüffall</th><th>Entscheidung</th><th>Begründung</th><th>Ergebnis</th></tr></thead><tbody><tr><td>x=0</td><td>sperren</td><td>unter der Mindestmenge von 5 Kartons</td><td>kein Live-Angebot</td></tr><tr><td>x=37</td><td>sperren</td><td>kein vollständiges Fünferbündel</td><td>kein Live-Angebot</td></tr><tr><td>x=125</td><td>zulässig</td><td>zwischen 5 und 150 sowie durch 5 teilbar</td><td><span class="formula">K(125)=480+2.000=2.480 €</span></td></tr><tr><td>x=175</td><td>sperren</td><td>über der Kapazität von 150 Kartons</td><td>kein Live-Angebot</td></tr></tbody></table>
+    <p><b>c)</b> Das Einsetzen von x=0 in einen linearen Term ist mathematisch erlaubt und ergibt K(0)=480. Im Live-Geschäft beschreibt x=0 jedoch keine zulässige Sendung, weil mindestens 5 Kartons verlangt werden. Der Funktionswert kann als rechnerischer Achsenabschnitt beziehungsweise feste Kostenkomponente gelesen werden, darf aber nicht als freigabefähiges Kundenangebot behandelt werden.</p>
+  </div>
+  <div class="card solution">
+    <h3>Aufgabe 4 – mögliche Systemfreigabe F-52</h3>
+    <p>Liste A ist eine eindeutige Zuordnung und stimmt mit der Kostenregel <span class="formula">K(x)=480+16x</span> überein. Liste B ist keine Funktion der Kartonzahl, weil x=50 zwei verschiedene Beträge erhält. Liste C ist zwar eine Funktion, aber nicht vollständig mit der freizugebenden Kostenregel vereinbar.</p>
+    <p>Die Schreibweisen werden im System getrennt: x bezeichnet die Kartonzahl, K(x) den Betrag in Euro und P(x|K(x)) den zugehörigen Graphenpunkt. Beispielsweise gilt bei x=95: <span class="formula">K(95)=2.000 €</span> und <span class="formula">P(95|2.000)</span>.</p>
+    <p>Die Live-Freigabe gilt ausschließlich für <span class="formula">D<sub>S</sub>={5,10,15,…,150}</span>. Eingaben unter 5, über 150 oder ohne Teilbarkeit durch 5 werden vor der Berechnung gesperrt. Daher sind 0, 37 und 175 Kartons abzulehnen; 125 Kartons sind zulässig und ergeben 2.480 €.</p>
+    <p>Die zwei Beträge für 75 Kartons in NL und BE zeigen kein Rechenproblem des Terms, sondern eine fehlende Einflussgröße. Eine einzelne Funktion K(x) der Kartonzahl darf derselben Eingabe nicht zwei Ausgaben zuordnen. Das System kann entweder getrennte Funktionen verwenden, zum Beispiel <span class="formula">K<sub>NL</sub>(x)=480+16x</span> und <span class="formula">K<sub>BE</sub>(x)=560+16x</span>, oder die Zielzone als zusätzliche Eingabe aufnehmen. F-52 wird nur mit eindeutiger Zonenwahl, Bereichsprüfung und getrennten Ausgaberegeln freigegeben.</p>
+  </div>
+</section>
+
+<section class="teacher-only" id="w5-quellen">
+  <h2>8. Quellen, Annahmen und technische Abgrenzung</h2>
+  <ul class="source-list">
+    <li><b>Klassenprofil 11BC:</b> Bildungsgang D28, international-kaufmännischer Kontext, heterogene Jahrgangsstufe 11, zwei Lernstunden und separate Übungsstunde.</li>
+    <li><b>Halbjahresskript Mathematik 11.1, Woche 5:</b> Funktion als eindeutige Zuordnung; Stelle, Funktionswert, Punkt; mathematischer und sachlicher Definitionsbereich.</li>
+    <li><b>Didaktische Jahresplanung Mathematik 11.1:</b> Modellierung wirtschaftlicher Zusammenhänge durch Funktionen, Darstellungen und CAS-Einsatz; curricularer Anschluss nach Regression.</li>
+    <li><b>Vorwochendatei 11BC Mathematik Woche 4:</b> gesicherte Regressions- und Prognosesprache, Datenbereichsprüfung und verbindliche HTML-, Ansichts-, Hilfe-, Simulations- und Druckstruktur.</li>
+  </ul>
+  <p><b>Annahmen:</b> Datum bleibt offen; es wurden keine abweichenden Lernstände, besonderen Schwierigkeiten oder organisatorischen Vorgaben bestätigt. Es gilt daher die heterogene Lerngruppe der Jahrgangsstufe 11 und die Standardausstattung des Klassenprofils. Firmenname, Person, Kennung und Daten sind didaktisch konstruiert.</p>
+  <p><b>Fachliche Rechenbasis:</b> Für <span class="formula">K(x)=480+16x</span> gelten unter anderem K(5)=560 €, K(25)=880 €, K(30)=960 €, K(50)=1.280 €, K(75)=1.680 €, K(95)=2.000 €, K(125)=2.480 € und K(150)=2.880 €. Der freigegebene Sachbereich ist <span class="formula">{5,10,15,…,150}</span>.</p>
+  <p><b>Technische Abgrenzung:</b> Die Datei verwendet ausschließlich Inline-CSS, lokales JavaScript, Inline-SVG und Canvas. Es gibt keine externen Ressourcen, Nachladewege, Browser-Speicherabhängigkeiten oder Netzwerkfunktionen. Die Labore sind didaktische Visualisierungen und ersetzen keine vollständige ERP- oder Tabellenkalkulationssoftware.</p>
+</section>
+</main>
+
+<script>
+(function(){
+'use strict';
+const body=document.body;
+const viewButtons=Array.from(document.querySelectorAll('[data-view-target]'));
+function setView(view){body.dataset.view=view;viewButtons.forEach(function(btn){btn.classList.toggle('active',btn.dataset.viewTarget===view);});window.scrollTo({top:0,behavior:'smooth'});if(view==='simulations'||view==='all'){requestAnimationFrame(redrawAll);}}
+viewButtons.forEach(function(btn){btn.addEventListener('click',function(){setView(btn.dataset.viewTarget);});});
+document.querySelectorAll('[data-sim-target]').forEach(function(btn){btn.addEventListener('click',function(){const id=btn.dataset.simTarget;setView('simulations');requestAnimationFrame(function(){const target=document.getElementById(id);if(target){target.scrollIntoView({behavior:'smooth',block:'start'});}});});});
+const printToggle=document.getElementById('w5PrintHintToggle');
+const printModeText=document.getElementById('w5PrintModeText');
+printToggle.addEventListener('click',function(){body.classList.toggle('print-hints');const on=body.classList.contains('print-hints');document.querySelectorAll('.student-only .inline-hints details').forEach(function(item){item.open=on;});printToggle.textContent='Hilfen beim Drucken: '+(on?'an':'aus');printModeText.textContent=on?'Schülerdruck mit geöffneten Hilfen':'Schülerdruck ohne Hilfen';});
+document.getElementById('w5PrintBtn').addEventListener('click',function(){window.print();});
+function deNumber(value){let text=String(value).trim().replace('−','-').replace(/\s/g,'');if(text.indexOf(',')>=0&&text.indexOf('.')>=0){text=text.replace(/\./g,'').replace(',','.');}else if(text.indexOf(',')>=0){text=text.replace(',','.');}else if(/^[-+]?\d{1,3}(\.\d{3})+$/.test(text)){text=text.replace(/\./g,'');}return Number(text);}
+function fmt(value,digits){return Number(value).toLocaleString('de-DE',{minimumFractionDigits:digits,maximumFractionDigits:digits});}
+function k(x){return 480+16*x;}
+function setupCanvas(canvas){const ratio=window.devicePixelRatio||1;const cssWidth=Math.max(320,canvas.clientWidth||760);const cssHeight=Math.round(cssWidth*360/760);canvas.width=Math.round(cssWidth*ratio);canvas.height=Math.round(cssHeight*ratio);const ctx=canvas.getContext('2d');ctx.setTransform(ratio,0,0,ratio,0,0);return {ctx:ctx,w:cssWidth,h:cssHeight};}
+
+const mappings={A:[[5,560],[25,880],[50,1280],[75,1680]],B:[[25,880],[50,1280],[50,1360],[75,1680]],C:[[5,560],[25,880],[50,880],[75,1680]]};
+const mapCandidate=document.getElementById('mapCandidate'),mapGuess=document.getElementById('mapGuess'),mappingSvg=document.getElementById('mappingSvg'),mapFeedback=document.getElementById('mapFeedback');
+function analyzeMapping(pairs){const inputMap={};pairs.forEach(function(p){if(!inputMap[p[0]])inputMap[p[0]]=[];if(inputMap[p[0]].indexOf(p[1])<0)inputMap[p[0]].push(p[1]);});const conflicts=Object.keys(inputMap).filter(function(x){return inputMap[x].length>1;});return {inputs:Object.keys(inputMap),outputs:Array.from(new Set(pairs.map(function(p){return p[1];}))),conflicts:conflicts,isFunction:conflicts.length===0};}
+function drawMapping(show){const pairs=mappings[mapCandidate.value],a=analyzeMapping(pairs);while(mappingSvg.lastChild&&mappingSvg.lastChild.nodeName!=='desc'){mappingSvg.removeChild(mappingSvg.lastChild);}const ns='http://www.w3.org/2000/svg';function el(name,attrs,text){const node=document.createElementNS(ns,name);Object.keys(attrs||{}).forEach(function(key){node.setAttribute(key,attrs[key]);});if(text!==undefined)node.textContent=text;mappingSvg.appendChild(node);return node;}el('rect',{x:0,y:0,width:760,height:330,fill:'#fff'});el('text',{x:150,y:30,'text-anchor':'middle',fill:'#183b52','font-size':16,'font-weight':800},'Eingaben x [Kartons]');el('text',{x:610,y:30,'text-anchor':'middle',fill:'#183b52','font-size':16,'font-weight':800},'Ausgaben K [€]');const inVals=a.inputs.map(Number).sort(function(x,y){return x-y;}),outVals=a.outputs.map(Number).sort(function(x,y){return x-y;});const yPos=function(i,n){return 65+(n===1?100:i*(220/(n-1)));};const inY={},outY={};inVals.forEach(function(v,i){inY[v]=yPos(i,inVals.length);el('circle',{cx:150,cy:inY[v],r:25,fill:'#eef8fb',stroke:'#0b6b8a','stroke-width':2});el('text',{x:150,y:inY[v]+5,'text-anchor':'middle',fill:'#172033','font-size':14,'font-weight':800},String(v));});outVals.forEach(function(v,i){outY[v]=yPos(i,outVals.length);el('circle',{cx:610,cy:outY[v],r:29,fill:'#f8fafc',stroke:'#526079','stroke-width':2});el('text',{x:610,y:outY[v]+5,'text-anchor':'middle',fill:'#172033','font-size':13,'font-weight':800},fmt(v,0));});pairs.forEach(function(p){const conflict=a.conflicts.indexOf(String(p[0]))>=0;el('path',{d:'M 177 '+inY[p[0]]+' C 330 '+inY[p[0]]+', 430 '+outY[p[1]]+', 579 '+outY[p[1]],fill:'none',stroke:show&&conflict?'#b74343':'#0b6b8a','stroke-width':show&&conflict?4:2.5,'marker-end':'url(#arrowMap)'});});const defs=document.createElementNS(ns,'defs'),marker=document.createElementNS(ns,'marker'),path=document.createElementNS(ns,'path');marker.setAttribute('id','arrowMap');marker.setAttribute('viewBox','0 0 10 10');marker.setAttribute('refX','9');marker.setAttribute('refY','5');marker.setAttribute('markerWidth','7');marker.setAttribute('markerHeight','7');marker.setAttribute('orient','auto-start-reverse');path.setAttribute('d','M 0 0 L 10 5 L 0 10 z');path.setAttribute('fill','#0b6b8a');marker.appendChild(path);defs.appendChild(marker);mappingSvg.insertBefore(defs,mappingSvg.children[2]||null);}
+function resetMapping(){mapCandidate.value='A';mapGuess.value='';['mapInputs','mapOutputs','mapConflict','mapStatus'].forEach(function(id){document.getElementById(id).textContent='–';});mapFeedback.className='sim-feedback';mapFeedback.textContent='Startzustand: Liste wählen und Prognose abgeben.';drawMapping(false);}
+mapCandidate.addEventListener('change',function(){mapGuess.value='';['mapInputs','mapOutputs','mapConflict','mapStatus'].forEach(function(id){document.getElementById(id).textContent='–';});mapFeedback.className='sim-feedback';mapFeedback.textContent='Liste geändert: neue Prognose erforderlich.';drawMapping(false);});
+document.getElementById('checkMapping').addEventListener('click',function(){if(!mapGuess.value){mapFeedback.className='sim-feedback warn';mapFeedback.textContent='Wähle zuerst Funktion oder keine Funktion.';return;}const a=analyzeMapping(mappings[mapCandidate.value]),ok=(mapGuess.value==='yes')===a.isFunction;document.getElementById('mapInputs').textContent=String(a.inputs.length);document.getElementById('mapOutputs').textContent=String(a.outputs.length);document.getElementById('mapConflict').textContent=a.conflicts.length?a.conflicts.join(', '):'keine';document.getElementById('mapStatus').textContent=a.isFunction?'eindeutige Zuordnung':'nicht eindeutig';drawMapping(true);mapFeedback.className='sim-feedback '+(ok?'ok':'warn');mapFeedback.textContent=(ok?'Die Prognose passt. ':'Prüfe die Pfeile derselben Eingabe erneut. ')+(a.isFunction?'Jeder Eingabewert besitzt genau einen ausgehenden Zielwert. Wiederholte Ausgaben sind erlaubt.':'Mindestens eine Eingabe führt zu zwei verschiedenen Ausgaben; als Funktion von x ist die Zuordnung so nicht verwendbar.');});
+document.getElementById('resetMapping').addEventListener('click',resetMapping);
+
+const notationX=document.getElementById('notationX'),notationInput=document.getElementById('notationInput'),notationChoice=document.getElementById('notationChoice'),notationCanvas=document.getElementById('notationCanvas'),notationFeedback=document.getElementById('notationFeedback');
+function drawNotation(show){const c=setupCanvas(notationCanvas),ctx=c.ctx,w=c.w,h=c.h,left=65,right=25,top=22,bottom=50;ctx.clearRect(0,0,w,h);ctx.fillStyle='#fff';ctx.fillRect(0,0,w,h);ctx.strokeStyle='#d7e0e7';ctx.lineWidth=1;ctx.font='12px Arial';ctx.fillStyle='#526079';ctx.textAlign='center';[0,30,60,90,120,150].forEach(function(x){const px=left+x/150*(w-left-right);ctx.beginPath();ctx.moveTo(px,top);ctx.lineTo(px,h-bottom);ctx.stroke();ctx.fillText(String(x),px,h-bottom+18);});ctx.textAlign='right';[0,600,1200,1800,2400,3000].forEach(function(y){const py=h-bottom-y/3000*(h-top-bottom);ctx.beginPath();ctx.moveTo(left,py);ctx.lineTo(w-right,py);ctx.stroke();ctx.fillText(fmt(y,0),left-8,py+4);});ctx.strokeStyle='#34495e';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(left,top);ctx.lineTo(left,h-bottom);ctx.lineTo(w-right,h-bottom);ctx.stroke();ctx.fillStyle='#183b52';ctx.textAlign='center';ctx.font='bold 13px Arial';ctx.fillText('Kartonzahl x',w/2,h-8);ctx.save();ctx.translate(17,h/2);ctx.rotate(-Math.PI/2);ctx.fillText('Abwicklungsbetrag K(x) [€]',0,0);ctx.restore();function mp(x,y){return {x:left+x/150*(w-left-right),y:h-bottom-y/3000*(h-top-bottom)};}const a=mp(0,k(0)),z=mp(150,k(150));ctx.strokeStyle='#0b6b8a';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(z.x,z.y);ctx.stroke();if(show){const x=Number(notationX.value),q=mp(x,k(x));ctx.fillStyle='#d69a00';ctx.beginPath();ctx.arc(q.x,q.y,7,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#d69a00';ctx.setLineDash([6,5]);ctx.beginPath();ctx.moveTo(q.x,q.y);ctx.lineTo(q.x,h-bottom);ctx.moveTo(q.x,q.y);ctx.lineTo(left,q.y);ctx.stroke();ctx.setLineDash([]);}}
+function resetNotation(){notationX.value='5';notationInput.value='';notationChoice.value='';['notationPlace','notationValue','notationPoint'].forEach(function(id){document.getElementById(id).textContent='–';});notationFeedback.className='sim-feedback';notationFeedback.textContent='Startzustand: Stelle wählen, Wert berechnen und Punktbegriff einordnen.';drawNotation(false);}
+notationX.addEventListener('change',function(){notationInput.value='';notationChoice.value='';['notationPlace','notationValue','notationPoint'].forEach(function(id){document.getElementById(id).textContent='–';});notationFeedback.className='sim-feedback';notationFeedback.textContent='Stelle geändert: neu rechnen und einordnen.';drawNotation(false);});
+document.getElementById('checkNotation').addEventListener('click',function(){if(notationInput.value.trim()===''||!notationChoice.value){notationFeedback.className='sim-feedback warn';notationFeedback.textContent='Gib einen Funktionswert ein und ordne P(x|K(x)) ein.';return;}const x=Number(notationX.value),value=k(x),user=deNumber(notationInput.value),okValue=Number.isFinite(user)&&Math.abs(user-value)<0.01,okChoice=notationChoice.value==='point';document.getElementById('notationPlace').textContent='x='+fmt(x,0)+' Kartons';document.getElementById('notationValue').textContent='K('+fmt(x,0)+')='+fmt(value,0)+' €';document.getElementById('notationPoint').textContent='P('+fmt(x,0)+'|'+fmt(value,0)+')';drawNotation(true);notationFeedback.className='sim-feedback '+(okValue&&okChoice?'ok':'warn');notationFeedback.textContent=(okValue&&okChoice?'Rechnung und Zuordnung stimmen. ':'Prüfe Termauswertung und die zwei Koordinaten eines Punktes. ')+'Die Stelle ist eine Kartonzahl, der Funktionswert ein Geldbetrag und der Punkt verbindet beide Angaben.';});
+document.getElementById('resetNotation').addEventListener('click',resetNotation);
+
+const gateX=document.getElementById('gateX'),gateDecision=document.getElementById('gateDecision'),gateReason=document.getElementById('gateReason'),gateMarker=document.getElementById('gateMarker'),gateFeedback=document.getElementById('gateFeedback');
+function gateInfo(x){if(x<5)return {allow:false,reason:'min',text:'unter Mindestmenge'};if(x>150)return {allow:false,reason:'max',text:'über Kapazität'};if(x%5!==0)return {allow:false,reason:'bundle',text:'kein Fünferbündel'};return {allow:true,reason:'ok',text:'alle Bedingungen erfüllt'};}
+function positionGate(x){const clamped=Math.max(-10,Math.min(175,x)),left=2+(clamped+10)/185*96;gateMarker.style.left=left+'%';gateMarker.hidden=false;}
+function resetGate(){gateX.value='0';gateDecision.value='';gateReason.value='';['gateInputOut','gateStatus','gateValue'].forEach(function(id){document.getElementById(id).textContent='–';});gateMarker.hidden=true;gateFeedback.className='sim-feedback';gateFeedback.textContent='Startzustand: Menge wählen, Entscheidung und Grund prognostizieren.';}
+gateX.addEventListener('change',function(){gateDecision.value='';gateReason.value='';['gateInputOut','gateStatus','gateValue'].forEach(function(id){document.getElementById(id).textContent='–';});gateMarker.hidden=true;gateFeedback.className='sim-feedback';gateFeedback.textContent='Menge geändert: Entscheidung und Grund neu prüfen.';});
+document.getElementById('checkGate').addEventListener('click',function(){if(!gateDecision.value||!gateReason.value){gateFeedback.className='sim-feedback warn';gateFeedback.textContent='Wähle Entscheidung und Hauptgrund.';return;}const x=Number(gateX.value),info=gateInfo(x),okDecision=(gateDecision.value==='allow')===info.allow,okReason=gateReason.value===info.reason;document.getElementById('gateInputOut').textContent=fmt(x,0)+' Kartons';document.getElementById('gateStatus').textContent=info.allow?'freigegeben':'gesperrt: '+info.text;document.getElementById('gateValue').textContent=info.allow?fmt(k(x),0)+' €':'keine Live-Ausgabe';positionGate(x);gateFeedback.className='sim-feedback '+(okDecision&&okReason?'ok':'warn');gateFeedback.textContent=(okDecision&&okReason?'Entscheidung und Sperrgrund passen. ':'Prüfe die drei Bedingungen in fester Reihenfolge. ')+(info.allow?'Erst nach der Bereichsfreigabe wird der Funktionswert als Angebot ausgegeben.':'Der Term wäre teilweise berechenbar, aber der Sachbereich verhindert eine sachlich unzulässige Systemausgabe.');});
+document.getElementById('resetGate').addEventListener('click',resetGate);
+
+function redrawAll(){drawMapping(false);drawNotation(false);}
+window.addEventListener('resize',redrawAll);
+resetMapping();resetNotation();resetGate();
+})();
+</script>
+</body>
+</html>
